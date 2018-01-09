@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>中奖记录</title>
+    <link rel="shortcut icon" href="favicon.ico">
+    <link href="__CSS__/bootstrap.min.css?v=3.3.6" rel="stylesheet">
+    <link href="__CSS__/font-awesome.min.css?v=4.4.0" rel="stylesheet">
+    <link href="__CSS__/plugins/bootstrap-table/bootstrap-table.min.css" rel="stylesheet">
+    <link href="__CSS__/animate.min.css" rel="stylesheet">
+    <link href="__CSS__/style.min.css?v=4.1.0" rel="stylesheet">
+    <link href="__CSS__/plugins/sweetalert/sweetalert.css" rel="stylesheet">
+    <script src="__JS__/jquery.min.js?v=2.1.4"></script>
+    <script src="__JS__/plugins/layer/layer.min.js"></script>
+</head>
+<body class="gray-bg">
+<div class="wrapper wrapper-content animated fadeInRight">
+    <!-- Panel Other -->
+    <div class="ibox float-e-margins">
+        <div class="ibox-title">
+            <h5>中奖记录</h5>
+        </div>
+        <div class="ibox-content">
+            <div class="form-group clearfix col-sm-1">
+                {if authCheck('award/award_explod') }
+                <a href="{$ex_url}">
+                    <button class="btn btn-outline btn-primary" type="button">导出Excel</button>
+                </a>
+                {/if}
+            </div>
+            <!--搜索框开始-->
+            <form  method="get" class="form-inline pull-right">
+                <div class="content clearfix m-b">
+                    <div class="form-group">
+                        <label>奖品类型：</label>
+                        <select class="form-control" name="type">
+                            <option value="">--请选择--</option>
+                            <option value="1" {if !empty($get['type'])&&$get['type']==1 }selected{/if}>虚拟</option>
+                            <option value="2" {if !empty($get['type'])&&$get['type']==2 }selected{/if}>实物</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>兑换状态：</label>
+                        <select class="form-control" name="is_use">
+                            <option value="">--请选择--</option>
+                            <option value="1" {if !empty($get['is_use'])&&$get['is_use']==1 }selected{/if}>未兑换</option>
+                            <option value="2" {if !empty($get['is_use'])&&$get['is_use']==2 }selected{/if}>已兑换</option>
+                        </select>
+                    </div>
+                    <div class="form-group" style="margin-left: 10px;">
+                        <label>中奖时间：</label>
+                        <input style="width: 150px;"  id="start" placeholder="开始日" type="text" class="form-control"  name="start" {if !empty($get['start'])} value="{$get.start}"{/if}>
+                    </div>
+                    <div class="form-group">
+                        <label>-</label>
+                        <input style="width: 150px;"  id="end" placeholder="截至日" type="text" class="form-control"  name="end" {if !empty($get['end'])} value="{$get.end}"{/if}>
+                    </div>
+                    <div class="form-group">
+                        <button class="btn btn-primary"  style="margin-top:5px" id="search"><strong>搜 索</strong>
+                        </button>
+                    </div>
+                </div>
+            </form>
+            <!--搜索框结束-->
+            <div class="example-wrap">
+                <div class="example">
+                    <table id="cusTable" class="table table-hover table-striped">
+                        <thead>
+                        <th>ID</th>
+                        <th>奖品名称</th>
+                        <th>奖品类型</th>
+                        <th>中奖时间</th>
+                        <th>中奖者</th>
+                        <th>中奖者电话</th>
+                        <th>中奖者地址</th>
+                        <th>是否兑换</th>
+                        <th>操作</th>
+                        </thead>
+                        <tbody>
+                        {if !empty($list)&&$list->total()!=0}
+                        {foreach $list as $v }
+                        <tr>
+                            <td>{$v.id}</td>
+                            <td>{$v.name}</td>
+                            <td>{$type[$v.type]}</td>
+                            <td>{$v.num}{$v.add_time|date='Y-m-d',###}</td>
+                            <td>{$v.member_phone}</td>
+                            <td>{$v.mobile}</td>
+                            <td>{$v.address}</td>
+                            <td>{$v.address}</td>
+                            {if $v['is_use']==1}
+                                <td>已兑换</td>
+                            {else/}
+                                <td>未兑换</td>
+                            {/if}
+
+                            {if authCheck('award/award_log_edit') && $v.type==2 && $v.is_use==0 }
+                            <a href="javascript:log_edit({$v.id})">
+                                <button type="button" class="btn btn-primary btn-sm"><i class="fa fa-paste"></i>兑换</button>
+                            </a>
+                            {/if}
+                        </tr>
+                        {/foreach}
+                        {else /}
+                        <tr style="text-align: center"><td colspan="11">没有找到匹配的记录</td></tr>
+                        {/if}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <!-- End Example Pagination -->
+        </div>
+    </div>
+</div>
+<!-- End Panel Other -->
+</div>
+<script src="__JS__/jquery.min.js?v=2.1.4"></script>
+<script src="__JS__/plugins/layer/layer.min.js"></script>
+<script src="__JS__/layui/layui.js"></script>
+
+<script type="text/javascript">
+    layui.use('laydate', function(){
+        var laydate = layui.laydate;
+        laydate.render({
+            elem: '#start' //指定元素
+        });
+        laydate.render({
+            elem: '#end' //指定元素
+        });
+    });
+    function log_edit(id){
+        layer.confirm('确认兑换此奖品?', {icon: 3, title:'提示'}, function(index){
+            $.getJSON("{:url('award_log_edit')}", {'id' : id}, function(res){
+                if(1 == res.code){
+                    layer.alert(res.msg, {title: '友情提示', icon: 1, closeBtn: 0}, function(){
+                        window.location.reload();
+                    });
+                }else{
+                    layer.alert(res.msg, {title: '友情提示', icon: 2});
+                }
+            });
+            layer.close(index);
+        })
+    }
+</script>
+</body>
+</html>

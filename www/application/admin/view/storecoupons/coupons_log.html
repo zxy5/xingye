@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>门店优惠券领取记录</title>
+    <link rel="shortcut icon" href="favicon.ico">
+    <link href="__CSS__/bootstrap.min.css?v=3.3.6" rel="stylesheet">
+    <link href="__CSS__/font-awesome.min.css?v=4.4.0" rel="stylesheet">
+    <link href="__CSS__/plugins/bootstrap-table/bootstrap-table.min.css" rel="stylesheet">
+    <link href="__CSS__/animate.min.css" rel="stylesheet">
+    <link href="__CSS__/style.min.css?v=4.1.0" rel="stylesheet">
+    <link href="__CSS__/plugins/sweetalert/sweetalert.css" rel="stylesheet">
+    <script src="__JS__/jquery.min.js?v=2.1.4"></script>
+    <script src="__JS__/plugins/layer/layer.min.js"></script>
+</head>
+<body class="gray-bg">
+<div class="wrapper wrapper-content animated fadeInRight">
+    <!-- Panel Other -->
+    <div class="ibox float-e-margins">
+        <div class="ibox-title">
+            <h5>门店优惠券领取记录</h5>
+        </div>
+        <div class="ibox-content">
+            <div class="form-group clearfix col-sm-1">
+            </div>
+            <!--搜索框开始-->
+            <form  method="get" class="form-inline pull-right">
+                <div class="content clearfix m-b">
+                    <div class="form-group">
+                        <label>使用状态：</label>
+                        <select class="form-control" name="is_use">
+                            <option value="">--请选择--</option>
+                            <option value="1" {if !empty($get['is_use'])&&$get['is_use']==1 }selected{/if}>未使用</option>
+                            <option value="2" {if !empty($get['is_use'])&&$get['is_use']==2 }selected{/if}>已使用</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <button class="btn btn-primary"  style="margin-top:5px" id="search"><strong>搜 索</strong>
+                        </button>
+                    </div>
+                </div>
+            </form>
+            <!--搜索框结束-->
+            <div class="example-wrap">
+                <div class="example">
+                    <table id="cusTable" class="table table-hover table-striped">
+                        <thead>
+                        <th>ID</th>
+                        <th>会员电话</th>
+                        <th>门店优惠券</th>
+                        <th>领取时间</th>
+                        <th>状态</th>
+                        </thead>
+                        <tbody>
+                        {if $list->total()!=0}
+                        {foreach $list as $v }
+                        <tr>
+                            <td>{$v.id}</td>
+                            <td>{$v.member_phone}</td>
+                            <td>{$v.name}</td>
+                            <td>{$v.add_time|date='Y-m-d',###}</td>
+                            {eq name="v.is_use" value="1"}
+                            <td>已使用</td>
+                            {else/}
+                            <td>未使用</td>
+                            {/eq}
+                        </tr>
+                        {/foreach}
+                        {else/}
+                        <tr style="text-align: center">
+                            <td colspan="5">没有找到匹配的记录</td>
+                        </tr>
+                        {/if}
+                        </tbody>
+                    </table>
+                    <div style="text-align: center">
+                        {$list->render()}
+                    </div>
+                </div>
+            </div>
+            <!-- End Example Pagination -->
+        </div>
+    </div>
+</div>
+<!-- End Panel Other -->
+</div>
+</body>
+</html>

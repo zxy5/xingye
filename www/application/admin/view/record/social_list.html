@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>社保记录列表</title>
+    <link rel="shortcut icon" href="favicon.ico">
+    <link href="__CSS__/bootstrap.min.css?v=3.3.6" rel="stylesheet">
+    <link href="__CSS__/font-awesome.min.css?v=4.4.0" rel="stylesheet">
+    <link href="__CSS__/style.min.css?v=4.1.0" rel="stylesheet">
+    <link href="__JS__/layui/css/layui.css"rel="stylesheet">
+</head>
+<body class="gray-bg">
+<div class="wrapper wrapper-content animated fadeInRight">
+    <!-- Panel Other -->
+    <div class="ibox float-e-margins">
+        <div class="ibox-title">
+            <h5>社保记录列表</h5>
+        </div>
+        <div class="ibox-content">
+            <div class="form-group clearfix col-sm-1">
+                {if authCheck('record/social_export') }
+                <a href="{$ex_url}">
+                    <button class="btn btn-outline btn-primary" type="button">导出Excel列表</button>
+                </a>
+                {/if}
+            </div>
+            <!--搜索框开始-->
+            <form  method="get" class="form-inline pull-right">
+                <div class="content clearfix m-b">
+                    <div class="form-group">
+                        <label>名称：</label>
+                        <input type="text" class="form-control"  name="name" {if !empty($get['name'])} value="{$get.name}"{/if}>
+                    </div>
+                    <div class="form-group" style="margin-left: 10px;">
+                        <label>时间：</label>
+                        <input style="width: 150px;"  id="start" placeholder="开始日" type="text" class="form-control"  name="start" {if !empty($get['start'])} value="{$get.start}"{/if}>
+                    </div>
+                    <div class="form-group">
+                        <label>-</label>
+                        <input style="width: 150px;"  id="end" placeholder="截至日" type="text" class="form-control"  name="end" {if !empty($get['end'])} value="{$get.end}"{/if}>
+                    </div>
+                    <div class="form-group">
+                        <button class="btn btn-primary"  style="margin-top:5px" id="search"><strong>搜 索</strong>
+                        </button>
+                    </div>
+                </div>
+            </form>
+            <!--搜索框结束-->
+            <div class="example-wrap">
+                <div class="example">
+                    <table id="cusTable" class="table table-hover table-striped">
+                        <thead>
+                        <th>ID</th>
+                        <th>姓名</th>
+                        <th>电话</th>
+                        <th>添加时间</th>
+                        <th>操作</th>
+                        </thead>
+                        <tbody>
+                        {if count($list)!=0}
+                        {foreach $list as $v }
+                        <tr>
+                            <td>{$v.id}</td>
+                            <td>{$v.etc_name}</td>
+                            <td>{$v.etc_phone}</td>
+                            <td>{$v.add_time|date='Y-m-d',###}</td>
+                            <td>
+                                {if authCheck('record/social_del') }
+                                <a href="javascript:socialDel({$v.id})">
+                                    <button type="button" class="btn btn-danger btn-sm"><i class="fa fa-trash-o"></i> 删除</button>
+                                </a>
+                                {/if}
+                            </td>
+                        </tr>
+                        {/foreach}
+                        {else /}
+                        <tr style="text-align: center">
+                            <td colspan="5">没有找到匹配的记录</td>
+                        </tr>
+                        {/if}
+                        </tbody>
+                    </table>
+                    <div style="text-align: center">
+                        {$list->render()}
+                    </div>
+                </div>
+            </div>
+            <!-- End Example Pagination -->
+        </div>
+    </div>
+</div>
+<!-- End Panel Other -->
+</div>
+<script src="__JS__/jquery.min.js?v=2.1.4"></script>
+<script src="__JS__/plugins/layer/layer.min.js"></script>
+<script src="__JS__/layui/layui.js"></script>
+
+<script type="text/javascript">
+    layui.use('laydate', function(){
+        var laydate = layui.laydate;
+        laydate.render({
+            elem: '#start' //指定元素
+        });
+        laydate.render({
+            elem: '#end' //指定元素
+        });
+    });
+    function socialDel(id){
+        layer.confirm('确认删除此记录?', {icon: 3, title:'提示'}, function(index){
+            $.getJSON("{:url('social_del')}", {'id' : id}, function(res){
+                if(1 == res.code){
+                    layer.alert(res.msg, {title: '友情提示', icon: 1, closeBtn: 0}, function(){
+                        window.location.reload();
+                    });
+                }else{
+                    layer.alert(res.msg, {title: '友情提示', icon: 2});
+                }
+            });
+            layer.close(index);
+        })
+    }
+</script>
+</body>
+</html>
