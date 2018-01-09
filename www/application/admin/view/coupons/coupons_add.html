@@ -21,7 +21,7 @@
                     <h5>添加门店优惠券</h5>
                 </div>
                 <div class="ibox-content">
-                    <form class="form-horizontal m-t" id="commentForm" method="post" action="{:url('storecoupons/coupons_add')}">
+                    <form class="form-horizontal m-t" id="commentForm" method="post" action="{:url('coupons/coupons_add')}">
                         <div class="form-group">
                             <label class="col-sm-3 control-label">优惠券名称：</label>
                             <div class="input-group col-sm-5">
@@ -121,7 +121,7 @@
             layer.close(index);
             if(1 == res.code){
                 layer.alert(res.msg, {title: '友情提示', icon: 1, closeBtn: 0}, function(){
-                    window.location.href = '/admin/storecoupons/coupons_list';
+                    window.location.href = '/admin/coupons/coupons_list';
                 });
             }else if(111 == res.code){
                 window.location.reload();
@@ -146,7 +146,7 @@
             //执行实例
             var uploadInst = upload.render({
                 elem: '#test1' //绑定元素
-                ,url: "{:url('storecoupons/uploadImg')}" //上传接口
+                ,url: "{:url('coupons/uploadImg')}" //上传接口
                 ,done: function(res){
                     //上传完毕回调
                     $("#thumd").val(res.data.src);

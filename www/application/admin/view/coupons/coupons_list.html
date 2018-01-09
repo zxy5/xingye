@@ -23,8 +23,8 @@
         </div>
         <div class="ibox-content">
             <div class="form-group clearfix col-sm-1">
-                {if authCheck('storecoupons/coupons_add') }
-                <a href="{:url('storecoupons/coupons_add')}">
+                {if authCheck('coupons/coupons_add') }
+                <a href="{:url('coupons/coupons_add')}">
                 <button class="btn btn-outline btn-primary" type="button">添加优惠券</button>
                 </a>
                 {/if}
@@ -78,12 +78,12 @@
                             <td>禁用</td>
                             {/eq}
                             <td>
-                                {if authCheck('storecoupons/coupons_edit') }
-                                <a href="/admin/Storecoupons/coupons_edit/id/{$v.id}">
+                                {if authCheck('coupons/coupons_edit') }
+                                <a href="/admin/coupons/coupons_edit/id/{$v.id}">
                                     <button type="button" class="btn btn-primary btn-sm"><i class="fa fa-paste"></i>编辑</button>
                                 </a>
                                 {/if}
-                                {if authCheck('storecoupons/coupons_del') }
+                                {if authCheck('coupons/coupons_del') }
                                 <a href="javascript:couponsDel({$v.id})">
                                     <button type="button" class="btn btn-danger btn-sm"><i class="fa fa-trash-o"></i> 删除</button>
                                 </a>

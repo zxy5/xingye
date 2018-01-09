@@ -14,7 +14,7 @@ use think\Model;
 
 class CouponsModel extends Model
 {
-    protected $table = 'sd_store_coupons';
+    protected $table = 'sd_coupons';
 
     /**
      * 获取门店优惠券列表

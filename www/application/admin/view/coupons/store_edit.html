@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>添加门店</title>
+    <title>编辑门店</title>
     <link rel="shortcut icon" href="favicon.ico">
     <link href="__CSS__/bootstrap.min.css?v=3.3.6" rel="stylesheet">
     <link href="__CSS__/font-awesome.min.css?v=4.4.0" rel="stylesheet">
@@ -18,19 +18,20 @@
         <div class="col-sm-8">
             <div class="ibox float-e-margins">
                 <div class="ibox-title">
-                    <h5>添加门店</h5>
+                    <h5>编辑门店</h5>
                 </div>
                 <div class="ibox-content">
-                    <form class="form-horizontal m-t" id="commentForm" method="post" action="{:url('storecoupons/store_add')}">
+                    <form class="form-horizontal m-t" id="commentForm" method="post" action="{:url('coupons/store_edit')}">
+                        <input value="{$info.id}" name="id" type="hidden" />
                         <div class="form-group">
                             <label class="col-sm-3 control-label">门店名称：</label>
                             <div class="input-group col-sm-5">
-                                <input id="name" type="text" class="form-control" name="name" required="">
+                                <input id="name" type="text" class="form-control" name="name" value="{$info.store_name}"  required="">
                             </div>
                         </div>
                         <div class="form-group">
                             <label class="col-sm-3 control-label">缩略图：</label>
-                            <input name="thumd" id="thumd" type="hidden"/>
+                            <input name="thumd" id="thumd" type="hidden" {if !empty($info['store_thumd'])}value="{$info.store_thumd}"{/if} />
                             <div class="form-inline">
                                 <div class="input-group col-sm-2">
                                     <button type="button" class="layui-btn" id="test1">
@@ -38,20 +39,24 @@
                                     </button>
                                 </div>
                                 <div class="input-group col-sm-3">
-                                    <div id="sm"></div>
+                                    <div id="sm">
+                                        {if !empty($info['store_thumd'])}
+                                        <img src="{$info.store_thumd}" style="width:40px;height: 40px;"/>
+                                        {/if}
+                                    </div>
                                 </div>
                             </div>
                         </div>
                         <div class="form-group">
                             <label class="col-sm-3 control-label">门店地址：</label>
                             <div class="input-group col-sm-5">
-                                <input id="address" type="text" class="form-control" name="address">
+                                <input id="address" type="text" class="form-control" value="{$info.store_address}" name="address">
                             </div>
                         </div>
                         <div class="form-group">
                             <label class="col-sm-3 control-label">门店电话：</label>
                             <div class="input-group col-sm-5">
-                                <input id="addresse" type="text" class="form-control" name="phone" required="">
+                                <input id="addresse" type="text" class="form-control" value="{$info.store_phone}" name="phone" required="">
                             </div>
                         </div>
                         <div class="form-group">
@@ -60,7 +65,7 @@
                                 <select class="form-control" required="" name="coupons_id">
                                     <option value="">--请选择--</option>
                                     {foreach $c_list as $v}
-                                    <option value="{$v.id}">{$v.name}</option>
+                                    <option value="{$v.id}" {if $info['coupons_id']==$v['id']} selected {/if}>{$v.name}</option>
                                     {/foreach}
                                 </select>
                             </div>
@@ -70,11 +75,11 @@
                             <div class="input-group col-sm-5">
                                 <div class="radio i-checks col-sm-3">
                                     <label>
-                                        <input type="radio" value="1" checked  name="status"> <i></i> 启用</label>
+                                        <input type="radio" value="1" {if $info['status']==1}checked{/if} name="status"> <i></i> 启用</label>
                                 </div>
                                 <div class="radio i-checks col-sm-3">
                                     <label>
-                                        <input type="radio" value="2" name="status"> <i></i> 禁用</label>
+                                        <input type="radio" value="2" {if $info['status']==2}checked{/if} name="status"> <i></i> 禁用</label>
                                 </div>
                             </div>
                         </div>
@@ -106,7 +111,7 @@
             layer.close(index);
             if(1 == res.code){
                 layer.alert(res.msg, {title: '友情提示', icon: 1, closeBtn: 0}, function(){
-                    window.location.href = '/admin/storecoupons/store_list';
+                    window.location.href = '/admin/coupons/store_list';
                 });
             }else if(111 == res.code){
                 window.location.reload();
@@ -131,7 +136,7 @@
             //执行实例
             var uploadInst = upload.render({
                 elem: '#test1' //绑定元素
-                ,url: "{:url('storecoupons/store_uploadImg')}" //上传接口
+                ,url: "{:url('torecoupons/store_uploadImg')}" //上传接口
                 ,done: function(res){
                     //上传完毕回调
                     $("#thumd").val(res.data.src);

@@ -14,7 +14,7 @@ use app\admin\model\StoreModel;
 use think\Db;
 use think\Validate;
 
-class Storecoupons extends  Base
+class Coupons extends  Base
 {
 
     /**
@@ -25,9 +25,9 @@ class Storecoupons extends  Base
         if( !empty($_GET['is_use']) ){
             $where['a.is_use'] = trim($_GET['is_use'])-1;
         }
-        $list = Db::name('store_coupons_log')->alias('a')
+        $list = Db::name('coupons_log')->alias('a')
                   ->field('a.*,b.name,c.member_name')
-                  ->join('__STORE_COUPONS__ b','a.coupons_id=b.id','LEFT')
+                  ->join('__COUPONS__ b','a.coupons_id=b.id','LEFT')
                   ->join('__MEMBER__ c','a.member_id=c.id','LEFT')
                   ->where($where)->order('a.id desc')->paginate();
 
@@ -41,7 +41,7 @@ class Storecoupons extends  Base
      *优惠券分类
      */
     public function coupons_class_list(){
-
+        print_r('adf');
     }
     public function coupons_class_add(){
 
