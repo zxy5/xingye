@@ -41,7 +41,8 @@ class Coupons extends  Base
      *优惠券分类
      */
     public function coupons_class_list(){
-        print_r('adf');
+//        print_r('adf');
+
     }
     public function coupons_class_add(){
 
