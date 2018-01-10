@@ -13,6 +13,7 @@ namespace app\admin\model;
 
 use think\exception\PDOException;
 use think\Model;
+use think\Validate;
 
 class CouponsClassModel extends Model
 {
@@ -25,7 +26,7 @@ class CouponsClassModel extends Model
      * @param string $order
      * @return false|\PDOStatement|string|\think\Collection
      */
-    public function getClassList( $where = null,$feild = '*',$order = 'class_id desc' ){
+    public function getClassList( $where = null,$feild = '*',$order = 'class_sort desc,class_id desc' ){
 
         return $this->field($feild)->where($where)->order($order)->select();
     }
@@ -47,7 +48,7 @@ class CouponsClassModel extends Model
      */
     public function delClassById( $id ){
         try{
-            $this->where('id',$id)->delete();
+            $this->where('class_id',$id)->delete();
             return msg(1, '', '删除成功！');
         }catch( PDOException $e ){
             return msg(-1, '', $e->getMessage());
@@ -64,8 +65,14 @@ class CouponsClassModel extends Model
         try{
             $rule = [
                 ['class_name','require','分类名称不能为空'],
+                ['class_sort','number','分类排序只能为数字'],
             ];
-            $re = $this->validate($rule)->where('id',$id)->update($param);
+            $validate = new Validate($rule);
+            if(!$validate->check($param)){
+                return msg('-1','',$validate->getError());
+            }
+
+            $re = $this->where('class_id',$id)->update($param);
             if( $re ){
                 return msg(1,'','更新成功！');
             }else{
@@ -84,9 +91,18 @@ class CouponsClassModel extends Model
     public function addClass( $param ){
         try{
             $rule = [
-                ['class_name','require','分类名称不能为空'],
+                'class_name' => 'require',
+                'class_sort' => 'number',
             ];
-            $re = $this->validate($rule)->insert($param);
+            $msg = [
+                'class_name.require'=>'分类名称不能为空',
+                'class_sort.number'=>'分类排序只能为数字'
+            ];
+            $validate = new Validate($rule,$msg);
+            if(!$validate->check($param)){
+                return msg('-1','',$validate->getError());
+            }
+            $re = $this->insert($param);
             if( $re ){
                 return msg(1,'','添加成功！');
             }else{

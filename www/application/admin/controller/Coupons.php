@@ -9,6 +9,7 @@
  */
 namespace app\admin\controller;
 
+use app\admin\model\CouponsClassModel;
 use app\admin\model\CouponsModel;
 use app\admin\model\StoreModel;
 use think\Db;
@@ -41,15 +42,79 @@ class Coupons extends  Base
      *优惠券分类
      */
     public function coupons_class_list(){
-//        print_r('adf');
-
+        $model = new CouponsClassModel();
+        $list = $model->getClassList();
+        $this->assign('list',$list);
+        return $this->fetch();
     }
+
+    /**
+     * 添加分类
+     */
     public function coupons_class_add(){
-
+        if( request()->isAjax() ){
+            $model = new CouponsClassModel();
+            $data = [
+                'class_name' => input('param.name'),
+                'class_thumd' => input('param.thumd'),
+                'class_sort' => input('param.sort'),
+                'add_time' => time()
+            ];
+            $re = $model->addClass($data);
+            return json($re);
+        }else{
+            return $this->fetch();
+        }
     }
-    public function coupons_class_edit(){}
-    public function coupons_class_del(){}
 
+    /**
+     * 修改分类
+     */
+    public function coupons_class_edit(){
+        $model = new CouponsClassModel();
+        if( request()->isAjax() ){
+            $data = [
+                'class_name' => input('param.name'),
+                'class_thumd' => input('param.thumd'),
+                'class_sort' => input('param.sort'),
+            ];
+            $re = $model->editClass(input('param.id'),$data);
+            return json($re);
+        }else{
+            $id = input('param.id');
+            $info = $model->getClassById( $id );
+            $this->assign('info',$info);
+            return $this->fetch();
+        }
+    }
+
+    /**
+     * 删除分类
+     */
+    public function coupons_class_del(){
+        $id = input('param.id');
+        $model = new CouponsClassModel();
+        $re = $model->delClassById($id);
+        return json($re);
+    }
+
+    /**
+     * 上传分类缩略图
+     */
+    public function class_uploadImg(){
+        if(request()->isAjax()){
+            $file = request()->file('file');
+            // 移动到框架应用根目录/public/uploads/ 目录下
+            $info = $file->move(ROOT_PATH . 'public' . DS . 'upload' . DS . '/coupons_class');
+            if($info){
+                $src =  '/upload/coupons_class' . '/' . date('Ymd') . '/' . $info->getFilename();
+                return json(msg(1, ['src' => $src], ''));
+            }else{
+                // 上传失败获取错误信息
+                return json(msg(-1, '', $file->getError()));
+            }
+        }
+    }
     /**
      * 优惠券管理列表
      */

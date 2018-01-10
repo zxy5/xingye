@@ -10,6 +10,7 @@
 namespace app\admin\model;
 
 use think\Model;
+use think\Validate;
 
 class AwardModel extends Model
 {
@@ -51,7 +52,11 @@ class AwardModel extends Model
                 ['chance', 'number|elt:10000', '中奖概率必须为数字|中奖概率必须小于10000'],
                 ['num', 'number', '奖品数量必须为数字']
             ];
-            $result =  $this->validate($rule)->where('id',$id)->update($param);
+            $validate = new Validate($rule);
+            if(!$validate->check($param)){
+                return msg('-1','',$validate->getError());
+            }
+            $result =  $this->where('id',$id)->update($param);
             if($result){
                 return msg(1, '', '奖品修改成功！');
             }else{
@@ -85,7 +90,11 @@ class AwardModel extends Model
                 ['chance', 'number|elt:10000', '中奖概率必须为数字|中奖概率必须小于10000'],
                 ['num', 'number', '奖品数量必须为数字']
             ];
-            $result =  $this->validate($rule)->insert($param);
+            $validate = new Validate($rule);
+            if(!$validate->check($param)){
+                return msg('-1','',$validate->getError());
+            }
+            $result =  $this->insert($param);
             if($result){
                 return msg(1, '', '添加奖品成功');
             }else{

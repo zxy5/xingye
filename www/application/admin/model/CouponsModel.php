@@ -11,6 +11,7 @@ namespace app\admin\model;
 
 use think\Db;
 use think\Model;
+use think\Validate;
 
 class CouponsModel extends Model
 {
@@ -66,6 +67,10 @@ class CouponsModel extends Model
                 ['thumd', 'require', '优惠券缩略图不能为空'],
                 ['desc', 'require', '优惠券描述不能为空'],
             ];
+            $validate = new Validate($rule);
+            if(!$validate->check($param)){
+                return msg('-1','',$validate->getError());
+            }
             $result =  $this->validate($rule)->where('id',$id)->update($param);
             if($result){
                 return msg(1, '', '修改成功！');
@@ -103,7 +108,11 @@ class CouponsModel extends Model
                 ['thumd', 'require', '优惠券缩略图不能为空'],
                 ['desc', 'require', '优惠券描述不能为空'],
             ];
-            $result =  $this->validate($rule)->insert($param);
+            $validate = new Validate($rule);
+            if(!$validate->check($param)){
+                return msg('-1','',$validate->getError());
+            }
+            $result =  $this->insert($param);
             if($result){
                 return msg(1, '', '添加成功');
             }else{
