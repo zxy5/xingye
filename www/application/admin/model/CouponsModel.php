@@ -25,9 +25,13 @@ class CouponsModel extends Model
      */
     public function getCouponsList( $where = null,$field='' ,$order = 'a.id desc', $page = 15 ){
         if( $field=='' ){
-            $field = 'a.*,user_name';
+            $field = 'a.*,user_name,class_name';
         }
-        return $this->alias('a')->field( $field)->join('__ADMIN__ b','a.user_id=b.id','LEFT')->where($where)->order($order)->paginate($page);
+        $re = $this->alias('a')->field( $field)
+            ->join('__ADMIN__ b','a.user_id=b.id','LEFT')
+            ->join('__COUPONS_CLASS__ c','a.class_id=c.class_id','LEFT')
+            ->where($where)->order($order)->paginate($page);
+        return $re;
 //        return $this->where($where)->paginate($page);
     }
 
@@ -50,8 +54,8 @@ class CouponsModel extends Model
      * @param $id
      * @return array|false|\PDOStatement|string|Model
      */
-    public function getCouponsById( $id ){
-        return $this->where('id',$id)->find();
+    public function getCouponsById( $id ,$field = '*'){
+        return $this->field($field)->where('id',$id)->find();
     }
 
     /**

@@ -146,6 +146,7 @@ class Coupons extends  Base
                 'start_time' => strtotime(input('param.start_time')),
                 'end_time' => strtotime(input('param.end_time')),
                 'status' => input('param.status'),
+                'class_id' => input('param.class_id'),
                 'user_id' => session('id')
             ];
             $re = $cModel->editCouponsById(input('param.id'),$data);
@@ -153,7 +154,14 @@ class Coupons extends  Base
         }else{
             $id = input('param.id');
             $info = $cModel->getCouponsById( $id );
-            $this->assign('info',$info);
+
+            $model = new CouponsClassModel();
+            $list = $model->getClassList( null,'*','class_id asc' );
+
+            $this->assign([
+                'c_list'=>$list,
+                'info'=>$info,
+            ]);
             return $this->fetch();
         }
     }
@@ -173,11 +181,15 @@ class Coupons extends  Base
                 'end_time' => strtotime(input('param.end_time')),
                 'add_time' => time(),
                 'status' => input('param.status'),
+                'class_id' => input('param.class_id'),
                 'user_id' => session('id')
             ];
             $re = $cModel->insertCoupons($data);
             return json($re);
         }else{
+            $model = new CouponsClassModel();
+            $list = $model->getClassList( null,'*','class_id asc' );
+            $this->assign('c_list',$list);
             return $this->fetch();
         }
     }

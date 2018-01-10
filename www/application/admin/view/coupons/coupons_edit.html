@@ -70,6 +70,17 @@
                             </div>
                         </div>
                         <div class="form-group">
+                            <label class="col-sm-3 control-label">门店优惠券：</label>
+                            <div class="input-group col-sm-2">
+                                <select class="form-control" required="" name="class_id">
+                                    <option value="">--请选择--</option>
+                                    {foreach $c_list as $v}
+                                    <option value="{$v.class_id}" {if $info['class_id']==$v['class_id']} selected {/if}>{$v.class_name}</option>
+                                    {/foreach}
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
                             <label class="col-sm-3 control-label">是否启用：</label>
                             <div class="input-group col-sm-5">
                                 <div class="radio i-checks col-sm-3">
