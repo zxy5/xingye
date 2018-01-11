@@ -50,7 +50,9 @@
                         <th>会员电话</th>
                         <th>门店优惠券</th>
                         <th>领取时间</th>
-                        <th>状态</th>
+                        <th>验证码</th>
+                        <th>使用状态</th>
+                        <th>验证状态</th>
                         </thead>
                         <tbody>
                         {if $list->total()!=0}
@@ -60,16 +62,22 @@
                             <td>{$v.member_phone}</td>
                             <td>{$v.name}</td>
                             <td>{$v.add_time|date='Y-m-d',###}</td>
+                            <td>{$v.code_str}</td>
                             {eq name="v.is_use" value="1"}
                             <td>已使用</td>
                             {else/}
                             <td>未使用</td>
                             {/eq}
+                            {eq name="v.is_validate" value="1"}
+                            <td>已验证</td>
+                            {else/}
+                            <td>未验证</td>
+                            {/eq}
                         </tr>
                         {/foreach}
                         {else/}
                         <tr style="text-align: center">
-                            <td colspan="5">没有找到匹配的记录</td>
+                            <td colspan="7">没有找到匹配的记录</td>
                         </tr>
                         {/if}
                         </tbody>
