@@ -70,7 +70,7 @@
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="col-sm-3 control-label">门店优惠券：</label>
+                            <label class="col-sm-3 control-label">分类：</label>
                             <div class="input-group col-sm-2">
                                 <select class="form-control" required="" name="class_id">
                                     <option value="">--请选择--</option>
@@ -78,6 +78,25 @@
                                     <option value="{$v.class_id}" {if $info['class_id']==$v['class_id']} selected {/if}>{$v.class_name}</option>
                                     {/foreach}
                                 </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">门店登录电话：</label>
+                            <div class="input-group col-sm-3">
+                                <input type="text" class="form-control" value="{$info.login_phone}" name="login_phone" required="">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">是否推荐：</label>
+                            <div class="input-group col-sm-5">
+                                <div class="radio i-checks col-sm-3">
+                                    <label>
+                                        <input type="radio" value="1" {if $info['is_recommend']==1}checked{/if} name="is_recommend"> <i></i> 是</label>
+                                </div>
+                                <div class="radio i-checks col-sm-3">
+                                    <label>
+                                        <input type="radio" value="0" {if $info['is_recommend']==0}checked{/if} name="is_recommend"> <i></i> 否</label>
+                                </div>
                             </div>
                         </div>
                         <div class="form-group">

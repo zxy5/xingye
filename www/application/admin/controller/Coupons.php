@@ -132,6 +132,18 @@ class Coupons extends  Base
     }
 
     /**
+     * 重置密码
+     * 密码为登录手机号码
+     */
+    public function reset_pass(){
+        $id = input('param.id');
+        $model = new CouponsModel();
+        $login_phone = $model->getCouponsById($id,'login_phone');
+        $re = $model->resetPasswordById($id,md5($login_phone['login_phone']));
+        return json($re);
+    }
+
+    /**
      * 编辑
      */
     public function coupons_edit(){
@@ -147,6 +159,8 @@ class Coupons extends  Base
                 'end_time' => strtotime(input('param.end_time')),
                 'status' => input('param.status'),
                 'class_id' => input('param.class_id'),
+                'login_phone' => input('param.login_phone'),
+                'is_recommend' => input('param.is_recommend'),
                 'user_id' => session('id')
             ];
             $re = $cModel->editCouponsById(input('param.id'),$data);
@@ -182,6 +196,9 @@ class Coupons extends  Base
                 'add_time' => time(),
                 'status' => input('param.status'),
                 'class_id' => input('param.class_id'),
+                'login_phone' => input('param.login_phone'),
+                'login_password' => md5(input('param.login_phone')),
+                'is_recommend' => input('param.is_recommend'),
                 'user_id' => session('id')
             ];
             $re = $cModel->insertCoupons($data);

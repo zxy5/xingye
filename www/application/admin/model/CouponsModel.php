@@ -25,7 +25,7 @@ class CouponsModel extends Model
      */
     public function getCouponsList( $where = null,$field='' ,$order = 'a.id desc', $page = 15 ){
         if( $field=='' ){
-            $field = 'a.*,user_name,class_name';
+            $field = 'a.*,class_name';
         }
         $re = $this->alias('a')->field( $field)
             ->join('__ADMIN__ b','a.user_id=b.id','LEFT')
@@ -46,7 +46,7 @@ class CouponsModel extends Model
         if( $field=='' ){
             $field = 'a.*,user_name';
         }
-        return Db::name('store_coupons')->alias('a')->field( $field)->join('__ADMIN__ b','a.user_id=b.id','LEFT')->where($where)->order($order)->select();
+        return Db::name('coupons')->alias('a')->field( $field)->join('__ADMIN__ b','a.user_id=b.id','LEFT')->where($where)->order($order)->select();
     }
 
     /**
@@ -56,6 +56,25 @@ class CouponsModel extends Model
      */
     public function getCouponsById( $id ,$field = '*'){
         return $this->field($field)->where('id',$id)->find();
+    }
+
+    /**
+     * 重置密码
+     * @param $id
+     * @param $pas
+     * @return array
+     */
+    public function resetPasswordById( $id,$pas ){
+        try{
+            $result =  $this->where('id',$id)->update(['login_password'=>$pas,'is_modify'=>0]);
+            if($result){
+                return msg(1, '', '重置成功！');
+            }else{
+                return msg(-1, '', '重置失败！');
+            }
+        }catch(PDOException $e){
+            return msg(-2, '', $e->getMessage());
+        }
     }
 
     /**
@@ -72,6 +91,9 @@ class CouponsModel extends Model
                 ['desc', 'require', '优惠券描述不能为空'],
             ];
             $validate = new Validate($rule);
+            $validate->rule('login_phone','/^1[34578]\d{9}$/');
+            $validate->message('login_phone','手机号码格式不正确');
+
             if(!$validate->check($param)){
                 return msg('-1','',$validate->getError());
             }
@@ -113,6 +135,9 @@ class CouponsModel extends Model
                 ['desc', 'require', '优惠券描述不能为空'],
             ];
             $validate = new Validate($rule);
+            $validate->rule('login_phone','/^1[34578]\d{9}$/');
+            $validate->message('login_phone','手机号码格式不正确');
+
             if(!$validate->check($param)){
                 return msg('-1','',$validate->getError());
             }
