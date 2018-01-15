@@ -15,7 +15,7 @@ class Index extends Base
         //获取分类
         $type_list = Db::name('coupons_class')->where(array())->order('class_sort desc,class_id desc')->select();
         //获取推荐券
-        $list = Db::name('coupons')->field('name,discount,thumd,store_address,store_phone')->where('is_recommend','1')->select();
+        $list = Db::name('coupons')->field('id,name,discount,thumd,store_address,store_phone')->where('is_recommend','1')->select();
 
         $this->assign([
             'list'=>$list,
