@@ -2,29 +2,62 @@
 <html>
 <head>
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>snake后台</title>
-    <link rel="shortcut icon" href="favicon.ico">
-    <link href="/static/admin/css/bootstrap.min.css?v=3.3.6" rel="stylesheet">
-    <link href="/static/admin/css/font-awesome.min.css?v=4.4.0" rel="stylesheet">
-
-    <link href="/static/admin/css/animate.min.css" rel="stylesheet">
-    <link href="/static/admin/css/style.min.css?v=4.1.0" rel="stylesheet">
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no">
+    <meta name="format-detection" content="telephone=no">
+    <title>线下场景宝-首页</title>
+    <link rel="stylesheet" type="text/css" href="/static/home/icon-custom/iconfont.css">
+    <link rel="stylesheet" href="/static/home/css/frozen.css">
+    <link rel="stylesheet" href="/static/home/css/index.css">
 </head>
-
-<body class="gray-bg">
-<div class="middle-box text-center animated fadeInDown">
-    <h1>snake</h1>
-    <h3 class="font-bold">访问后台,请在地址后面加上 /admin</h3>
-
-    <div class="error-desc">
-
-        <br/> 默认用户名 ：admin，密码 ： admin
-        <br/>
-        <br/>  author : NickBai , homepage : http://baiyf.com , email : 1902822973@qq.com
-    </div>
-</div>
-<script src="/static/admin/js/jquery.min.js?v=2.1.4"></script>
-<script src="/static/admin/js/bootstrap.min.js?v=3.3.6"></script>
+<body ontouchstart="">
+<footer class="ui-footer ui-footer-btn">
+    <ul class="ui-tiled ui-border-t">
+        <li data-href="index.html" class="ui-border-r active"><div class="circle"><i class="iconfont icon-shouye-xuanze1"></i></div><div class="">首页</div></li>
+        <li data-href="ui.html" class="ui-border-r "><div class="circle"><i class="iconfont icon-choujiang1"></i></div><div>抽奖</div></li>
+        <li data-href="ui.html" class="ui-border-r "><div class="circle"><i class="iconfont icon-gerenzhongxin1"></i></div><div>个人中心</div></li>
+    </ul>
+</footer>
+<section id="banner" class="ui-placehold-img">
+    <span style="background-image:url(/static/home/img/banner.png);"></span>
+</section>
+<ul class="ui-tiled menu">
+    <li><a href=""><i class="iconfont icon-meishi"></i><div>美食类商户</div></a></li>
+    <li><i class="iconfont icon-jiaju"></i><div>居家类商户</div></li>
+    <li><i class="iconfont icon-qinziying"></i><div>亲子类商户</div></li>
+</ul>
+<p class="list-title">-- 热门 --</p>
+<section class="ui-container">
+    <ul class="ui-list ui-list-link ui-border-tb">
+        {foreach $list as $vo }
+        <li class="ui-border-t">
+            <div class="ui-list-img">
+                <span style="background-image:url({$vo.thumd})"></span>
+            </div>
+            <div class="ui-list-info">
+                <h4 class="ui-nowrap">{$vo.name}</h4>
+                <p class="ui-nowrap">商户地址：{$vo.store_address}</p>
+                <p class="ui-nowrap">商户电话：{$vo.store_phone}</p>
+                <p class="ui-nowrap sale"><span class="sale-info">{$vo.discount}折</span><span class="sale-type">优惠券</span></p>
+            </div>
+            <a href=""><div class="btn">立即领取</div></a>
+        </li>
+        {/foreach}
+    </ul>
+</section>
+<script src="/static/home/lib/zepto.min.js"></script>
+<script src="/static/home/js/frozen.js"></script>
+<script>
+  (function (){
+    var tab = new fz.Scroll('.ui-tab', {
+      role: 'tab',
+      autoplay: true,
+      interval: 3000
+    });
+    /* 滑动开始前 */
+    tab.on('beforeScrollStart', function(fromIndex, toIndex) {
+      console.log(fromIndex,toIndex);// from 为当前页，to 为下一页
+    })
+  })();
+</script>
 </body>
 </html>

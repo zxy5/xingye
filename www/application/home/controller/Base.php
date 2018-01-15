@@ -17,9 +17,9 @@ class Base extends Controller
     public function _initialize()
     {
         //检测用户是否登录
-        if( empty( session('member_id') ) ){
-            $this->redirect('login/index');
-        }
+//        if( empty( session('member_id') ) ){
+//            $this->redirect('login/index');
+//        }
     }
 
 }

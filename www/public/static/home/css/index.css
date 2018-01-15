@@ -1,0 +1,127 @@
+a{
+    text-decoration: none;
+    color: #ffffff;
+}
+#banner{
+    padding-top: 46.25%;
+}
+.menu{
+    padding: 1%;
+}
+.menu.ui-tiled li:nth-child(1){
+    background-color: #ea405a;
+    color: #ffffff;
+}
+.menu.ui-tiled li:nth-child(2){
+    background-color: #bdb112;
+    color: #ffffff;
+    margin-left: 0;
+    margin-right: 0;
+}
+.menu.ui-tiled li:nth-child(3){
+    background-color: #026c48;
+    color: #ffffff;
+}
+.menu.ui-tiled li{
+    border-radius: 1vmin;
+    margin: 5vmin 8vmin;
+    font-size: 0.12rem;
+}
+.menu .iconfont{
+    font-size: 10vmin;
+}
+.menu div{
+    margin-top: -2vmin;
+    margin-bottom: 1vmin;
+}
+.ui-list-img{
+    width: 85px;
+    height: 85px;
+}
+.ui-footer .ui-tiled{
+    color: #666;
+    font-size: 0.12rem;
+}
+.active {
+    color: green;
+}
+.list-title{
+    text-align: center;
+    background-color: #fff;
+    color: #8c8c8c;
+    padding: 2vmin 0;
+}
+.ui-container li{
+    position: relative;
+}
+.ui-container .btn{
+    padding: 1vmin 3vmin;
+    border-radius: 0.04rem;
+    position: absolute;
+    font-size: 14px;
+    bottom: 7%;
+    right: 3%;
+    background-color: #ff0000;
+    color: #ffffff;
+}
+.ui-list-info{
+    -webkit-box-pack: start;
+}
+.ui-list-info .sale{
+    position: absolute;
+    bottom: 8%;
+}
+.ui-list-info .sale-info{
+    color: #f36708;
+    font-size: 20px;
+    margin-right: 1vmin;
+}
+.ui-list-info .sale-type{
+    color: #f36708;
+    font-size: 14px;
+}
+.ui-list-info p{
+    color: #666666;
+    font-size: 12px;
+    line-height: 14px;
+}
+.ui-list-img{
+    margin: 17px 10px 10px 0px;
+}
+.ui-list-link > li:after{
+    content: ''
+}
+.ui-nowrap{
+    max-width: 100%;
+    overflow: inherit;
+    white-space: inherit;
+    text-overflow: inherit;
+}
+.menu i,.iconfont{
+    font-size: 22px;
+}
+.icon{
+    font-size: 38px;
+    line-height: 100px;
+    margin: 10px 0;
+    color: #333;
+    -webkit-transition: font-size 0.25s ease-out 0s;
+    -moz-transition: font-size 0.25s ease-out 0s;
+    transition: font-size 0.25s ease-out 0s;
+}
+.circle {
+    width: 30px;
+    height: 30px;
+    -moz-border-radius: 15px;
+    -webkit-border-radius: 15px;
+    border-radius: 15px;
+    background-color: transparent;
+}
+
+.ui-footer .active .circle{
+    background-color: green;
+}
+
+.ui-footer .active .iconfont{
+    color: #ffffff;
+}

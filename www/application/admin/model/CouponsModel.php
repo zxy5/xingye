@@ -89,6 +89,7 @@ class CouponsModel extends Model
                 ['name', 'require', '优惠券名称不能为空'],
                 ['thumd', 'require', '优惠券缩略图不能为空'],
                 ['desc', 'require', '优惠券描述不能为空'],
+                ['discount', 'number', '优惠券折扣为数字'],
             ];
             $validate = new Validate($rule);
             $validate->rule('login_phone','/^1[34578]\d{9}$/');
@@ -97,6 +98,12 @@ class CouponsModel extends Model
             if(!$validate->check($param)){
                 return msg('-1','',$validate->getError());
             }
+
+            //检测登录电话是否存在
+            if( $this->checkLoginPhone( $param['login_phone'],$id ) ){
+                return msg('-1','','该号码已存在！');
+            }
+
             $result =  $this->validate($rule)->where('id',$id)->update($param);
             if($result){
                 return msg(1, '', '修改成功！');
@@ -133,6 +140,7 @@ class CouponsModel extends Model
                 ['name', 'require', '优惠券名称不能为空'],
                 ['thumd', 'require', '优惠券缩略图不能为空'],
                 ['desc', 'require', '优惠券描述不能为空'],
+                ['discount', 'number', '优惠券折扣为数字'],
             ];
             $validate = new Validate($rule);
             $validate->rule('login_phone','/^1[34578]\d{9}$/');
@@ -141,6 +149,12 @@ class CouponsModel extends Model
             if(!$validate->check($param)){
                 return msg('-1','',$validate->getError());
             }
+
+            //检测登录电话是否存在
+            if( $this->checkLoginPhone($param['login_phone']) ){
+                return msg('-1','','该号码已存在！');
+            }
+
             $result =  $this->insert($param);
             if($result){
                 return msg(1, '', '添加成功');
@@ -150,6 +164,24 @@ class CouponsModel extends Model
             }
         }catch(PDOException $e){
             return msg(-2, '', $e->getMessage());
+        }
+    }
+
+    /**
+     * 检测登录电话是否存在
+     * @param $phone
+     * @param int $id
+     * @return bool
+     */
+    public function checkLoginPhone( $phone ,$id=0){
+        $where = array();
+        $where['login_phone'] = $phone;
+        $where['id'] = array('<>',$id);
+        $info = $this->where( $where )->find();
+        if( empty($info) ){
+            return false;
+        }else{
+            return true ;
         }
     }
 
