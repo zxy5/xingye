@@ -36,13 +36,17 @@
                         <th>奖品ID</th>
                         <th>缩略图</th>
                         <th>奖品名称</th>
+                        <th>折扣</th>
+                        <th>登录电话</th>
                         <th>奖品介绍</th>
+                        <th>门店地址</th>
                         <th>数量</th>
                         <th>中奖概率<br/>(万分之)</th>
                         <th>奖品类型</th>
                         <th>添加时间</th>
                         <th>修改时间</th>
                         <th>管理者</th>
+                        <th>修改密码</th>
                         <th>操作</th>
                         </thead>
                         <tbody>
@@ -52,13 +56,23 @@
                             <td>{$v.id}</td>
                             <td><img src="{$v.thumd}" style="width: 40px; height: 40px;"></td>
                             <td>{$v.name}</td>
-                            <td>{$v.desc}</td>
+                            <td>{$v.discount}</td>
+                            <td>{$v.login_phone}</td>
+                            <td>{$v.desc|my_substr=0,10}</td>
+                            <td>{$v.store_address|my_substr=0,10}</td>
                             <td>{$v.num}</td>
                             <td>{$v.chance}</td>
                             <td>{$type[$v.type]}</td>
                             <td>{$v.add_time|date='Y-m-d',###}</td>
                             <td>{$v.update_time|date='Y-m-d',###}</td>
                             <td>{$v.user_name}</td>
+
+                            {eq name="v.is_modify" value="1"}
+                            <td style="color: green">是</td>
+                            {else/}
+                            <td style="color: red">否</td>
+                            {/eq}
+
                             <td>
                                 {if authCheck('award/award_edit') }
                                 <a href="/admin/award/award_edit/id/{$v.id}">
@@ -68,6 +82,11 @@
                                 {if authCheck('award/award_del') }
                                 <a href="javascript:award_del({$v.id})">
                                     <button type="button" class="btn btn-danger btn-sm"><i class="fa fa-trash-o"></i> 删除</button>
+                                </a>
+                                {/if}
+                                {if authCheck('award/reset_pass') }
+                                <a href="javascript:reset_pass({$v.id})">
+                                    <button type="button" class="btn btn-warning btn-sm"><i class="fa fa-mail-reply"></i> 重置密码</button>
                                 </a>
                                 {/if}
                             </td>
@@ -90,6 +109,20 @@
     function award_del(id){
         layer.confirm('确认删除此奖品?', {icon: 3, title:'提示'}, function(index){
             $.getJSON("{:url('award_del')}", {'id' : id}, function(res){
+                if(1 == res.code){
+                    layer.alert(res.msg, {title: '友情提示', icon: 1, closeBtn: 0}, function(){
+                        window.location.reload();
+                    });
+                }else{
+                    layer.alert(res.msg, {title: '友情提示', icon: 2});
+                }
+            });
+            layer.close(index);
+        })
+    }
+    function reset_pass(id){
+        layer.confirm('确认重置此优惠券登录密码?', {icon: 3, title:'提示'}, function(index){
+            $.getJSON("{:url('reset_pass')}", {'id' : id}, function(res){
                 if(1 == res.code){
                     layer.alert(res.msg, {title: '友情提示', icon: 1, closeBtn: 0}, function(){
                         window.location.reload();

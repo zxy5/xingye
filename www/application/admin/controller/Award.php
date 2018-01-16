@@ -10,6 +10,7 @@
  */
 namespace app\admin\controller;
 
+use app\admin\model\AdminModel;
 use app\admin\model\AwardModel;
 use think\Db;
 use PHPExcel;
@@ -29,6 +30,18 @@ class Award extends Base
     }
 
     /**
+     * 重置密码
+     * 密码为登录手机号码
+     */
+    public function reset_pass(){
+        $id = input('param.id');
+        $model = new AwardModel();
+        $login_phone = $model->getAwardById($id,'login_phone');
+        $re = $model->resetPasswordById($id,md5($login_phone['login_phone']));
+        return json($re);
+    }
+
+    /**
      * 编辑奖品
      */
     public function award_edit(){
@@ -44,6 +57,11 @@ class Award extends Base
                 'desc' => input('param.desc'),
                 'thumd' => input('param.thumd'),
                 'type' => input('param.type'),
+                'discount' => input('param.discount'),
+                'store_address' => input('param.store_address'),
+                'store_phone' => input('param.store_phone'),
+                'login_phone' => input('param.login_phone'),
+                'login_password' => md5(input('param.login_phone')),
                 'num' => input('param.num'),
                 'chance' => input('param.chance'),
                 'api_id' => input('param.api_id'),
@@ -75,6 +93,11 @@ class Award extends Base
                 'name' => input('param.name'),
                 'desc' => input('param.desc'),
                 'thumd' => input('param.thumd'),
+                'discount' => input('param.discount'),
+                'store_address' => input('param.store_address'),
+                'store_phone' => input('param.store_phone'),
+                'login_phone' => input('param.login_phone'),
+                'login_password' => md5(input('param.login_phone')),
                 'type' => input('param.type'),
                 'num' => input('param.num'),
                 'chance' => input('param.chance'),

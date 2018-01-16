@@ -1,0 +1,43 @@
+.ui-tab-nav li.current{
+    color: green;
+    border-bottom: 2px green solid;
+}
+
+.ui-list-info .sale{
+    position: absolute;
+    bottom: 25%;
+}
+.ui-list-info{
+    padding-top: 25px;
+}
+.ui-container .btn{
+    padding: 0.5vmin 2vmin;
+    border-radius: 0.04rem;
+    border: 1px solid #666666;
+    position: absolute;
+    font-size: 14px;
+    bottom: 30%;
+    right: 3%;
+    background-color: #ffffff;
+    color: #666666;
+}
+#banner{
+    padding-top: 30.25%;
+}
+#phone{
+    position: absolute;
+    bottom: 0;
+    left: 36%;
+    z-index: 1;
+    color: #343434;
+}
+.ui-list-info .sale-info{
+    font-size: 25px;
+}
+.ui-list-info .sale-type{
+    font-size: 15px;
+}
+.ui-list li h4{
+    color: #333333;
+    font-size: 17px;
+}

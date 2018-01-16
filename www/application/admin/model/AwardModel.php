@@ -32,8 +32,27 @@ class AwardModel extends Model
      * @param $id
      * @return array|false|\PDOStatement|string|Model
      */
-    public function getAwardById( $id ){
-        return $this->where('id',$id)->find();
+    public function getAwardById( $id ,$filed = '*'){
+        return $this->field($filed)->where('id',$id)->find();
+    }
+
+    /**
+     * 重置密码
+     * @param $id
+     * @param $pas
+     * @return array
+     */
+    public function resetPasswordById( $id,$pas ){
+        try{
+            $result =  $this->where('id',$id)->update(['login_password'=>$pas,'is_modify'=>0]);
+            if($result){
+                return msg(1, '', '重置成功！');
+            }else{
+                return msg(-1, '', '重置失败！');
+            }
+        }catch(PDOException $e){
+            return msg(-2, '', $e->getMessage());
+        }
     }
 
     /**
@@ -56,6 +75,12 @@ class AwardModel extends Model
             if(!$validate->check($param)){
                 return msg('-1','',$validate->getError());
             }
+
+            //检测登录电话是否存在
+            if( $this->checkLoginPhone( $param['login_phone'],$id ) ){
+                return msg('-1','','该号码已存在！');
+            }
+
             $result =  $this->where('id',$id)->update($param);
             if($result){
                 return msg(1, '', '奖品修改成功！');
@@ -94,6 +119,12 @@ class AwardModel extends Model
             if(!$validate->check($param)){
                 return msg('-1','',$validate->getError());
             }
+
+            //检测登录电话是否存在
+            if( $this->checkLoginPhone($param['login_phone']) ){
+                return msg('-1','','该号码已存在！');
+            }
+
             $result =  $this->insert($param);
             if($result){
                 return msg(1, '', '添加奖品成功');
@@ -118,6 +149,24 @@ class AwardModel extends Model
             return msg(1, '', '删除成功！');
         }catch( PDOException $e ){
             return msg(-1, '', $e->getMessage());
+        }
+    }
+
+    /**
+     * 检测登录电话是否存在
+     * @param $phone
+     * @param int $id
+     * @return bool
+     */
+    public function checkLoginPhone( $phone ,$id=0){
+        $where = array();
+        $where['login_phone'] = $phone;
+        $where['id'] = array('<>',$id);
+        $info = $this->where( $where )->find();
+        if( empty($info) ){
+            return false;
+        }else{
+            return true ;
         }
     }
 

@@ -30,6 +30,24 @@
                             </div>
                         </div>
                         <div class="form-group">
+                            <label class="col-sm-3 control-label">门店折扣：</label>
+                            <div class="input-group col-sm-5">
+                                <input type="text" class="form-control" name="discount" value="{$info.discount}" required="">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">门店地址：</label>
+                            <div class="input-group col-sm-5">
+                                <input type="text" class="form-control" name="store_address" value="{$info.store_address}" >
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">联系电话：</label>
+                            <div class="input-group col-sm-5">
+                                <input type="text" class="form-control" name="store_phone" value="{$info.store_phone}" >
+                            </div>
+                        </div>
+                        <div class="form-group">
                             <label class="col-sm-3 control-label">奖品描述：</label>
                             <div class="input-group col-sm-5">
                                 <textarea id="description" class="form-control" name="desc" required="">{$info.desc}</textarea>
@@ -78,6 +96,12 @@
                             <label class="col-sm-3 control-label">对应api的id：</label>
                             <div class="input-group col-sm-5">
                                 <input id="api_id" type="text" class="form-control" value="{$info.api_id}" name="api_id">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">门店登录电话：</label>
+                            <div class="input-group col-sm-3">
+                                <input type="text" class="form-control" value="{$info.login_phone}" name="login_phone" required="">
                             </div>
                         </div>
                         <div class="form-group">
