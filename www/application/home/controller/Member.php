@@ -34,8 +34,9 @@ class Member extends Base
         $condition['a.member_id'] = $member_id;
         $condition['a.is_use'] = 0;
         $award_log = Db::name('award_log')
-                        ->alias('a')->field('a.*,b.name,b.thumd')
-                        ->join('__AWARD__','a.award_id=b.id','LEFT')->where($condition)->paginate(20);
+                        ->alias('a')->field('a.*,b.name,b.id as a_id,b.thumd,b.discount')
+                        ->join('__AWARD__ b','a.award_id=b.id','LEFT')->where($condition)->paginate(20);
+
 
         $this->assign([
             'award_log' => $award_log,

@@ -53,31 +53,20 @@
                         <li>
                             <section class="ui-container">
                                 <ul class="ui-list ui-list-link ui-border-tb">
+                                    {if }
+                                    {foreach $award_log as $award}
                                     <li class="ui-border-t">
                                         <div class="ui-list-img">
-                                            <span style="background-image:url(http://placeholder.qiniudn.com/170x170)"></span>
+                                            <span style="background-image:url({$award.thumd})"></span>
                                         </div>
                                         <div class="ui-list-info">
-                                            <h4 class="ui-nowrap">大龙火锅(春熙路概念店)</h4>
-                                            <p class="ui-nowrap sale"><span class="sale-info">5折</span><span class="sale-type">优惠券</span></p>
+                                            <h4 class="ui-nowrap">{$award.name}</h4>
+                                            <p class="ui-nowrap sale"><span class="sale-info">{$award.discount}折</span><span class="sale-type">优惠券</span></p>
                                         </div>
                                         <a href=""><div class="btn">查看详情</div></a>
                                     </li>
-                                    <li class="ui-border-t">
-                                        <div class="ui-list-img">
-                                            <span style="background-image:url(http://placeholder.qiniudn.com/170x170)"></span>
-                                        </div>
-                                        <div class="ui-list-info">
-                                            <h4 class="ui-nowrap">贺氏洪七公吃串串（总府店）</h4>
-                                            <p class="ui-nowrap sale"><span class="sale-info">5折</span><span class="sale-type">优惠券</span></p>
-                                        </div>
-                                        <a href=""><div class="btn">查看详情</div></a>
-                                    </li>
+                                    {/foreach}
                                 </ul>
-                                <div class="ui-loading-wrap">
-                                    <p>加载中</p>
-                                    <i class="ui-loading"></i>
-                                </div>
                             </section>
                         </li>
                     </ul>
