@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50553
 File Encoding         : 65001
 
-Date: 2018-01-19 13:52:07
+Date: 2018-01-19 13:55:33
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -69,7 +69,7 @@ CREATE TABLE `sd_award` (
   `type` tinyint(1) NOT NULL DEFAULT '1' COMMENT '奖品类型',
   `chance` int(10) NOT NULL DEFAULT '0' COMMENT '中奖概率',
   `num` int(10) NOT NULL DEFAULT '0' COMMENT '奖品数量',
-  `desc` varchar(255) NOT NULL DEFAULT '' COMMENT '奖品描述',
+  `desc` text NOT NULL COMMENT '奖品描述',
   `api_id` int(10) NOT NULL DEFAULT '0' COMMENT 'api对应id',
   `api_link` varchar(255) NOT NULL DEFAULT '' COMMENT '领取奖品url',
   `add_time` int(10) NOT NULL DEFAULT '0' COMMENT '添加时间',
