@@ -26,6 +26,21 @@ class Index extends Base
     }
 
     /**
+     * 券列表
+     */
+    public function  coupons_list(){
+        if( request()->isAjax() ){
+            echo 'asd';
+        }else{
+            //分类id
+            $class_id = input('param.id');
+            $class_info = Db::name('coupons_class')->field('class_id,class_name')->where('class_id',$class_id)->find();
+            $this->assign('class_info',$class_info);
+            return $this->fetch();
+        }
+    }
+
+    /**
      * 领取优惠券
      */
     public function add_coupons_log(){

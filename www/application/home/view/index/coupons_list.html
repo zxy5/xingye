@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no">
+    <meta name="format-detection" content="telephone=no">
+    <title>线下场景宝-分类页</title>
+    <link rel="stylesheet" type="text/css" href="/static/home/icon-custom/iconfont.css">
+    <link rel="stylesheet" href="/static/home/css/frozen.css">
+    <link rel="stylesheet" href="/static/home/css/index.css">
+    <link rel="stylesheet" href="/static/home/css/minirefresh.min.css">
+</head>
+<body ontouchstart="">
+<footer class="ui-footer ui-footer-btn">
+    <ul class="ui-tiled ui-border-t">
+        <li data-href="index.html" class="ui-border-r active "><a href="/home/index/index"><div class="circle"><i class="iconfont icon-shouye-xuanze1"></i></div><div class="">首页</div></a></li>
+        <li data-href="ui.html" class="ui-border-r "><a href="/home/index/award"><div class="circle"><i class="iconfont icon-choujiang1"></i></div><div>抽奖</div></a></li>
+        <li data-href="ui.html" class="ui-border-r "><a href="/home/member/index"><div class="circle"><i class="iconfont icon-gerenzhongxin1"></i></div><div>个人中心</div></a></li>
+    </ul>
+</footer>
+<section class="ui-container">
+    <div class="content">
+        <div id="minirefresh" class="minirefresh-wrap">
+            <div class="minirefresh-scroll">
+                <p class="list-title">{$class_info.class_name}</p>
+                <input type="hidden" id="class_id" value="{$class_info.class_id}" />
+                <ul class="data-list ui-list ui-list-link ui-border-tb" id="listdata">
+
+                </ul>
+            </div>
+        </div>
+    </div>
+</section>
+<script src="/static/home/lib/zepto.min.js"></script>
+<script src="/static/home/js/frozen.js"></script>
+<script type="text/javascript" src="/static/home/js/minirefresh.min.js"></script>
+<script>
+    $(function () {
+
+        // 初始化页码
+        var page = 0;
+
+        // miniRefresh 对象
+        var miniRefresh = new MiniRefresh({
+            container: '#minirefresh',
+            down: {
+                //isLock: true,//是否禁用下拉刷新
+                callback: function () {
+                    doAjax('down');
+                }
+            },
+            up: {
+                isAuto: true,
+                callback: function () {
+                    doAjax('up');
+                }
+            }
+        });
+
+        // 组装 ajax 分页函数。参数 downOrUp 判断是下拉刷新还是上拉加载。
+        // 特别提示：若你仅使用下拉刷新或上拉加载的其中一项，可不用组装 ajax 分页函数了，直接将 ajax 分页放在下拉刷新或上拉加载的回调 callback 里。
+        var doAjax = function (downOrUp) {
+            if (downOrUp == 'down') {
+                page = 1;// 下拉刷新页码设置
+            } else {
+                page++;// 上拉加载递增页码
+            }
+
+            $.ajax({
+                url: '/home/index/coupons_list',// 请求网址
+                type: 'GET',
+                data: {// 请求参数，一般会带上页码
+                    'page': page,
+                    't': new Date().getTime()// 防止GET请求缓存
+                },
+                success: function (response) {
+                    console.log(response);
+                    // 下面这段请根据自己的数据结构来处理
+                    var arrLen = response.data.length;
+
+                    if (arrLen > 0) {
+                        var html = '';
+                        $.each(response.data, function (key, value) {
+                            html +=
+                                    '<li class="ui-border-t">' +
+                                    '<div class="ui-list-img">' +
+                                    '<span style="background-image:url(http://placeholder.qiniudn.com/170x170)"></span>' +
+                                    '</div>' +
+                                    '<div class="ui-list-info">' +
+                                    '<h4 class="ui-nowrap">大龙火锅(春熙路概念店)</h4>'+
+                                    '<p class="ui-nowrap">商户地址：成都市锦江区红星路四段25号附23号 2楼</p>'+
+                                    '<p class="ui-nowrap">商户电话：028-65773893</p>'+
+                                    '<p class="ui-nowrap sale"><span class="sale-info">5折</span><span class="sale-type">优惠券</span></p>'+
+                                    '</div>'+
+                                    '<div class="btn">立即领取</div>'+
+                                    '</li>';
+                        });
+                        setTimeout(function () { // 使用 setTimeout 函数是方便演示的，你可以不用 setTimeout 函数
+                            if (downOrUp == 'down') {
+                                $('#listdata').html('');
+                                $('#listdata').append(html);// DOM 插入数据
+                                miniRefresh.endDownLoading(true);// 结束下拉刷新
+                            } else {
+                                $('#listdata').append(html);
+                                if (response.last_page == page) {// 是否已取完数据页
+                                    miniRefresh.endUpLoading(true);// 结束上拉加载
+                                } else {
+                                    miniRefresh.endUpLoading(false);
+                                }
+                            }
+                        }, 600);
+                    } else {
+                        if (downOrUp == 'down') {
+                            $('#listdata').html('');
+                            miniRefresh.endDownLoading(true);
+                        } else {
+                            miniRefresh.endUpLoading(true);
+                        }
+                    }
+                },
+                error: function () {
+                    if (downOrUp == 'down') {
+                        $('#listdata').html('');
+                        miniRefresh.endDownLoading(true);
+                    } else {
+                        miniRefresh.endUpLoading(true);
+                    }
+                }
+            });
+        };
+    });
+</script>
+<script>
+    (function (){
+        var tab = new fz.Scroll('.ui-tab', {
+            role: 'tab',
+            autoplay: true,
+            interval: 3000
+        });
+        /* 滑动开始前 */
+        tab.on('beforeScrollStart', function(fromIndex, toIndex) {
+            console.log(fromIndex,toIndex);// from 为当前页，to 为下一页
+        })
+    })();
+</script>
+</body>
+</html>
