@@ -67,12 +67,10 @@
             }
             console.log('1');
             $.ajax({
-//                url: '/home/index/coupons_list',// 请求网址
-                type: 'GET',
+                url: '/home/index/coupons_list',// 请求网址
+                type: 'post',
+                data:{ 'page':page,'class_id':$('#class_id').val() },
                 success: function (response) {
-                  console.log('2');
-
-                  console.log(response);
                     // 下面这段请根据自己的数据结构来处理
                     var arrLen = response.data.length;
 
@@ -82,15 +80,15 @@
                             html +=
                                     '<li class="ui-border-t">' +
                                     '<div class="ui-list-img">' +
-                                    '<span style="background-image:url(http://placeholder.qiniudn.com/170x170)"></span>' +
+                                    '<span style="background-image:url('+value.thumd+')"></span>' +
                                     '</div>' +
                                     '<div class="ui-list-info">' +
-                                    '<h4 class="ui-nowrap">大龙火锅(春熙路概念店)</h4>'+
-                                    '<p class="ui-nowrap">商户地址：成都市锦江区红星路四段25号附23号 2楼</p>'+
-                                    '<p class="ui-nowrap">商户电话：028-65773893</p>'+
-                                    '<p class="ui-nowrap sale"><span class="sale-info">5折</span><span class="sale-type">优惠券</span></p>'+
+                                    '<h4 class="ui-nowrap">'+value.name+'</h4>'+
+                                    '<p class="ui-nowrap">商户地址：'+value.store_address+'</p>'+
+                                    '<p class="ui-nowrap">商户电话：'+value.store_phone+'</p>'+
+                                    '<p class="ui-nowrap sale"><span class="sale-info">'+value.discount+'折</span><span class="sale-type">优惠券</span></p>'+
                                     '</div>'+
-                                    '<div class="btn">立即领取</div>'+
+                                    '<a href="javascript:add_coupons('+value.id+')"><div class="btn">立即领取</div></a>'+
                                     '</li>';
                         });
                             if (downOrUp == 'down') {
@@ -106,8 +104,6 @@
                                 }
                             }
                     } else {
-                      console.log('3');
-
                       if (downOrUp == 'down') {
                             $('#listdata').html('');
                             miniRefresh.endDownLoading(true);
@@ -117,8 +113,6 @@
                     }
                 },
                 error: function () {
-                  console.log('');
-
                   if (downOrUp == 'down') {
                         $('#listdata').html('');
                         miniRefresh.endDownLoading(true);
@@ -142,6 +136,19 @@
             console.log(fromIndex,toIndex);// from 为当前页，to 为下一页
         })
     })();
+    //领取优惠券
+    function add_coupons( id ){
+        alert(id);
+        $.ajax({
+            url:'/home/index/add_coupons_log',
+            type:'get',
+            dataType:'json',
+            data:{'id':id},
+            success:function( re ){
+                alert(re);
+            }
+        });
+    }
 </script>
 </body>
 </html>

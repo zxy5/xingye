@@ -26,11 +26,26 @@ class Index extends Base
     }
 
     /**
-     * 券列表
+     * 券列表分类
      */
     public function  coupons_list(){
         if( request()->isAjax() ){
-            echo 'asd';
+
+            $limit = 10;
+            $offset = (input('param.page') - 1) * $limit;
+
+            //优惠券列表
+            $list = Db::name('coupons')->field('id,name,discount,thumd,store_address,store_phone')
+                ->where('class_id','1')->limit($offset,$limit)->order('id desc')->select();
+            $class_info = Db::name('coupons_class')->field('class_id,class_thumd')->where('class_id',input('param.class_id'))->find();
+            //整理数据
+            foreach( $list as $k=>$v ){
+                   if( empty($v['thumd'])||$v['thumd']=='' ){
+                        $list[$k]['thumd'] = $class_info['class_thumd'];
+                   }
+            }
+            return json(array('data'=>$list));
+
         }else{
             //分类id
             $class_id = input('param.id');
