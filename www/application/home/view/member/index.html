@@ -14,8 +14,8 @@
 <footer class="ui-footer ui-footer-btn">
     <ul class="ui-tiled ui-border-t">
         <li data-href="index.html" class="ui-border-r "><a href="/home/index/index"><div class="circle"><i class="iconfont icon-shouye-xuanze1"></i></div><div class="">首页</div></a></li>
-        <li data-href="ui.html" class="ui-border-r "><a href="lottery.html"><div class="circle"><i class="iconfont icon-choujiang1"></i></div><div>抽奖</div></a></li>
-        <li data-href="ui.html" class="ui-border-r active"><a href="user.html"><div class="circle"><i class="iconfont icon-gerenzhongxin1"></i></div><div>个人中心</div></a></li>
+        <li data-href="ui.html" class="ui-border-r "><a href="/home/index/award"><div class="circle"><i class="iconfont icon-choujiang1"></i></div><div>抽奖</div></a></li>
+        <li data-href="ui.html" class="ui-border-r active"><a href="/home/member/index"><div class="circle"><i class="iconfont icon-gerenzhongxin1"></i></div><div>个人中心</div></a></li>
     </ul>
 </footer>
 <section id="banner" class="ui-placehold-img">
@@ -44,7 +44,7 @@
                                             <h4 class="ui-nowrap">{$v.name}</h4>
                                             <p class="ui-nowrap sale"><span class="sale-info">{$v.discount}折</span><span class="sale-type">优惠券</span></p>
                                         </div>
-                                        <a href=""><div class="btn">查看详情</div></a>
+                                        <a href="/home/member/coupons_detail/id/{$v.id}"><div class="btn">查看详情</div></a>
                                     </li>
                                     {/foreach}
                                 </ul>
@@ -53,7 +53,6 @@
                         <li>
                             <section class="ui-container">
                                 <ul class="ui-list ui-list-link ui-border-tb">
-                                    {if }
                                     {foreach $award_log as $award}
                                     <li class="ui-border-t">
                                         <div class="ui-list-img">
@@ -63,7 +62,7 @@
                                             <h4 class="ui-nowrap">{$award.name}</h4>
                                             <p class="ui-nowrap sale"><span class="sale-info">{$award.discount}折</span><span class="sale-type">优惠券</span></p>
                                         </div>
-                                        <a href=""><div class="btn">查看详情</div></a>
+                                        <a href="/home/member/coupons_detail/id/{$v.id}"><div class="btn">查看详情</div></a>
                                     </li>
                                     {/foreach}
                                 </ul>

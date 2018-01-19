@@ -1,0 +1,68 @@
+body{
+    background-color: #f4f4f4;
+}
+section{
+    padding: 3vw 0vw 3vw 2vw;
+}
+p{
+    font-size: 14px;
+}
+.header{
+    background-color: #ffffff;
+    position: relative;
+    border-bottom: 1px solid #d6d6d6;
+}
+.header .title{
+    color: #333333;
+    font-weight: bold;
+}
+.btn{
+    padding: 2vmin 3vmin;
+    border-radius: 0.03rem;
+    position: absolute;
+    font-size: 16px;
+    bottom: 22%;
+    right: 3%;
+    background-color: #ff9e05;
+    color: #ffffff;
+}
+.sale-info{
+    color: #f36708;
+    font-size: 20px;
+}
+.sale-type{
+    color: #f36708;
+    font-size: 14px;
+}
+.time-line{
+    color: #b3b3b3;
+    font-size: 12px;
+}
+.body{
+    background-color: #ffffff;
+    margin-top: 10px;
+    border-top: 1px solid #d6d6d6;
+    border-bottom: 1px solid #d6d6d6;
+}
+.body .dress{
+    color: #696969;
+}
+.body .phone{
+    color: #696969;
+}
+.footer{
+    min-height: 65vw;
+    background-color: #ffffff;
+    margin-top: 10px;
+    border-top: 1px solid #d6d6d6;
+}
+.footer .footer-title{
+    color: #999999;
+    padding: 1vw 0vw 10px 1vw;
+    border-bottom: 1px solid #d6d6d6;
+}
+.detail-info{
+    color: #999999;
+    padding: 10px 1vw 1vw 1vw;
+    font-size: 12px;
+}

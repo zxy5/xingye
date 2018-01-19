@@ -15,7 +15,8 @@ class Index extends Base
         //获取分类
         $type_list = Db::name('coupons_class')->where(array())->order('class_sort desc,class_id desc')->select();
         //获取推荐券
-        $list = Db::name('coupons')->field('id,name,discount,thumd,store_address,store_phone')->where('is_recommend','1')->select();
+        $list = Db::name('coupons')->field('id,name,discount,thumd,store_address,store_phone')
+                    ->where('is_recommend','1')->order('id desc')->select();
 
         $this->assign([
             'list'=>$list,
@@ -25,19 +26,20 @@ class Index extends Base
     }
 
     /**
-     * 线下门店优惠券
+     * 领取优惠券
      */
-    public function coupons(){
-        $list = Db::name('store_coupons')->field('*')->paginate();
-
+    public function add_coupons_log(){
+        $id = input('param.id');
+        if( !session('member_id') ){
+            return (json(msg(-1,'','请登录'))) ;
+        }
     }
 
     /**
      * 抽奖
      */
     public function award(){
-
-        return $this->fetch();
+        echo '抽奖页';
     }
 
     /**

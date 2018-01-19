@@ -12,8 +12,8 @@
 <body ontouchstart="">
 <footer class="ui-footer ui-footer-btn">
     <ul class="ui-tiled ui-border-t">
-        <li data-href="index.html" class="ui-border-r active "><a href="index.html"><div class="circle"><i class="iconfont icon-shouye-xuanze1"></i></div><div class="">首页</div></a></li>
-        <li data-href="ui.html" class="ui-border-r "><a href="lottery.html"><div class="circle"><i class="iconfont icon-choujiang1"></i></div><div>抽奖</div></a></li>
+        <li data-href="index.html" class="ui-border-r active "><a href="/home/index/index"><div class="circle"><i class="iconfont icon-shouye-xuanze1"></i></div><div class="">首页</div></a></li>
+        <li data-href="ui.html" class="ui-border-r "><a href="/home/index/award"><div class="circle"><i class="iconfont icon-choujiang1"></i></div><div>抽奖</div></a></li>
         <li data-href="ui.html" class="ui-border-r "><a href="/home/member/index"><div class="circle"><i class="iconfont icon-gerenzhongxin1"></i></div><div>个人中心</div></a></li>
     </ul>
 </footer>
@@ -39,7 +39,7 @@
                 <p class="ui-nowrap">商户电话：{$vo.store_phone}</p>
                 <p class="ui-nowrap sale"><span class="sale-info">{$vo.discount}折</span><span class="sale-type">优惠券</span></p>
             </div>
-            <a href=""><div class="btn">立即领取</div></a>
+            <a href="javascript:add_coupons({$vo.id})"><div class="btn">立即领取</div></a>
         </li>
         {/foreach}
     </ul>
@@ -58,6 +58,19 @@
       console.log(fromIndex,toIndex);// from 为当前页，to 为下一页
     })
   })();
+    //领取优惠券
+    function add_coupons( id ){
+        $.ajax({
+            url:'/home/index/add_coupons_log',
+            type:'get',
+            dataType:'json',
+            data:{'id':id},
+            success:function( re ){
+                console.log(re);
+            }
+        });
+    }
+
 </script>
 </body>
 </html>

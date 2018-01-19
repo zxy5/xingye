@@ -34,7 +34,7 @@ class Member extends Base
         $condition['a.member_id'] = $member_id;
         $condition['a.is_use'] = 0;
         $award_log = Db::name('award_log')
-                        ->alias('a')->field('a.*,b.name,b.id as a_id,b.thumd,b.discount')
+                        ->alias('a')->field('a.*,b.name,b.id as a_id,b.thumd,b.discount,b.type')
                         ->join('__AWARD__ b','a.award_id=b.id','LEFT')->where($condition)->paginate(20);
 
 
@@ -43,6 +43,20 @@ class Member extends Base
             'coup_list' => $coup_list,
             'member_info'=> $member_info
         ]);
+        return $this->fetch();
+    }
+
+    /**
+     * 优惠券详情
+     */
+    public function coupons_detail(){
+        $id = input('param.id');
+        $info = Db::name('coupons_log')->alias('a')
+                    ->field('a.*,b.name,b.id as c_id,b.thumd,b.store_phone,b.store_address,b.desc,b.discount,b.start_time,b.end_time')
+                    ->join('__COUPONS__ b','a.coupons_id=b.id','LEFT')
+                    ->where('a.id',$id)->find();
+        $this->assign('info',$info);
+
         return $this->fetch();
     }
 }
