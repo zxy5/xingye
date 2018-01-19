@@ -65,16 +65,14 @@
             } else {
                 page++;// 上拉加载递增页码
             }
-
+            console.log('1');
             $.ajax({
-                url: '/home/index/coupons_list',// 请求网址
+//                url: '/home/index/coupons_list',// 请求网址
                 type: 'GET',
-                data: {// 请求参数，一般会带上页码
-                    'page': page,
-                    't': new Date().getTime()// 防止GET请求缓存
-                },
                 success: function (response) {
-                    console.log(response);
+                  console.log('2');
+
+                  console.log(response);
                     // 下面这段请根据自己的数据结构来处理
                     var arrLen = response.data.length;
 
@@ -95,22 +93,22 @@
                                     '<div class="btn">立即领取</div>'+
                                     '</li>';
                         });
-                        setTimeout(function () { // 使用 setTimeout 函数是方便演示的，你可以不用 setTimeout 函数
                             if (downOrUp == 'down') {
                                 $('#listdata').html('');
                                 $('#listdata').append(html);// DOM 插入数据
                                 miniRefresh.endDownLoading(true);// 结束下拉刷新
                             } else {
                                 $('#listdata').append(html);
-                                if (response.last_page == page) {// 是否已取完数据页
+                                if (response.last_page && response.last_page == page) { // 是否已取完数据页
                                     miniRefresh.endUpLoading(true);// 结束上拉加载
                                 } else {
                                     miniRefresh.endUpLoading(false);
                                 }
                             }
-                        }, 600);
                     } else {
-                        if (downOrUp == 'down') {
+                      console.log('3');
+
+                      if (downOrUp == 'down') {
                             $('#listdata').html('');
                             miniRefresh.endDownLoading(true);
                         } else {
@@ -119,7 +117,9 @@
                     }
                 },
                 error: function () {
-                    if (downOrUp == 'down') {
+                  console.log('');
+
+                  if (downOrUp == 'down') {
                         $('#listdata').html('');
                         miniRefresh.endDownLoading(true);
                     } else {
