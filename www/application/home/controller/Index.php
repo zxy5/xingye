@@ -10,8 +10,7 @@ class Index extends Base
      * 首页
      * @return mixed
      */
-    public function index()
-    {
+    public function index(){
         //获取分类
         $type_list = Db::name('coupons_class')->where(array())->order('class_sort desc,class_id desc')->select();
         //获取推荐券
@@ -60,8 +59,33 @@ class Index extends Base
      */
     public function add_coupons_log(){
         $id = input('param.id');
-        if( !session('member_id') ){
-            return (json(msg(-1,'','请登录'))) ;
+        if( !is_numeric( $id ) ){
+            return json(msg(-1,'','数据错误！'));
+        }
+        session('member_id','1');
+        session('member_phone','15858282359');
+        //查看领取券中是否有未使用的该种券
+        $where = [
+            'member_id' => session('member_id'),
+            'coupons_id' => $id,
+            'is_validate' => 0
+        ];
+        $info = Db::name('coupons_log')->field('id')->where( $where )->find();
+        if( !empty($info) ){
+            return json(msg(-1,'','该券已领取！'));
+        }
+
+        $data = [
+            'member_id' => session('member_id'),
+            'member_phone' => session('member_phone'),
+            'add_time' => time(),
+            'coupons_id' => $id,
+        ];
+        $insert = Db::name('coupons_log')->insert($data);
+        if( $insert ){
+            return json(msg(1,'','领取成功！'));
+        }else{
+            return json(msg(-1,'','领取失败！'));
         }
     }
 

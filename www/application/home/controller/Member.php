@@ -27,7 +27,7 @@ class Member extends Base
         $where['a.is_validate'] = 0;
         $coup_list = Db::name('coupons_log')
                         ->alias('a')->field('a.*,b.name,b.id as c_id,b.thumd,b.discount')
-                        ->join('__COUPONS__ b','a.coupons_id=b.id','LEFT')->where($where)->paginate(20);
+                        ->join('__COUPONS__ b','a.coupons_id=b.id','LEFT')->where($where)->order('a.id desc')->paginate(10);
 
         //中奖记录
         $condition = array();
@@ -35,7 +35,7 @@ class Member extends Base
         $condition['a.is_use'] = 0;
         $award_log = Db::name('award_log')
                         ->alias('a')->field('a.*,b.name,b.id as a_id,b.thumd,b.discount,b.type')
-                        ->join('__AWARD__ b','a.award_id=b.id','LEFT')->where($condition)->paginate(20);
+                        ->join('__AWARD__ b','a.award_id=b.id','LEFT')->where($condition)->order('a.id desc')->paginate(10);
 
 
         $this->assign([

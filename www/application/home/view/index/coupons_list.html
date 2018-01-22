@@ -138,14 +138,18 @@
     })();
     //领取优惠券
     function add_coupons( id ){
-        alert(id);
         $.ajax({
             url:'/home/index/add_coupons_log',
             type:'get',
             dataType:'json',
             data:{'id':id},
             success:function( re ){
-                alert(re);
+                if( re.code != 1){
+                    alert(re.msg)
+                }else{
+                    alert(re.msg);
+                    window.location.href = '/home/member/index';
+                }
             }
         });
     }
