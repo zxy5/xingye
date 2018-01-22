@@ -17,33 +17,66 @@ class Member extends Base
      * 个人中心
      */
     public function index(){
-//        $member_id = session('member_id');
-        $member_id = 1;
+        $member_id = session('member_id');
         $member_info = Db::name('member')->where('id',$member_id)->find();
-
-        //领取记录
-        $where = array();
-        $where['a.member_id'] = $member_id;
-        $where['a.is_validate'] = 0;
-        $coup_list = Db::name('coupons_log')
-                        ->alias('a')->field('a.*,b.name,b.id as c_id,b.thumd,b.discount')
-                        ->join('__COUPONS__ b','a.coupons_id=b.id','LEFT')->where($where)->order('a.id desc')->paginate(10);
-
-        //中奖记录
-        $condition = array();
-        $condition['a.member_id'] = $member_id;
-        $condition['a.is_use'] = 0;
-        $award_log = Db::name('award_log')
-                        ->alias('a')->field('a.*,b.name,b.id as a_id,b.thumd,b.discount,b.type')
-                        ->join('__AWARD__ b','a.award_id=b.id','LEFT')->where($condition)->order('a.id desc')->paginate(10);
-
-
-        $this->assign([
-            'award_log' => $award_log,
-            'coup_list' => $coup_list,
-            'member_info'=> $member_info
-        ]);
+        $this->assign( 'member_info', $member_info );
         return $this->fetch();
+    }
+
+    /**
+     * 领取记录
+     */
+    public function get_coupons_log(){
+        if( request()->isAjax() ){
+
+            $limit = 10;
+            $offset = (input('param.page') - 1) * $limit;
+
+            //领取记录
+            $where = array();
+            $where['a.member_id'] = session('member_id');
+            $where['a.is_validate'] = 0;
+            $coup_list = Db::name('coupons_log')
+                ->alias('a')->field('a.*,b.name,b.id as c_id,b.thumd,b.discount,c.class_thumd')
+                ->join('__COUPONS__ b','a.coupons_id=b.id','LEFT')
+                ->join('__COUPONS_CLASS__ c','b.class_id=c.class_id','LEFT')
+                ->where($where)
+                ->limit($offset,$limit)->order('a.id desc')->select();
+
+            //整理数据
+            foreach( $coup_list as $k=>$v ){
+                if( empty($v['thumd'])||$v['thumd']=='' ){
+                    $coup_list[$k]['thumd'] = $v['class_thumd'];
+                }
+            }
+            return json(array('data'=>$coup_list));
+        }else{
+            return json(msg(-1,'','非法请求！'));
+        }
+    }
+
+    /**
+     * 获取中奖记录
+     */
+    public function get_award_log(){
+        if( request()->isAjax() ){
+            $limit = 10;
+            $offset = (input('param.page') - 1) * $limit;
+
+            //中奖记录
+            $condition = array();
+            $condition['a.member_id'] = session('member_id');
+            $condition['a.is_use'] = 0;
+            $award_log = Db::name('award_log')
+                ->alias('a')->field('a.*,b.name,b.id as a_id,b.thumd,b.discount,b.type')
+                ->join('__AWARD__ b','a.award_id=b.id','LEFT')
+                ->where($condition)
+                ->limit($offset,$limit)->order('a.id desc')->select();
+            return json(array('data'=>$award_log));
+
+        }else{
+            return json(msg(-1,'','非法请求！'));
+        }
     }
 
     /**

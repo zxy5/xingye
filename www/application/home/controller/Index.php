@@ -62,8 +62,6 @@ class Index extends Base
         if( !is_numeric( $id ) ){
             return json(msg(-1,'','数据错误！'));
         }
-        session('member_id','1');
-        session('member_phone','15858282359');
         //查看领取券中是否有未使用的该种券
         $where = [
             'member_id' => session('member_id'),

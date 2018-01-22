@@ -8,19 +8,18 @@
     <link rel="stylesheet" type="text/css" href="/static/home/icon-custom/iconfont.css">
     <link rel="stylesheet" href="/static/home/css/frozen.css">
     <link rel="stylesheet" href="/static/home/css/index.css">
+    <link rel="stylesheet" href="/static/home/css/minirefresh.min.css">
     <link rel="stylesheet" href="/static/home/css/user.css">
+    <style>
+        .minirefresh-wrap{
+            position: relative;
+        }
+    </style>
 </head>
 <body ontouchstart="">
-<footer class="ui-footer ui-footer-btn">
-    <ul class="ui-tiled ui-border-t">
-        <li data-href="index.html" class="ui-border-r "><a href="/home/index/index"><div class="circle"><i class="iconfont icon-shouye-xuanze1"></i></div><div class="">首页</div></a></li>
-        <li data-href="ui.html" class="ui-border-r "><a href="/home/index/award"><div class="circle"><i class="iconfont icon-choujiang1"></i></div><div>抽奖</div></a></li>
-        <li data-href="ui.html" class="ui-border-r active"><a href="/home/member/index"><div class="circle"><i class="iconfont icon-gerenzhongxin1"></i></div><div>个人中心</div></a></li>
-    </ul>
-</footer>
 <section id="banner" class="ui-placehold-img">
     <span style="background-image:url(/static/home/img/user.png);"></span>
-    <h3 id="phone">{$member_info.member_phone}</h3>
+    <h3 id="phone">189xxxxxxxx</h3>
 </section>
 <section class="ui-container">
     <section id="tab">
@@ -28,66 +27,117 @@
             <div class="demo-block">
                 <div class="ui-tab">
                     <ul class="ui-tab-nav ui-border-b">
-                        <li class="current">我的礼券</li>
-                        <li>我的奖品</li>
+                        <li class="current" id="liquan">我的礼券</li>
+                        <li id="jiangpin">我的奖品</li>
                     </ul>
-                    <ul class="ui-tab-content" style="width:300%">
-                        <li>
-                            <section class="ui-container">
-                                <ul class="ui-list ui-list-link ui-border-tb">
-                                    {foreach $coup_list as $v}
-                                    <li class="ui-border-t">
-                                        <div class="ui-list-img">
-                                            <span style="background-image:url({$v.thumd})"></span>
-                                        </div>
-                                        <div class="ui-list-info">
-                                            <h4 class="ui-nowrap">{$v.name}</h4>
-                                            <p class="ui-nowrap sale"><span class="sale-info">{$v.discount}折</span><span class="sale-type">优惠券</span></p>
-                                        </div>
-                                        <a href="/home/member/coupons_detail/id/{$v.id}"><div class="btn">查看详情</div></a>
-                                    </li>
-                                    {/foreach}
-                                </ul>
-                            </section>
-                        </li>
-                        <li>
-                            <section class="ui-container">
-                                <ul class="ui-list ui-list-link ui-border-tb">
-                                    {foreach $award_log as $award}
-                                    <li class="ui-border-t">
-                                        <div class="ui-list-img">
-                                            <span style="background-image:url({$award.thumd})"></span>
-                                        </div>
-                                        <div class="ui-list-info">
-                                            <h4 class="ui-nowrap">{$award.name}</h4>
-                                            <p class="ui-nowrap sale"><span class="sale-info">{$award.discount}折</span><span class="sale-type">优惠券</span></p>
-                                        </div>
-                                        <a href="/home/member/coupons_detail/id/{$v.id}"><div class="btn">查看详情</div></a>
-                                    </li>
-                                    {/foreach}
-                                </ul>
-                            </section>
-                        </li>
-                    </ul>
+                    <div class="minirefresh-scroll">
+                        <ul class="data-list ui-list ui-list-link ui-border-tb">
+                            <div class="content">
+                                <div id="minirefresh" class="minirefresh-wrap">
+                                    <div class="minirefresh-scroll">
+                                        <ul class="data-list ui-list ui-list-link ui-border-tb" id="listdata">
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </ul>
+                    </div>
                 </div>
             </div>
         </div>
     </section>
-</section>
+</section><!-- /.ui-container-->
 <script src="/static/home/lib/zepto.min.js"></script>
 <script src="/static/home/js/frozen.js"></script>
+<!-- 引入 jQuery 或 Zepto -->
+<!-- 引入 miniRefresh JS -->
+<script type="text/javascript" src="/static/home/js/minirefresh.min.js"></script>
 <script>
-    (function (){
-        var tab = new fz.Scroll('.ui-tab', {
-            role: 'tab',
-            autoplay: false,
-            interval: 3000
+    $(function () {
+
+        // 初始化页码
+        var page = 0;
+
+        // miniRefresh 对象
+        var miniRefresh = new MiniRefresh({
+            container: '#minirefresh',
+            down: {
+                //isLock: true,//是否禁用下拉刷新
+                callback: function () {
+                    doAjax('down');
+                }
+            },
+            up: {
+                isAuto: true,
+                callback: function () {
+                    doAjax('up');
+                }
+            }
         });
-        /* 滑动开始前 */
-        tab.on('beforeScrollStart', function(fromIndex, toIndex) {
-            console.log(fromIndex,toIndex);// from 为当前页，to 为下一页
-        })
-    })();
+
+        // 组装 ajax 分页函数。参数 downOrUp 判断是下拉刷新还是上拉加载。
+        // 特别提示：若你仅使用下拉刷新或上拉加载的其中一项，可不用组装 ajax 分页函数了，直接将 ajax 分页放在下拉刷新或上拉加载的回调 callback 里。
+        var doAjax = function (downOrUp) {
+            if (downOrUp == 'down') {
+                page = 1; // 下拉刷新页码设置
+            } else {
+                page++; // 上拉加载递增页码
+            }
+
+            $.ajax({
+                url: 'listdata' + page + '.json', // 请求网址
+                type: 'GET',
+                success: function (response) {
+                    // 下面这段请根据自己的数据结构来处理
+                    var arrLen = response.data.length;
+
+                    if (arrLen > 0) {
+                        var html = '';
+                        $.each(response.data, function (key, value) {
+                            html +=
+                                    '<li class="ui-border-t">'+
+                                    '<div class="ui-list-img">'+
+                                    '<span style="background-image:url(http://placeholder.qiniudn.com/170x170)"></span>'+
+                                    '</div>'+
+                                    '<div class="ui-list-info">'+
+                                    '<h4 class="ui-nowrap">大龙火锅(春熙路概念店)</h4>'+
+                                    '<p class="ui-nowrap sale"><span class="sale-info">5折</span><span class="sale-type">优惠券</span></p>'+
+                                    '</div>'+
+                                    '<a href=""><div class="btn">查看详情</div></a>'+
+                                    '</li>';
+                        });
+                        if (downOrUp == 'down') {
+                            $('#listdata').html('');
+                            $('#listdata').append(html); // DOM 插入数据
+                            miniRefresh.endDownLoading(true); // 结束下拉刷新
+                        } else {
+                            $('#listdata').append(html);
+                            if (response.last_page == page) { // 是否已取完数据页
+                                miniRefresh.endUpLoading(true); // 结束上拉加载
+                            } else {
+                                miniRefresh.endUpLoading(false);
+                            }
+                        }
+                    } else {
+                        if (downOrUp == 'down') {
+                            $('#listdata').html('');
+                            miniRefresh.endDownLoading(true);
+                        } else {
+                            miniRefresh.endUpLoading(true);
+                        }
+                    }
+                },
+                error: function () {
+                    if (downOrUp == 'down') {
+                        $('#listdata').html('');
+                        miniRefresh.endDownLoading(true);
+                    } else {
+                        miniRefresh.endUpLoading(true);
+                    }
+                }
+            });
+        };
+    });
 </script>
 </body>
 </html>
