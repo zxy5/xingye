@@ -81,11 +81,11 @@
         var $current = $(e.target);
         var id = $current.attr('id');
         if(id === 'liquan'){
-          url = '/home/member/get_coupons_log'
-          doAjax();
+          url = '/home/member/get_coupons_log';
+          doAjax('down');
         }else if(id === 'jiangpin'){
-          url = '/home/member/get_award_log'
-          doAjax();
+          url = '/home/member/get_award_log';
+          doAjax('down');
         }
         $('#liquan').removeClass('current');
         $('#jiangpin').removeClass('current');
@@ -111,7 +111,6 @@
                   console.log('response--->',response)
                     // 下面这段请根据自己的数据结构来处理
                     var arrLen = response.data.length;
-
                     if (arrLen > 0) {
                         var html = '';
                         $.each(response.data, function (key, value) {
