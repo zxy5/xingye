@@ -19,7 +19,7 @@
 <body ontouchstart="">
 <section id="banner" class="ui-placehold-img">
     <span style="background-image:url(/static/home/img/user.png);"></span>
-    <h3 id="phone">189xxxxxxxx</h3>
+    <h3 id="phone">{$member_info.member_phone}</h3>
 </section>
 <section class="ui-container">
     <section id="tab">
@@ -27,8 +27,8 @@
             <div class="demo-block">
                 <div class="ui-tab">
                     <ul class="ui-tab-nav ui-border-b">
-                        <li class="current" id="liquan">我的礼券</li>
-                        <li id="jiangpin">我的奖品</li>
+                        <li id= "liquan" class="tabs">我的礼券</li>
+                        <li id= "jiangpin" class="tabs">我的奖品</li>
                     </ul>
                     <div class="minirefresh-scroll">
                         <ul class="data-list ui-list ui-list-link ui-border-tb">
@@ -54,9 +54,9 @@
 <script type="text/javascript" src="/static/home/js/minirefresh.min.js"></script>
 <script>
     $(function () {
-
         // 初始化页码
-        var page = 0;
+        var page = 0,
+            url = '/home/member/get_coupons_log';
 
         // miniRefresh 对象
         var miniRefresh = new MiniRefresh({
@@ -75,19 +75,40 @@
             }
         });
 
+      //添加事件
+      $('.tabs').eq(0).addClass('current');
+      $('.tabs').click(function(e){
+        var $current = $(e.target);
+        var id = $current.attr('id');
+        if(id === 'liquan'){
+          url = '/home/member/get_coupons_log'
+          doAjax();
+        }else if(id === 'jiangpin'){
+          url = '/home/member/get_award_log'
+          doAjax();
+        }
+        $('#liquan').removeClass('current');
+        $('#jiangpin').removeClass('current');
+        $current.addClass('current');
+      })
+
         // 组装 ajax 分页函数。参数 downOrUp 判断是下拉刷新还是上拉加载。
         // 特别提示：若你仅使用下拉刷新或上拉加载的其中一项，可不用组装 ajax 分页函数了，直接将 ajax 分页放在下拉刷新或上拉加载的回调 callback 里。
         var doAjax = function (downOrUp) {
-            if (downOrUp == 'down') {
+          console.log('url---->',url)
+          if (downOrUp == 'down') {
                 page = 1; // 下拉刷新页码设置
             } else {
                 page++; // 上拉加载递增页码
             }
-
             $.ajax({
-                url: 'listdata' + page + '.json', // 请求网址
-                type: 'GET',
+                url: url, // 请求网址
+                type: 'post',
+                data: {
+                  page: page
+                },
                 success: function (response) {
+                  console.log('response--->',response)
                     // 下面这段请根据自己的数据结构来处理
                     var arrLen = response.data.length;
 
@@ -96,14 +117,14 @@
                         $.each(response.data, function (key, value) {
                             html +=
                                     '<li class="ui-border-t">'+
-                                    '<div class="ui-list-img">'+
-                                    '<span style="background-image:url(http://placeholder.qiniudn.com/170x170)"></span>'+
-                                    '</div>'+
-                                    '<div class="ui-list-info">'+
-                                    '<h4 class="ui-nowrap">大龙火锅(春熙路概念店)</h4>'+
-                                    '<p class="ui-nowrap sale"><span class="sale-info">5折</span><span class="sale-type">优惠券</span></p>'+
-                                    '</div>'+
-                                    '<a href=""><div class="btn">查看详情</div></a>'+
+                                        '<div class="ui-list-img">'+
+                                            '<span style="background-image:url(http://placeholder.qiniudn.com/170x170)"></span>'+
+                                        '</div>'+
+                                        '<div class="ui-list-info">'+
+                                            '<h4 class="ui-nowrap">大龙火锅(春熙路概念店)</h4>'+
+                                        '<p class="ui-nowrap sale"><span class="sale-info">5折</span><span class="sale-type">优惠券</span></p>'+
+                                        '</div>'+
+                                        '<a href=""><div class="btn">查看详情</div></a>'+
                                     '</li>';
                         });
                         if (downOrUp == 'down') {
