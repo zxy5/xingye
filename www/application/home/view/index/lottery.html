@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no">
+    <meta name="format-detection" content="telephone=no">
+    <title>线下场景宝-抽奖</title>
+    <link rel="stylesheet" type="text/css" href="icon-custom/iconfont.css">
+    <link rel="stylesheet" href="/static/home/css/frozen.css">
+    <link rel="stylesheet" href="/static/home/css/index.css">
+    <link rel="stylesheet" href="/static/home/css/app.css">
+</head>
+<body ontouchstart="">
+<footer class="ui-footer ui-footer-btn">
+    <ul class="ui-tiled ui-border-t">
+        <li data-href="index.html" class="ui-border-r "><a href="index.html"><div class="circle"><i class="iconfont icon-shouye-xuanze1"></i></div><div class="">首页</div></a></li>
+        <li data-href="ui.html" class="ui-border-r active"><a href="lottery.html"><div class="circle"><i class="iconfont icon-choujiang1"></i></div><div>抽奖</div></a></li>
+        <li data-href="ui.html" class="ui-border-r "><a href="user.html"><div class="circle"><i class="iconfont icon-gerenzhongxin1"></i></div><div>个人中心</div></a></li>
+    </ul>
+</footer>
+<div class="lottery-layout">
+    <!-- lotterylist -->
+    <div id="lottery-list" class="lottery-list">
+        <div class="mask"></div>
+        <div class="mask"></div>
+        <dl class="lottery-cardlist" id="lottery-cardlist">
+            <dd></dd>
+            <dd>1</dd>
+            <dd>2</dd>
+            <dd></dd>
+            <dd></dd>
+        </dl>
+    </div>
+    <div class="lottery-run button blue" id="run">立即抽奖</div>
+</div>
+<script src="/static/home/lib/zepto.min.js"></script>
+<script src="/static/home/js/lottery.js"></script>
+<script >
+window.onload = function(){
+  document.getElementById('run').onclick = function() {
+  		//调用ajax记得加lock,防止多次点击
+  		$.ajax({
+            url: 'listdata1.json',
+            type: 'GET',
+            success: function (response) {
+                console.log(response);
+            },
+            error: function () {
+                console.error('出错!');
+            }
+          });
+  		/*
+  		 * total:转几圈   number
+  		 * ms:动画速度毫秒 number
+  		 * time:抽奖机会  number
+  		 * award:中的啥奖 number
+  		 */
+  		var _lot = new lottery({ "total": 3, "ms": 500, "time": 1, "award": 1 });
+  		_lot.run();
+  	}
+}
+</script>
+</body>
+</html>
