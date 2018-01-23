@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no">
+    <meta name="format-detection" content="telephone=no">
+    <title>线下场景宝-详情</title>
+    <link rel="stylesheet" type="text/css" href="/static/home/icon-custom/iconfont.css">
+    <link rel="stylesheet" href="/static/home/css/frozen.css">
+    <link rel="stylesheet" href="/static/home/css/index.css">
+    <link rel="stylesheet" href="/static/home/css/detail.css">
+</head>
+<body ontouchstart="">
+<footer class="ui-footer ui-footer-btn">
+    <ul class="ui-tiled ui-border-t">
+        <li data-href="index.html" class="ui-border-r"><a href="/home/index/index"><div class="circle"><i class="iconfont icon-shouye-xuanze1"></i></div><div class="">首页</div></a></li>
+        <li data-href="ui.html" class="ui-border-r "><a href="/home/index/award"><div class="circle"><i class="iconfont icon-choujiang1"></i></div><div>抽奖</div></a></li>
+        <li data-href="ui.html" class="ui-border-r active"><a href="/home/member/index"><div class="circle"><i class="iconfont icon-gerenzhongxin1"></i></div><div>个人中心</div></a></li>
+    </ul>
+</footer>
+<section id="banner" class="ui-placehold-img">
+    <span style="background-image:url({$info.thumd});"></span>
+</section>
+<section class="header">
+    <h3 class="title">{$info.name}</h3>
+    <p class=""><span class="sale-info">{$info.discount}折</span><span class="sale-type">优惠券</span><span class="time-line">有效时间: {$info.start_time|date="Y年m月d日",###}-{$info.end_time|date="Y年m月d日",###}</span></p>
+    <a href=""><div class="btn">立即使用</div></a>
+</section>
+<section class="body">
+    <p class="dress">商户地址：{$info.store_address}</p>
+    <p class="phone">商户电话：{$info.store_phone}</p>
+</section>
+<section class="footer">
+    <h4 class="footer-title">使用规则</h4>
+    <p class="detail-info">
+        {$info.desc}
+    </p>
+</section>
+<script src="/static/home/lib/zepto.min.js"></script>
+<script src="/static/home/js/frozen.js"></script>
+<script>
+    (function (){
+        var tab = new fz.Scroll('.ui-tab', {
+            role: 'tab',
+            autoplay: true,
+            interval: 3000
+        });
+        /* 滑动开始前 */
+        tab.on('beforeScrollStart', function(fromIndex, toIndex) {
+            console.log(fromIndex,toIndex);// from 为当前页，to 为下一页
+        })
+    })();
+</script>
+</body>
+</html>

@@ -97,4 +97,18 @@ class Member extends Base
 
         return $this->fetch();
     }
+
+    /**
+     * 奖品详情
+     */
+    public function award_detail(){
+        $id = input('param.id');
+        $info = Db::name('award_log')->alias('a')
+            ->field('a.*,b.name,b.id as c_id,b.thumd,b.store_phone,b.store_address,b.desc,b.discount,b.start_time,b.end_time')
+            ->join('__AWARD__ b','a.award_id=b.id','LEFT')
+            ->where('a.id',$id)->find();
+
+        $this->assign('info',$info);
+        return $this->fetch();
+    }
 }
