@@ -92,14 +92,39 @@ class Index extends Base
      * 抽奖
      */
     public function award(){
-        echo '抽奖页';
+       return $this->fetch();
     }
 
     /**
      * 计算中奖——奖品
      */
     public function lottery(){
+        $arr = array(0,0,0,0,0,0,0,0,0,0);
+        //产生随机数
+        $rand_num = rand(1,10000);
+        //整理奖品中奖区间
+        $list = Db::name('award')->field('id,name,chance')->select();
+        $sum = 0;
+        foreach( $list as $k=>$v ){
+            if( $v['chance']!=0 ){
 
+            }
+        }
+
+
+        echo '<pre /> ';
+        print_r($list);
     }
 
 }
+
+
+
+
+
+
+
+
+
+
+
