@@ -57,7 +57,7 @@
         // 初始化页码
         var page = 0,
             url = '/home/member/get_coupons_log';
-
+            detail_url = '/home/member/coupons_detail';
         // miniRefresh 对象
         var miniRefresh = new MiniRefresh({
             container: '#minirefresh',
@@ -82,9 +82,11 @@
         var id = $current.attr('id');
         if(id === 'liquan'){
           url = '/home/member/get_coupons_log';
+          detail_url = '/home/member/coupons_detail';
           doAjax('down');
         }else if(id === 'jiangpin'){
           url = '/home/member/get_award_log';
+          detail_url = '/home/member/award_detail';
           doAjax('down');
         }
         $('#liquan').removeClass('current');
@@ -95,7 +97,6 @@
         // 组装 ajax 分页函数。参数 downOrUp 判断是下拉刷新还是上拉加载。
         // 特别提示：若你仅使用下拉刷新或上拉加载的其中一项，可不用组装 ajax 分页函数了，直接将 ajax 分页放在下拉刷新或上拉加载的回调 callback 里。
         var doAjax = function (downOrUp) {
-          console.log('url---->',url)
           if (downOrUp == 'down') {
                 page = 1; // 下拉刷新页码设置
             } else {
@@ -108,7 +109,6 @@
                   page: page
                 },
                 success: function (response) {
-                  console.log('response--->',response)
                     // 下面这段请根据自己的数据结构来处理
                     var arrLen = response.data.length;
                     if (arrLen > 0) {
@@ -117,13 +117,13 @@
                             html +=
                                     '<li class="ui-border-t">'+
                                         '<div class="ui-list-img">'+
-                                            '<span style="background-image:url(http://placeholder.qiniudn.com/170x170)"></span>'+
+                                            '<span style="background-image:url('+value.thumd+')"></span>'+
                                         '</div>'+
                                         '<div class="ui-list-info">'+
-                                            '<h4 class="ui-nowrap">大龙火锅(春熙路概念店)</h4>'+
-                                        '<p class="ui-nowrap sale"><span class="sale-info">5折</span><span class="sale-type">优惠券</span></p>'+
+                                            '<h4 class="ui-nowrap">'+value.name+'</h4>'+
+                                        '<p class="ui-nowrap sale"><span class="sale-info">'+value.discount+'折</span><span class="sale-type">优惠券</span></p>'+
                                         '</div>'+
-                                        '<a href=""><div class="btn">查看详情</div></a>'+
+                                        '<a href="'+detail_url+'/id/'+value.id+'"><div class="btn">查看详情</div></a>'+
                                     '</li>';
                         });
                         if (downOrUp == 'down') {

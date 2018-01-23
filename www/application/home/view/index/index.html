@@ -31,7 +31,11 @@
         {foreach $list as $vo }
         <li class="ui-border-t">
             <div class="ui-list-img">
+                {if !empty($vo['thumd'])}
                 <span style="background-image:url({$vo.thumd})"></span>
+                {else/}
+                <span style="background-image:url({$vo.class_thumd})"></span>
+                {/if}
             </div>
             <div class="ui-list-info">
                 <h4 class="ui-nowrap">{$vo.name}</h4>
