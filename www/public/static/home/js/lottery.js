@@ -252,8 +252,6 @@ var lottery = function () {
         that.animate = "linear";
         that.ms = that.remember;
       }
-      console.log(this.animate);
-      console.log(this.ms);
       move(cardlist, { "top": -this.lotteryListHeight + 260 }, this.ms, this.animate, callback);
 
       function callback() {
