@@ -56,12 +56,12 @@ dl,dd{
 	
 	/* Specifying a version with gradients according to */
 	
-	background-image:	url('button_bg.png'), url('button_bg.png'),
+	background-image:	url('../img/button_bg.png'), url('../img/button_bg.png'),
 						-moz-radial-gradient(	center bottom, circle,
 												rgba(89,208,244,1) 0,rgba(89,208,244,0) 100px),
 						-moz-linear-gradient(#4fbbf7, #3faeeb);
 
-	background-image:	url('button_bg.png'), url('button_bg.png'),
+	background-image:	url('../img/button_bg.png'), url('../img/button_bg.png'),
 						-webkit-gradient(	radial, 50% 100%, 0, 50% 100%, 100,
 											from(rgba(89,208,244,1)), to(rgba(89,208,244,0))),
 						-webkit-gradient(linear, 0% 0%, 0% 100%, from(#4fbbf7), to(#3faeeb));
@@ -69,12 +69,12 @@ dl,dd{
 
 .blue.button:hover{
 	
-	background-image:	url('button_bg.png'), url('button_bg.png'),
+	background-image:	url('../img/button_bg.png'), url('../img/button_bg.png'),
 						-moz-radial-gradient(	center bottom, circle,
 												rgba(109,217,250,1) 0,rgba(109,217,250,0) 100px),
 						-moz-linear-gradient(#63c7fe, #58bef7);
 						
-	background-image:	url('button_bg.png'), url('button_bg.png'),
+	background-image:	url('../img/button_bg.png'), url('../img/button_bg.png'),
 						-webkit-gradient(	radial, 50% 100%, 0, 50% 100%, 100,
 											from(rgba(109,217,250,1)), to(rgba(109,217,250,0))),
 						-webkit-gradient(linear, 0% 0%, 0% 100%, from(#63c7fe), to(#58bef7));
