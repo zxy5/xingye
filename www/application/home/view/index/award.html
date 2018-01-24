@@ -40,10 +40,11 @@ window.onload = function(){
   document.getElementById('run').onclick = function() {
   		//调用ajax记得加lock,防止多次点击
   		$.ajax({
-            url: 'listdata1.json',
-            type: 'GET',
+            url: '/home/index/lottery',
+            type: 'post',
+            dataType:'json',
             success: function (response) {
-                console.log(response);
+               alert(response.msg)
             },
             error: function () {
                 console.error('出错!');

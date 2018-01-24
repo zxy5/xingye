@@ -92,28 +92,76 @@ class Index extends Base
      * 抽奖
      */
     public function award(){
-       return $this->fetch();
+        $list = Db::name('award')->field('id,name,chance,num,thumd')->order('sort desc')->select();
+        $this->assign('list',$list);
+        return $this->fetch();
     }
 
     /**
      * 计算中奖——奖品
      */
     public function lottery(){
-        $arr = array(0,0,0,0,0,0,0,0,0,0);
-        //产生随机数
-        $rand_num = rand(1,10000);
-        //整理奖品中奖区间
-        $list = Db::name('award')->field('id,name,chance')->select();
-        $sum = 0;
-        foreach( $list as $k=>$v ){
-            if( $v['chance']!=0 ){
-
+        //判断是否能够抽奖
+        $record = Db::name('award_record')->where('member_id',session('member_id'))->order('add_time desc')->find();
+        if( !empty($record) ){
+            $week = date('W',$record['add_time']);
+            $now = date('W',time());
+            if( $now==$week ){
+                return json(msg('-1','','你本周已抽过奖啦，下周再来吧！'));
             }
         }
+        //记录抽奖时间
+        Db::name('award_record')->insert(['add_time'=>time(),'member_id'=>session('member_id')]);
+        //产生随机数
+        $rand_num = rand(1,10000);
+        $list = Db::name('award')->field('id,name,chance,num')->select();
+        $sum = 0;
+        $jp_key = -1;
+        foreach( $list as $k=>$v ){
+            if( $v['chance']!=0 ){
+                $max = $sum + $v['chance'];
+                if( $rand_num > $sum && $rand_num <= $max ){
+                    $jp_key = $k;
+                    break;
+                }
+                $sum += $v['chance'];
+            }
+        }
+        if( $jp_key == -1 ){
+            return json(msg('-1','','运气欠佳！'));
+        }
+        $award = $list[$jp_key];
 
+        if( $award['num']<1 ){
+            return json(msg('-1','','奖品已领完！'));
+        }
+        $where = [
+            'member_id'=>session('member_id'),
+            'award_id'=>$award['id'],
+            'is_validate'=>0
+        ];
+        $has = Db::name('award_log')->where($where)->find();
+        if( !empty($has) ){
+            return json(msg('-1','','你已中过该奖！'));
+        }
+        $data = [
+            'member_id'=>session('member_id'),
+            'member_phone'=>session('member_phone'),
+            'award_id'=>$award['id'],
+            'add_time'=>time()
+        ];
 
-        echo '<pre /> ';
-        print_r($list);
+        Db::startTrans();
+        try{
+            $in = Db::name('award_log')->insert($data);
+            $re = Db::name('award')->where('id',$award['id'])->setDec('num',1);
+        }catch (\Exception $e) {
+           Db::rollback();
+        }
+        if( empty($in) || empty($re) ){
+            return json(msg('-1','','系统错误！'));
+        }
+        return json(msg('1',$award,'恭喜你中奖了！'));
     }
 
 }

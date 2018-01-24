@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50553
 File Encoding         : 65001
 
-Date: 2018-01-19 13:55:33
+Date: 2018-01-24 11:23:14
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -35,7 +35,7 @@ CREATE TABLE `sd_admin` (
 -- ----------------------------
 -- Records of sd_admin
 -- ----------------------------
-INSERT INTO `sd_admin` VALUES ('1', 'admin', '21232f297a57a5a743894a0e4a801fc3', '93', '127.0.0.1', '1516340620', 'admin', '1', '1');
+INSERT INTO `sd_admin` VALUES ('1', 'admin', '21232f297a57a5a743894a0e4a801fc3', '95', '127.0.0.1', '1516691148', 'admin', '1', '1');
 INSERT INTO `sd_admin` VALUES ('3', 'user', 'e10adc3949ba59abbe56e057f20f883e', '1', '127.0.0.1', '1515480964', 'user', '1', '2');
 
 -- ----------------------------
@@ -75,7 +75,7 @@ CREATE TABLE `sd_award` (
   `add_time` int(10) NOT NULL DEFAULT '0' COMMENT '添加时间',
   `update_time` int(10) NOT NULL DEFAULT '0' COMMENT '更新时间',
   `user_id` int(10) NOT NULL DEFAULT '0' COMMENT '添加人',
-  `order` int(10) NOT NULL DEFAULT '0' COMMENT '排序',
+  `sort` int(10) NOT NULL DEFAULT '0' COMMENT '排序',
   `store_address` varchar(150) NOT NULL DEFAULT '' COMMENT '门店地址',
   `store_phone` varchar(15) NOT NULL DEFAULT '' COMMENT '门店联系电话',
   `discount` float(10,2) NOT NULL DEFAULT '0.00' COMMENT '门店折扣',
@@ -88,11 +88,11 @@ CREATE TABLE `sd_award` (
 -- ----------------------------
 -- Records of sd_award
 -- ----------------------------
-INSERT INTO `sd_award` VALUES ('1', '奖品1', '/upload/award/20171214/aca817bf638f9d797adaeadfdf737225.png', '1', '1000', '10000', '奖品1奖品1', '123', '', '1513228392', '1513228392', '1', '0', '', '', '0.00', '', '', '0');
-INSERT INTO `sd_award` VALUES ('2', '奖品2', '/upload/award/20171214/34b80507ab3424672052d969c21fafeb.png', '1', '1000', '10000', '奖品2奖品2', '122', '', '1513229524', '1513229524', '1', '0', '', '', '0.00', '', '', '0');
-INSERT INTO `sd_award` VALUES ('3', '奖品3', '/upload/award/20171214/cfdd03764a26e2113400a9d07fd5cb3e.png', '1', '1000', '10000', '奖品3奖品3', '121', '', '1513229614', '1513236814', '1', '0', '', '', '0.00', '', '', '0');
-INSERT INTO `sd_award` VALUES ('4', '百度外卖', '/upload/award/20171214/bde9426fabee64a992f2dde18922038d.png', '1', '0', '10000', '百度外卖百度外卖2', '123', '', '1513237054', '1516086805', '1', '0', '', '', '9.50', '15828230590', '99126d62b5ffb73fc89f9ae5f0ce60ae', '0');
-INSERT INTO `sd_award` VALUES ('5', '大龙火锅(春熙路概念店)', '/upload/award/20180116/9321255c83d687098d2aec6226c27b4b.png', '1', '1000', '10000', '大龙火锅(春熙路概念店)大龙火锅(春熙路概念店)', '0', '', '1516086943', '1516086943', '1', '0', '成都市锦江区红星路四段25号附23号 2楼', '028-65773893', '7.50', '15828230599', 'e993e6e2937199578bbe79883ba2c30e', '0');
+INSERT INTO `sd_award` VALUES ('1', '奖品1', '/upload/award/20171214/aca817bf638f9d797adaeadfdf737225.png', '1', '1000', '100', '奖品1奖品1', '123', '', '1513228392', '1513228392', '1', '0', '', '', '0.00', '', '', '0');
+INSERT INTO `sd_award` VALUES ('2', '奖品2', '/upload/award/20171214/34b80507ab3424672052d969c21fafeb.png', '1', '1000', '100', '奖品2奖品2', '122', '', '1513229524', '1513229524', '1', '0', '', '', '0.00', '', '', '0');
+INSERT INTO `sd_award` VALUES ('3', '奖品3', '/upload/award/20171214/cfdd03764a26e2113400a9d07fd5cb3e.png', '1', '1000', '100', '奖品3奖品3', '121', '', '1513229614', '1513236814', '1', '0', '', '', '0.00', '', '', '0');
+INSERT INTO `sd_award` VALUES ('4', '百度外卖', '/upload/award/20171214/bde9426fabee64a992f2dde18922038d.png', '1', '0', '100', '百度外卖百度外卖2', '123', '', '1513237054', '1516086805', '1', '0', '', '', '9.50', '15828230590', '99126d62b5ffb73fc89f9ae5f0ce60ae', '0');
+INSERT INTO `sd_award` VALUES ('5', '大龙火锅(春熙路概念店)', '/upload/award/20180116/9321255c83d687098d2aec6226c27b4b.png', '1', '1000', '100', '大龙火锅(春熙路概念店)大龙火锅(春熙路概念店)', '0', '', '1516086943', '1516086943', '1', '0', '成都市锦江区红星路四段25号附23号 2楼', '028-65773893', '7.50', '15828230599', 'e993e6e2937199578bbe79883ba2c30e', '0');
 
 -- ----------------------------
 -- Table structure for sd_award_log
@@ -108,11 +108,28 @@ CREATE TABLE `sd_award_log` (
   `mobile` varchar(15) NOT NULL DEFAULT '' COMMENT '实物奖品中奖者电话',
   `address` varchar(255) NOT NULL DEFAULT '' COMMENT '实物奖品中奖者地址',
   `is_use` tinyint(1) NOT NULL DEFAULT '0' COMMENT '是否使用或兑换',
+  `code_str` varchar(10) NOT NULL DEFAULT '' COMMENT '随机码',
+  `is_validate` tinyint(1) NOT NULL DEFAULT '0' COMMENT '是否验证',
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of sd_award_log
+-- ----------------------------
+
+-- ----------------------------
+-- Table structure for sd_award_record
+-- ----------------------------
+DROP TABLE IF EXISTS `sd_award_record`;
+CREATE TABLE `sd_award_record` (
+  `id` int(10) NOT NULL AUTO_INCREMENT,
+  `add_time` int(10) NOT NULL DEFAULT '0' COMMENT '添加时间',
+  `member_id` int(10) NOT NULL DEFAULT '0' COMMENT '用户id',
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of sd_award_record
 -- ----------------------------
 
 -- ----------------------------
@@ -145,7 +162,7 @@ CREATE TABLE `sd_coupons` (
 -- ----------------------------
 INSERT INTO `sd_coupons` VALUES ('1', '小龙坎7折', '1、客户凭优惠劵到店消费享受5折优惠，最高满400元立减200元每人每劵限消费一桌，单日优惠封顶200元，超出部分按原价支付。<br/><br/>\n\n 2、优惠劵使用仅限客户到店堂食，不予外卖或打包使用；店内特价菜、套餐、酒水软饮、火锅类锅底不做优惠范以内。<br/><br/>\n\n3、客户需使用邮储银行借记卡、信用卡、银联二维码支付消费的可享消费优惠。', '/upload/coupons/20180105/ec4bd274859b593d6c6158a9c9010904.png', '8.50', '环球中心N5', '028-65773893', '1515081600', '1517328000', '1515122271', '1', '1', '1', '0', '15828230592', 'e4d2e89649c43574102b2c14ddc4c5e9', '0');
 INSERT INTO `sd_coupons` VALUES ('2', '大龙火锅(春熙路概念店)', '大龙火锅(春熙路概念店)大龙火锅(春熙路概念店)', '/upload/coupons/20180115/069d6c38caf1acb40c6686621075a744.png', '5.00', '成都市锦江区红星路四段25号附23号 2楼', '028-65773893', '1515945600', '1517328000', '1516004448', '1', '1', '1', '1', '15828230599', 'e993e6e2937199578bbe79883ba2c30e', '0');
-INSERT INTO `sd_coupons` VALUES ('3', '贺氏洪七公吃串串（总府店）', '贺氏洪七公吃串串（总府店）贺氏洪七公吃串串（总府店）', '/upload/coupons/20180115/e10b5103f1f832ce8f79ac9db90f9066.png', '7.50', '成都市锦江区三倒拐街25号', '028-86934866', '1515945600', '1519747200', '1516004721', '1', '1', '1', '1', '15828230590', '99126d62b5ffb73fc89f9ae5f0ce60ae', '0');
+INSERT INTO `sd_coupons` VALUES ('3', '贺氏洪七公吃串串（总府店）', '贺氏洪七公吃串串（总府店）贺氏洪七公吃串串（总府店）', '', '7.50', '成都市锦江区三倒拐街25号', '028-86934866', '1515945600', '1519747200', '1516004721', '1', '1', '1', '1', '15828230590', '99126d62b5ffb73fc89f9ae5f0ce60ae', '0');
 INSERT INTO `sd_coupons` VALUES ('4', '大龙火锅(春熙路概念店)', '大龙火锅(春熙路概念店)大龙火锅(春熙路概念店)大龙火锅(春熙路概念店)', '/upload/coupons/20180115/09b02406c6c5a212b0291356663206c0.png', '9.85', '成都市锦江区红星路四段25号附23号 2楼', '028-65773893', '1515945600', '1517328000', '1516004858', '1', '1', '1', '1', '15828230593', 'e829d8f1fe0e647a1183970a71ae093a', '0');
 
 -- ----------------------------
@@ -182,12 +199,14 @@ CREATE TABLE `sd_coupons_log` (
   `code_str` varchar(10) NOT NULL DEFAULT '' COMMENT '随机码',
   `is_validate` tinyint(1) NOT NULL DEFAULT '0' COMMENT '是否验证',
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of sd_coupons_log
 -- ----------------------------
-INSERT INTO `sd_coupons_log` VALUES ('1', '1', '15828230592', '0', '1', '0', '', '0');
+INSERT INTO `sd_coupons_log` VALUES ('1', '1', '15858282359', '0', '1', '0', '', '0');
+INSERT INTO `sd_coupons_log` VALUES ('2', '1', '15858282359', '1516601809', '4', '0', '', '0');
+INSERT INTO `sd_coupons_log` VALUES ('3', '1', '15858282359', '1516602132', '3', '0', '', '0');
 
 -- ----------------------------
 -- Table structure for sd_member
