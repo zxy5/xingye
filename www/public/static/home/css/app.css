@@ -20,11 +20,11 @@ dl,dd{
 	-moz-border-radius:8px;
 	-webkit-border-radius:8px;
 	border-radius:8px;
-	
+
 	-moz-box-shadow:0 0 1px #fff inset;
 	-webkit-box-shadow:0 0 1px #fff inset;
 	box-shadow:0 0 1px #fff inset;
-	
+
 	-webkit-transition:background-position 1s;
 	-moz-transition:background-position 1s;
 	transition:background-position 1s;
@@ -48,43 +48,47 @@ dl,dd{
 /* BlueButton */
 .blue.button{
 	color:#0f4b6d !important;
-	
+
 	border:1px solid #84acc3 !important;
-	
+
 	/* A fallback background color */
 	background-color: #48b5f2;
-	
+
 	/* Specifying a version with gradients according to */
-	
-	background-image:	url('../img/button_bg.png'), url('../img/button_bg.png'),
-						-moz-radial-gradient(	center bottom, circle,
-												rgba(89,208,244,1) 0,rgba(89,208,244,0) 100px),
-						-moz-linear-gradient(#4fbbf7, #3faeeb);
 
 	background-image:	url('../img/button_bg.png'), url('../img/button_bg.png'),
-						-webkit-gradient(	radial, 50% 100%, 0, 50% 100%, 100,
-											from(rgba(89,208,244,1)), to(rgba(89,208,244,0))),
-						-webkit-gradient(linear, 0% 0%, 0% 100%, from(#4fbbf7), to(#3faeeb));
+	-moz-radial-gradient(	center bottom, circle,
+			rgba(89,208,244,1) 0,rgba(89,208,244,0) 100px),
+	-moz-linear-gradient(#4fbbf7, #3faeeb);
+
+	background-image:	url('../img/button_bg.png'), url('../img/button_bg.png'),
+	-webkit-gradient(	radial, 50% 100%, 0, 50% 100%, 100,
+			from(rgba(89,208,244,1)), to(rgba(89,208,244,0))),
+	-webkit-gradient(linear, 0% 0%, 0% 100%, from(#4fbbf7), to(#3faeeb));
 }
 
 .blue.button:hover{
 	background-image:	url('../img/button_bg.png'), url('../img/button_bg.png'),
-						-moz-radial-gradient(	center bottom, circle,
-												rgba(109,217,250,1) 0,rgba(109,217,250,0) 100px),
-						-moz-linear-gradient(#63c7fe, #58bef7);
-						
+	-moz-radial-gradient(	center bottom, circle,
+			rgba(109,217,250,1) 0,rgba(109,217,250,0) 100px),
+	-moz-linear-gradient(#63c7fe, #58bef7);
+
 	background-image:	url('../img/button_bg.png'), url('../img/button_bg.png'),
-						-webkit-gradient(	radial, 50% 100%, 0, 50% 100%, 100,
-											from(rgba(109,217,250,1)), to(rgba(109,217,250,0))),
-						-webkit-gradient(linear, 0% 0%, 0% 100%, from(#63c7fe), to(#58bef7));
+	-webkit-gradient(	radial, 50% 100%, 0, 50% 100%, 100,
+			from(rgba(109,217,250,1)), to(rgba(109,217,250,0))),
+	-webkit-gradient(linear, 0% 0%, 0% 100%, from(#63c7fe), to(#58bef7));
 }
 
 .lottery-layout{
-	background: #e4d150;
-	border-radius: 25px;
-	box-shadow: 2px 2px 3px #b2452f;
-	box-sizing: border-box;
-	border: 1px solid #e4d150;
+	margin-top: 54vw;
+	/* margin: 0 auto; */
+	width: 100%;
+	/* display: inline-block; */
+	/* background: #e4d150; */
+	/* border-radius: 25px; */
+	/* box-shadow: 2px 2px 3px #b2452f; */
+	/* box-sizing: border-box; */
+	/* border: 1px solid #e4d150; */
 }
 #lottery-list{
 	overflow: hidden;
@@ -133,14 +137,13 @@ dl,dd{
 	display: block;
 }
 .lottery-list{
-	background:#faefc3;
+	background: #faefc3;
 	position: relative;
-	width:300px;
-	height:200px;
+	width: 84vw;
+	height: 81vw;
 	margin: 0 auto;
-	border:4px solid #4c170d;
-	border-radius: 20px;
-
+	border: 1vw solid #4c170d;
+	border-radius: 3vmin;
 }
 .lottery-number{
 	margin: 20px;
@@ -154,25 +157,30 @@ dl,dd{
 }
 
 .lottery-cardlist{
-	width:200px;
+	width: 100%;
 	margin: 0 auto;
 	position: absolute;
-	left:50px;
-	top:-70px;
+	left: 0;
+	top: -70px;
 	z-index: 10;
 }
 .lottery-cardlist dd{
-	width:100%;
-	height:100px;
+	/* width: 100%; */
+	height: 100px;
 	line-height: 100px;
 	text-align: center;
 	color: #fff;
 	background: #c883cb;
-	margin: 10px 0;
+	margin: 10px 3vw;
 	border-radius: 10px;
 }
 
-
 body{
-	background: #fc6767;
+	/*background: #fcf5d5 url(../img/choujiang.png) no-repeat top center/cover;*/
+}
+#award-background{
+	width: 100%;
+	position: absolute;
+	top: 0;
+	left: 0;
 }

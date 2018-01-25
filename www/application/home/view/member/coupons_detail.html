@@ -23,7 +23,8 @@
 </section>
 <section class="header">
     <h3 class="title">{$info.name}</h3>
-    <p class=""><span class="sale-info">{$info.discount}折</span><span class="sale-type">优惠券</span><span class="time-line">有效时间: {$info.start_time|date="Y年m月d日",###}-{$info.end_time|date="Y年m月d日",###}</span></p>
+    <p class=""><span class="sale-info">{$info.discount}折</span><span class="sale-type">优惠券</span></p>
+    <p><span class="time-line">有效时间: {$info.start_time|date="Y年m月d日",###}-{$info.end_time|date="Y年m月d日",###}</span></p>
     <a href=""><div class="btn">立即使用</div></a>
 </section>
 <section class="body">
@@ -32,9 +33,7 @@
 </section>
 <section class="footer">
     <h4 class="footer-title">使用规则</h4>
-    <p class="detail-info">
-        {$info.desc}
-    </p>
+    <p class="detail-info">{$info.desc}</p>
 </section>
 <script src="/static/home/lib/zepto.min.js"></script>
 <script src="/static/home/js/frozen.js"></script>
