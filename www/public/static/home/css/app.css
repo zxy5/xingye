@@ -68,7 +68,6 @@ dl,dd{
 }
 
 .blue.button:hover{
-	
 	background-image:	url('../img/button_bg.png'), url('../img/button_bg.png'),
 						-moz-radial-gradient(	center bottom, circle,
 												rgba(109,217,250,1) 0,rgba(109,217,250,0) 100px),
@@ -80,31 +79,15 @@ dl,dd{
 						-webkit-gradient(linear, 0% 0%, 0% 100%, from(#63c7fe), to(#58bef7));
 }
 
-
-
-
-
-
-
-
-
-
-
 .lottery-layout{
-	background:#e4d150;
-	height: 400px;
-	width:400px;
-	margin: 30px auto;
+	background: #e4d150;
 	border-radius: 25px;
 	box-shadow: 2px 2px 3px #b2452f;
 	box-sizing: border-box;
-	border:1px solid #e4d150;
-
-
+	border: 1px solid #e4d150;
 }
 #lottery-list{
 	overflow: hidden;
-
 }
 #lottery-list card{
 	width:200px;
