@@ -80,7 +80,7 @@ dl,dd{
 }
 
 .lottery-layout{
-	margin-top: 54vw;
+	margin-top: 47vw;
 	/* margin: 0 auto; */
 	width: 100%;
 	/* display: inline-block; */
@@ -132,7 +132,7 @@ dl,dd{
 }
 .lottery-run{
 	width:100px;
-	margin:  20px auto;
+	margin:  10vw auto;
 	color: #fff;
 	display: block;
 }
@@ -140,7 +140,7 @@ dl,dd{
 	background: #faefc3;
 	position: relative;
 	width: 84vw;
-	height: 81vw;
+	height: 51vw;
 	margin: 0 auto;
 	border: 1vw solid #4c170d;
 	border-radius: 3vmin;
@@ -183,4 +183,5 @@ body{
 	position: absolute;
 	top: 0;
 	left: 0;
+	margin-bottom: 56px;
 }

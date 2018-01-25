@@ -18,22 +18,21 @@
         <li data-href="ui.html" class="ui-border-r "><a href="/home/member/index"><div class="circle"><i class="iconfont icon-gerenzhongxin1"></i></div><div>个人中心</div></a></li>
     </ul>
 </footer>
-<img id="award-background" src="/static/home/img/choujiang.png" alt="">
+<img id="award-background" src="/static/home/img/choujiang-bg3.png" alt="">
 <div class="lottery-layout">
     <!-- lotterylist -->
     <div id="lottery-list" class="lottery-list">
         <div class="mask"></div>
         <div class="mask"></div>
         <dl class="lottery-cardlist" id="lottery-cardlist">
-            <dd>mei1</dd>
+            <dd></dd>
             <dd>1</dd>
             <dd>2</dd>
             <dd>3</dd>
             <dd>4</dd>
             <dd>5</dd>
             <dd>6</dd>
-            <dd>mei3</dd>
-            <dd>mei4</dd>
+            <dd></dd>
         </dl>
     </div>
     <div class="lottery-run button blue" id="run">立即抽奖</div>
@@ -57,8 +56,7 @@ window.onload = function(){
         success: function (response) {
            console.log(response);
            if(response.code === '-1'){return false;}
-          var _lot = new lottery({ "total": 3, "ms": 500, "time": 1, "award": 1 });
-
+            var _lot = new lottery({ "total": 5, "ms": 500, "time": 1, "award": 6 });
           _lot.run();
         },
         error: function () {
