@@ -114,7 +114,7 @@ class Index extends Base
         Db::name('award_record')->insert(['add_time'=>time(),'member_id'=>session('member_id')]);
         //产生随机数
         $rand_num = rand(1,10000);
-        $list = Db::name('award')->field('id,name,chance,num')->select();
+        $list = Db::name('award')->field('id,name,chance,num,thumd')->select();
         $sum = 0;
         $jp_key = -1;
         foreach( $list as $k=>$v ){
