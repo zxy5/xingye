@@ -107,7 +107,7 @@ class Index extends Base
 //            $week = date('W',$record['add_time']);
 //            $now = date('W',time());
 //            if( $now==$week ){
-//                return json(msg('-1','','你本周已抽过奖啦，下周再来吧！'));
+//                return json(msg('0','','你本周已抽过奖啦，下周再来吧！'));
 //            }
 //        }
         //记录抽奖时间
@@ -133,7 +133,7 @@ class Index extends Base
         $award = $list[$jp_key];
 
         if( $award['num']<1 ){
-            return json(msg('-1','','奖品已领完！'));
+            return json(msg('-2','','奖品已领完！'));
         }
         $where = [
             'member_id'=>session('member_id'),
@@ -142,7 +142,7 @@ class Index extends Base
         ];
         $has = Db::name('award_log')->where($where)->find();
         if( !empty($has) ){
-            return json(msg('-1','','你已中过该奖！'));
+            return json(msg('-3','','你已中过该奖！'));
         }
         $data = [
             'member_id'=>session('member_id'),
@@ -159,7 +159,7 @@ class Index extends Base
            Db::rollback();
         }
         if( empty($in) || empty($re) ){
-            return json(msg('-1','','系统错误！'));
+            return json(msg('-4','','系统错误！'));
         }
         return json(msg('1',$award,'恭喜你中奖了！'));
     }
