@@ -16,12 +16,12 @@ class Base extends Controller
 
     public function _initialize()
     {
-        session('member_id','1');
-        session('member_phone','15858282359');
+//        session('member_id','1');
+//        session('member_phone','15858282359');
         //检测用户是否登录
-//        if( empty( session('member_id') ) ){
-//            $this->redirect('login/index');
-//        }
+        if( empty( session('member_id') ) ){
+            $this->redirect('login/index');
+        }
     }
 
 }

@@ -57,23 +57,31 @@
         });
           $.ajax({
             type:"Post",
-            url:"/get_code",
+            url:"/home/login/get_code",
             data:{
               phone:$(".phone").val()
             },
             success:function(data){
-              console.log(data);
-              infoDialog.dialog.update({
-                autoClose : 1500,
-                infoText : response.msg,
-                infoIcon : '/static/home/img/success.png'
-              });
+                if( data.code==1 ){
+                    infoDialog.dialog.update({
+                        autoClose : 1500,
+                        infoText : '发送成功！',
+                        infoIcon : '/static/home/img/success.png'
+                    });
+                    $('.code').val(data.data);
+                }else{
+                    infoDialog.dialog.update({
+                        autoClose : 1500,
+                        infoText : data.msg,
+                        infoIcon : '/static/home/img/fail.png'
+                    });
+                }
             },
             error: function () {
               infoDialog.dialog.update({
-                autoClose : 1500,
-                infoText : '发生错误!',
-                infoIcon : '/static/home/img/fail.png'
+                  autoClose : 1500,
+                  infoText : '发生错误!',
+                  infoIcon : '/static/home/img/fail.png'
               });
             }
           })
@@ -88,10 +96,10 @@
             infoIcon : '/static/home/img/loading.gif'
           });
           $.ajax({
-            url: '/index/index/qq_music',
+            url: '/home/login/dologin',
             type: 'post',
             dataType:'json',
-            data:{'phone':$('#phone').val()},
+            data:{'phone':$('.phone').val(),'code':$('.code').val()},
             success: function (response) {
               if( response.code && response.code == 1 ){
                 infoDialog.dialog.update({
@@ -99,6 +107,7 @@
                   infoText : response.msg,
                   infoIcon : '/static/home/img/success.png'
                 });
+                  location.href = '/home/index/index';
 //                TODO::location.href = response.data;
               }else {
                 infoDialog.dialog.update({
