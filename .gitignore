@@ -2,4 +2,4 @@
 .DS_Stroe
 .idea
 www/Apps/Runtime
-www/application/database.php
+*/database.php
