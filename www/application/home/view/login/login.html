@@ -93,27 +93,27 @@
             dataType:'json',
             data:{'phone':$('#phone').val()},
             success: function (response) {
-//              if( response.code==1 ){
+              if( response.code && response.code == 1 ){
                 infoDialog.dialog.update({
                   autoClose : 1500,
                   infoText : response.msg,
                   infoIcon : '/static/home/img/success.png'
                 });
 //                TODO::location.href = response.data;
-//              }else {
+              }else {
                 infoDialog.dialog.update({
                   autoClose : 1500,
                   infoText : response.msg,
                   infoIcon : '/static/home/img/fail.png'
                 });
-//              }
+              }
             },
             error: function () {
-//              infoDialog.dialog.update({
-//                autoClose : 1500,
-//                infoText : '发生错误!',
-//                infoIcon : '/static/home/img/fail.png'
-//              });
+              infoDialog.dialog.update({
+                autoClose : 1500,
+                infoText : '发生错误!',
+                infoIcon : '/static/home/img/fail.png'
+              });
             }
           });
         }
