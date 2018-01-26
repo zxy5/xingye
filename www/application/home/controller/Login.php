@@ -16,11 +16,16 @@ use think\Validate;
 
 class Login extends Controller
 {
+
+    public function index(){
+        $this->redirect('/home/login/login');
+    }
+
     /**
      * 登录
      * @return mixed
      */
-    public function index(){
+    public function login(){
         return $this->fetch();
     }
 
