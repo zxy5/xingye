@@ -9,6 +9,7 @@
     <link rel="stylesheet" href="/static/home/css/frozen.css">
     <link rel="stylesheet" href="/static/home/css/index.css">
     <link rel="stylesheet" href="/static/home/css/app.css">
+    <link rel="stylesheet" href="/static/home/css/dialog-plugin.css">
 </head>
 <body ontouchstart="">
 <footer class="ui-footer ui-footer-btn">
@@ -32,6 +33,12 @@
             <dd>4</dd>
             <dd>5</dd>
             <dd>6</dd>
+            <dd>7</dd>
+            <dd>8</dd>
+            <dd>9</dd>
+            <dd>10</dd>
+            <dd>11</dd>
+            <dd>12</dd>
             <dd></dd>
         </dl>
     </div>
@@ -39,6 +46,7 @@
 </div>
 <script src="/static/home/lib/zepto.min.js"></script>
 <script src="/static/home/js/lottery.js"></script>
+<script src="/static/home/js/dialog-plugin.js"></script>
 <script >
 window.onload = function(){
   document.getElementById('run').onclick = function() {
@@ -56,14 +64,13 @@ window.onload = function(){
         success: function (response) {
            console.log(response);
            if(response.code === '-1'){return false;}
-            var _lot = new lottery({ "total": 5, "ms": 500, "time": 1, "award": 6 });
-          _lot.run();
         },
         error: function () {
             console.error('出错!');
         }
       });
-
+    var _lot = new lottery({ "total": 5, "ms": 500, "time": 1, "award": 6 });
+    _lot.run();
   }
 }
 </script>

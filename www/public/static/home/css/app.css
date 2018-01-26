@@ -47,6 +47,7 @@ dl,dd{
 
 /* BlueButton */
 .blue.button{
+	text-align: center;
 	color:#0f4b6d !important;
 
 	border:1px solid #84acc3 !important;
@@ -77,6 +78,15 @@ dl,dd{
 	-webkit-gradient(	radial, 50% 100%, 0, 50% 100%, 100,
 			from(rgba(109,217,250,1)), to(rgba(109,217,250,0))),
 	-webkit-gradient(linear, 0% 0%, 0% 100%, from(#63c7fe), to(#58bef7));
+}
+
+/* BlueButton */
+.gray.button{
+	text-align: center;
+	color: #49bfec !important;
+	border:1px solid #cccccc !important;
+	/* A fallback background color */
+	background-color: #cccccc;
 }
 
 .lottery-layout{
