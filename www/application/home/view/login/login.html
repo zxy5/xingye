@@ -6,173 +6,8 @@
     <meta name="format-detection" content="telephone=no">
     <title>线下场景宝-登录</title>
     <link rel="stylesheet" type="text/css" href="/static/home/icon-custom/iconfont.css">
-    <style type="text/css" >
-        input:-ms-input-placeholder{
-            color: #f8faf7;
-            font-size: 14px;
-        }
-        input::-webkit-input-placeholder{
-            color: #f8faf7;
-            font-size: 14px;
-        }
-        *, *:after, *:before {
-            -webkit-box-sizing: border-box;
-            -moz-box-sizing: border-box;
-            box-sizing: border-box;
-        }
-        input, textarea, select, button {
-            text-rendering: auto;
-            color: initial;
-            letter-spacing: normal;
-            word-spacing: normal;
-            text-transform: none;
-            text-indent: 0px;
-            text-shadow: none;
-            display: inline-block;
-            text-align: start;
-            margin: 0em;
-            font: 11px system-ui;
-        }
-        .divCss{
-            background: #e7483c;
-        }
-        input {
-            -webkit-appearance: textfield;
-            background-color: white;
-            -webkit-rtl-ordering: logical;
-            user-select: text;
-            cursor: auto;
-            padding: 1px;
-            border-width: 2px;
-            border-style: inset;
-            border-color: initial;
-            border-image: initial;
-        }
-        #login-wrap{
-            width: 50%;
-            min-width: 322px;
-            margin: 0 auto;
-        }
-        .form-container{
-            width: 100%;
-            font-size: 0.3rem;
-            margin: 0 auto;
-            margin-top: 10%;
-            -webkit-border-radius: 10px;
-            -moz-border-radius: 10px;
-            border-radius: 10px;
-            text-align: center;
-            display: inline-block;
-            padding: 20px 20px;
-            -webkit-box-sizing: border-box;
-            -moz-box-sizing: border-box;
-            box-sizing: border-box;
-        }
-        .form-fields {
-            margin: 0 auto;
-            width: 290px;
-        }
-        .field_caption {
-            text-align: left;
-            padding-left: 5px;
-            text-transform: uppercase;
-            font-family: 'Helvetica Neue', helvetica;
-            font-size: 12px;
-            line-height: 0.22rem;
-            color: #fff;
-            position: relative;
-            margin-bottom: 5px;
-            margin-top: 15px;
-        }
-        .input-field {
-            position: relative;
-        }
-        .form-fields .phone, .code, input[type="text"], input[type="email"], input[type="password"] {
-            outline: 0;
-            -webkit-box-shadow: none;
-            -moz-box-shadow: none;
-            box-shadow: none;
-            font: 16px 'Montserrat', sans-serif !important;
-            color: #f8faf7;
-            -webkit-font-smoothing: antialiased;
-            margin: 0 auto;
-            /* margin-top: 15px; */
-            width: 100%;
-            text-align: left;
-            padding: 15px 10px 15px 45px;
-            background-color: #e42316;
-            border: none;
-            -webkit-border-radius: 30px;
-            -moz-border-radius: 30px;
-            border-radius: 30px;
-            height: 45px;
-            box-sizing: border-box;
-        }
-        .form-fields input[type="submit"] {
-            outline: 0;
-            -webkit-box-shadow: none;
-            -moz-box-shadow: none;
-            box-shadow: none;
-            font: 16px 'Montserrat', sans-serif !important;
-            font-weight: 700 !important;
-            color: #e42316;
-            -webkit-font-smoothing: antialiased;
-            margin: 0 auto;
-            margin-top: 23px;
-            padding: 10px 30px;
-            background-color: #fff;
-            text-transform: uppercase;
-            border: none;
-            -webkit-border-radius: 30px;
-            -moz-border-radius: 30px;
-            border-radius: 30px;
-            transition: .3s;
-            -webkit-transition: .3s;
-            -moz-transition: .3s;
-            cursor: pointer;
-            height: 48px;
-            width: 290px;
-            text-align: center;
-        }
-        .getCode{
-            padding: 7px 10px;
-            border: solid 1px #fff;
-            border-radius: 30px;
-            position: absolute;
-            top: 8px;
-            right: 10px;
-            color: #f6f6f6;
-            font-size: 14px;
-            cursor: pointer;
-            line-height: 14px;
-        }
-        .input-icon{
-            position: absolute;
-            color: #fff;
-            top: 10px;
-            left: 20px;
-            font-size: 25px;
-        }
-        #background-image{
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: #e7483c;
-            display: block;
-            z-index: 2;
-        }
-        #logo-wrap{
-            width: 100%;
-            margin-top: 30%;
-
-            text-align: center;
-        }
-        #logo{
-            width: 60%;
-        }
-    </style>
+    <link rel="stylesheet" href="/static/home/css/login.css">
+    <link rel="stylesheet" href="/static/home/css/dialog-plugin.css">
 </head>
 <body ontouchstart="">
     <div class="divCss" id="loginPage" >
@@ -185,19 +20,104 @@
                     <div class="field_caption">手机号</div>
                     <div class="input-field">
                         <span class="input-icon"><i class="icon-mobile-phone"></i></span>
-                        <input class="phone" type="text" placeholder="输入手机号">
+                        <input class="phone" type="tel" oninput="verification(this);" placeholder="输入手机号">
                     </div>
                     <div class="field_caption">验证码</div>
                     <div class="input-field">
                         <span class="input-icon" style="font-size: 21px;top:12px"><i class="icon-lock"></i></span>
-                        <span class="getCode">获取验证码</span>
+                        <span id="validateCode" class="getCode disable">获取验证码</span>
                         <input class="code" type="text" placeholder="输入验证码">
                     </div>
-                    <input type="submit" class="loginBtn" value="登 录">
+                    <input id="button" type="submit" class="loginBtn"  href="javascript:void(0);" onclick="login();" value="登 录">
                 </div>
             </div>
         </div>
     </div>
+    <script src="/static/home/lib/zepto.min.js"></script>
+    <script src="/static/home/js/dialog-plugin.js"></script>
+    <script>
+      //手机号码验证
+      function verification(currentDOM) {
+        var value = currentDOM.value;
+        var buttonDOM = document.getElementById('validateCode');
+        if(/^1[34578]\d{9}$/.test(value)){
+          $(buttonDOM).removeClass('disable');
+        }else{
+          $(buttonDOM).addClass('disable');
+        }
+      }
+      //验证码
+      $(".getCode").click(function () {
+        var $btn = $('#validateCode');
+        if($btn.hasClass('disable')){return false;}
+        var infoDialog = $.dialog({
+          type : 'info',
+          infoText : '加载中…',
+          infoIcon : '/static/home/img/loading.gif'
+        });
+          $.ajax({
+            type:"Post",
+            url:"/get_code",
+            data:{
+              phone:$(".phone").val()
+            },
+            success:function(data){
+              console.log(data);
+              infoDialog.dialog.update({
+                autoClose : 1500,
+                infoText : response.msg,
+                infoIcon : '/static/home/img/success.png'
+              });
+            },
+            error: function () {
+              infoDialog.dialog.update({
+                autoClose : 1500,
+                infoText : '发生错误!',
+                infoIcon : '/static/home/img/fail.png'
+              });
+            }
+          })
+      });
+      //登录
+        function login(){
+          var $btn = $('#validateCode');
+          if($btn.hasClass('disable')){return false;}
+          var infoDialog = $.dialog({
+            type : 'info',
+            infoText : '加载中…',
+            infoIcon : '/static/home/img/loading.gif'
+          });
+          $.ajax({
+            url: '/index/index/qq_music',
+            type: 'post',
+            dataType:'json',
+            data:{'phone':$('#phone').val()},
+            success: function (response) {
+//              if( response.code==1 ){
+                infoDialog.dialog.update({
+                  autoClose : 1500,
+                  infoText : response.msg,
+                  infoIcon : '/static/home/img/success.png'
+                });
+//                TODO::location.href = response.data;
+//              }else {
+                infoDialog.dialog.update({
+                  autoClose : 1500,
+                  infoText : response.msg,
+                  infoIcon : '/static/home/img/fail.png'
+                });
+//              }
+            },
+            error: function () {
+//              infoDialog.dialog.update({
+//                autoClose : 1500,
+//                infoText : '发生错误!',
+//                infoIcon : '/static/home/img/fail.png'
+//              });
+            }
+          });
+        }
+    </script>
 </body>
 </html>
 
