@@ -14,14 +14,23 @@ var move = function move(obj, attrs, duration, fx, callback) {
     var startTime = new Date();
     var j = {};
     for (var attr in attrs) {
+      console.log('attrs[attr]#####',attrs[attr])
       j[attr] = {};
       if (attr == 'opacity') {
+        console.log('obj---1',obj)
+        console.log('attr---1',attr)
+        console.log('css(obj, attr)---1',css(obj, attr))
         j[attr].b = Math.round(css(obj, attr) * 100);
       } else {
+        console.log('obj---2',obj)
+        console.log('attr---2',attr)
+        console.log('css(obj, attr)---2',css(obj, attr))
+
         j[attr].b = parseInt(css(obj, attr));
       }
       j[attr].c = attrs[attr] - j[attr].b;
     }
+    console.log('j------->',j)
     var d = duration;
     obj.iTimer = setInterval(function () {
       var t = new Date() - startTime;
@@ -35,7 +44,7 @@ var move = function move(obj, attrs, duration, fx, callback) {
           obj.style.opacity = v / 100;
           obj.style.filter = 'alpha(opacity=' + v + ')';
         } else {
-          obj.style[attr] = v + 'px';
+          obj.style[attr] = v + 'vw';
         }
       }
       if (t == d) {
@@ -231,6 +240,7 @@ var lottery = function () {
     };
     this.lotteryCardlist = getID('lottery-cardlist');
     this.lotteryListHeight = this.lotteryCardlist.offsetHeight; //列表的高度
+    console.log('this.lotteryListHeight-->',this.lotteryListHeight)
     this.time = info.time || 0;
     this.total = info.total || 9; //跑几圈
     this.start = 0; //计数器
@@ -252,16 +262,16 @@ var lottery = function () {
         that.animate = "linear";
         that.ms = that.remember;
       }
-      move(cardlist, { "top": -this.lotteryListHeight + 260 }, this.ms, this.animate, callback);
+      console.log('this.lotteryListHeight',this.lotteryListHeight)
+      move(cardlist, { "top": -210 }, this.ms, this.animate, callback);
 
       function callback() {
-        cardlist.style.top = "-70px";
+        cardlist.style.top = "-26.7vw";
         that.start++;
         if (that.start < that.total) {
           that.run();
         } else if (that.start >= that.total) {
-          move(cardlist, { "top": -that.award * 110 - 70 + 110 }, 4000, "backOut");
-          document.getElementById("times").innerHTML = --that.time;
+          move(cardlist, { "top": -that.award * 30.6 }, 4000, "backOut");
         }
       }
     }

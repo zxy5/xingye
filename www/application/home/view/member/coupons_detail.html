@@ -25,7 +25,9 @@
     <h3 class="title">{$info.name}</h3>
     <p class=""><span class="sale-info">{$info.discount}折</span><span class="sale-type">优惠券</span></p>
     <p><span class="time-line">有效时间: {$info.start_time|date="Y年m月d日",###}-{$info.end_time|date="Y年m月d日",###}</span></p>
-    <a href=""><div class="btn">立即使用</div></a>
+    <a href="">
+        <div class="btn" onclick="use();">立即使用</div>
+    </a>
 </section>
 <section class="body">
     <p class="dress">商户地址：{$info.store_address}</p>
@@ -49,6 +51,11 @@
             console.log(fromIndex,toIndex);// from 为当前页，to 为下一页
         })
     })();
+</script>
+<script>
+    function use(){
+        alert('跳转获取码的界面');
+    }
 </script>
 </body>
 </html>

@@ -39,45 +39,11 @@ dl,dd{
 	bottom:-1px;
 }
 
-
-
-
-
-
-
 /* BlueButton */
 .blue.button{
 	text-align: center;
-	color:#0f4b6d !important;
-
-	border:1px solid #84acc3 !important;
-
-	/* A fallback background color */
-	background-color: #48b5f2;
-
-	/* Specifying a version with gradients according to */
-
-	background-image:	url('../img/button_bg.png'), url('../img/button_bg.png'),
-	-moz-radial-gradient(	center bottom, circle,
-			rgba(89,208,244,1) 0,rgba(89,208,244,0) 100px),
-	-moz-linear-gradient(#4fbbf7, #3faeeb);
-
-	background-image:	url('../img/button_bg.png'), url('../img/button_bg.png'),
-	-webkit-gradient(	radial, 50% 100%, 0, 50% 100%, 100,
-			from(rgba(89,208,244,1)), to(rgba(89,208,244,0))),
-	-webkit-gradient(linear, 0% 0%, 0% 100%, from(#4fbbf7), to(#3faeeb));
-}
-
-.blue.button:hover{
-	background-image:	url('../img/button_bg.png'), url('../img/button_bg.png'),
-	-moz-radial-gradient(	center bottom, circle,
-			rgba(109,217,250,1) 0,rgba(109,217,250,0) 100px),
-	-moz-linear-gradient(#63c7fe, #58bef7);
-
-	background-image:	url('../img/button_bg.png'), url('../img/button_bg.png'),
-	-webkit-gradient(	radial, 50% 100%, 0, 50% 100%, 100,
-			from(rgba(109,217,250,1)), to(rgba(109,217,250,0))),
-	-webkit-gradient(linear, 0% 0%, 0% 100%, from(#63c7fe), to(#58bef7));
+	box-shadow:none;
+	border: none;
 }
 
 /* BlueButton */
@@ -90,7 +56,7 @@ dl,dd{
 }
 
 .lottery-layout{
-	margin-top: 47vw;
+	margin-top: 68.6vw;
 	/* margin: 0 auto; */
 	width: 100%;
 	/* display: inline-block; */
@@ -141,16 +107,18 @@ dl,dd{
 
 }
 .lottery-run{
-	width:100px;
-	margin:  10vw auto;
+	font-size: 5vw;
+	width: 34%;
+	height: 9vw;
+	margin: 8% auto 0 auto;
 	color: #fff;
 	display: block;
 }
 .lottery-list{
-	background: #faefc3;
+	background: #2f2f2f;
 	position: relative;
-	width: 84vw;
-	height: 51vw;
+	width: 61vw;
+	height: 33.5vw;
 	margin: 0 auto;
 	border: 1vw solid #4c170d;
 	border-radius: 3vmin;
@@ -171,17 +139,18 @@ dl,dd{
 	margin: 0 auto;
 	position: absolute;
 	left: 0;
-	top: -70px;
+	top: -26vw;
 	z-index: 10;
 }
 .lottery-cardlist dd{
 	/* width: 100%; */
 	height: 100px;
-	line-height: 100px;
+	height: 25vw;
+	line-height: 94px;
 	text-align: center;
 	color: #fff;
 	background: #c883cb;
-	margin: 10px 3vw;
+	margin: 2.8vw 3vw;
 	border-radius: 10px;
 }
 

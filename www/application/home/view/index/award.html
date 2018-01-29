@@ -19,12 +19,10 @@
         <li data-href="ui.html" class="ui-border-r "><a href="/home/member/index"><div class="circle"><i class="iconfont icon-gerenzhongxin1"></i></div><div>个人中心</div></a></li>
     </ul>
 </footer>
-<img id="award-background" src="/static/home/img/choujiang-bg3.png" alt="">
+<img id="award-background" src="/static/home/img/choujiang-bg4.png" alt="">
 <div class="lottery-layout">
     <!-- lotterylist -->
     <div id="lottery-list" class="lottery-list">
-        <div class="mask"></div>
-        <div class="mask"></div>
         <dl class="lottery-cardlist" id="lottery-cardlist">
             <dd></dd>
             <dd>1</dd>
@@ -42,7 +40,7 @@
             <dd></dd>
         </dl>
     </div>
-    <div class="lottery-run button blue" id="run">立即抽奖</div>
+    <div class="lottery-run button blue" id="run"></div>
 </div>
 <script src="/static/home/lib/zepto.min.js"></script>
 <script src="/static/home/js/lottery.js"></script>
@@ -50,6 +48,8 @@
 <script >
 window.onload = function(){
   document.getElementById('run').onclick = function() {
+    var _lot = new lottery({ "total": 5, "ms": 500, "time": 1, "award": 6 });
+    _lot.run();
     //调用ajax记得加lock,防止多次点击
     /*
        * total:转几圈   number
@@ -69,8 +69,7 @@ window.onload = function(){
             console.error('出错!');
         }
       });
-    var _lot = new lottery({ "total": 5, "ms": 500, "time": 1, "award": 6 });
-    _lot.run();
+
   }
 }
 </script>
