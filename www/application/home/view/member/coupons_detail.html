@@ -24,6 +24,7 @@
 </section>
 <section class="header">
     <h3 class="title">{$info.name}</h3>
+    <input type="hidden" class="log_id" value="{$info.id}">
     <p class=""><span class="sale-info">{$info.discount}折</span><span class="sale-type">优惠券</span></p>
     <p><span class="time-line">有效时间: {$info.start_time|date="Y年m月d日",###}-{$info.end_time|date="Y年m月d日",###}</span></p>
     <a href="javascript:void(0);">
@@ -57,10 +58,21 @@
 <script>
     //使用券，获取券码
     function use(){
-      $.dialog({
-        titleText: '优惠券券码',
-        contentHtml : '<p class="quanma">3SHDON</p>'
-      });
+        $.ajax({
+            url: '/home/member/use_coupons',
+            type: 'post',
+            dataType:'json',
+            data:{'id':$('.log_id').val()},
+            success: function (response) {
+                $.dialog({
+                    titleText: '优惠券券码',
+                    contentHtml : '<p class="quanma">'+response.data+'</p>'
+                });
+            },
+            error: function () {
+                console.error('出错!');
+            }
+        });
     }
 </script>
 </body>
