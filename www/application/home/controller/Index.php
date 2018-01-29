@@ -150,11 +150,11 @@ class Index extends Base
             'award_id'=>$award['id'],
             'add_time'=>time()
         ];
-
         Db::startTrans();
         try{
-            $in = Db::name('award_log')->insert($data);
+            $in = Db::name('award_log')->insertGetId($data);
             $re = Db::name('award')->where('id',$award['id'])->setDec('num',1);
+            Db::commit();
         }catch (\Exception $e) {
            Db::rollback();
         }
