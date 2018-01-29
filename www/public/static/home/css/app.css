@@ -139,28 +139,30 @@ dl,dd{
 	margin: 0 auto;
 	position: absolute;
 	left: 0;
-	top: -26vw;
+	top: -26.5vw;
 	z-index: 10;
 }
 .lottery-cardlist dd{
 	/* width: 100%; */
-	height: 100px;
+	/*height: 100px;*/
 	height: 25vw;
 	line-height: 94px;
 	text-align: center;
-	color: #fff;
-	background: #c883cb;
-	margin: 2.8vw 3vw;
-	border-radius: 10px;
+	color: #d82d2e;
+	/*background: #c883cb;*/
+	background-color: #ffffff;
+	margin: 2.8vw 1vw;
+	/*border-radius: 10px;*/
 }
 
-body{
-	/*background: #fcf5d5 url(../img/choujiang.png) no-repeat top center/cover;*/
-}
 #award-background{
 	width: 100%;
 	position: absolute;
 	top: 0;
 	left: 0;
 	margin-bottom: 56px;
+}
+
+.sale-info{
+	font-size: 6vw;
 }

@@ -262,16 +262,16 @@ var lottery = function () {
         that.animate = "linear";
         that.ms = that.remember;
       }
-      console.log('this.lotteryListHeight',this.lotteryListHeight)
-      move(cardlist, { "top": -210 }, this.ms, this.animate, callback);
+
+      move(cardlist, { "top": -(this.lotteryListHeight/window.innerWidth)*100+26.5 }, this.ms, this.animate, callback);
 
       function callback() {
-        cardlist.style.top = "-26.7vw";
+        cardlist.style.top = "-26.5vw";
         that.start++;
         if (that.start < that.total) {
           that.run();
         } else if (that.start >= that.total) {
-          move(cardlist, { "top": -that.award * 30.6 }, 4000, "backOut");
+          move(cardlist, { "top": -that.award * 27.67 }, 4000, "backOut");
         }
       }
     }

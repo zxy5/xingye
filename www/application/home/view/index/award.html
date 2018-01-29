@@ -10,6 +10,16 @@
     <link rel="stylesheet" href="/static/home/css/index.css">
     <link rel="stylesheet" href="/static/home/css/app.css">
     <link rel="stylesheet" href="/static/home/css/dialog-plugin.css">
+    <style>
+        .ui-list-img{
+            padding: 2.5vw;
+            width: 20vw;
+            /* display: inline-block; */
+            float: left;
+            height: 20vw;
+            margin: 0;
+        }
+    </style>
 </head>
 <body ontouchstart="">
 <footer class="ui-footer ui-footer-btn">
@@ -25,7 +35,12 @@
     <div id="lottery-list" class="lottery-list">
         <dl class="lottery-cardlist" id="lottery-cardlist">
             <dd></dd>
-            <dd>1</dd>
+            <dd style="display: flex;">
+                <div style="flex-basis: 42%;">
+                    <img style="width:100%;padding: 3vw;box-sizing: border-box;"src="http://placeholder.qiniudn.com/170x170" alt="">
+                </div>
+                <div style="flex-basis: 58%;"><p><span class="sale-info">9.8折</span><span class="sale-type">优惠券</span></p></div>
+            </dd>
             <dd>2</dd>
             <dd>3</dd>
             <dd>4</dd>
@@ -48,7 +63,7 @@
 <script >
 window.onload = function(){
   document.getElementById('run').onclick = function() {
-    var _lot = new lottery({ "total": 5, "ms": 500, "time": 1, "award": 6 });
+    var _lot = new lottery({ "total": 5, "ms": 500, "time": 1, "award": 1 });
     _lot.run();
     //调用ajax记得加lock,防止多次点击
     /*
@@ -69,7 +84,6 @@ window.onload = function(){
             console.error('出错!');
         }
       });
-
   }
 }
 </script>
