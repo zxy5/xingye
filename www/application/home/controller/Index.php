@@ -113,8 +113,6 @@ class Index extends Base
         //记录抽奖时间
         Db::name('award_record')->insert(['add_time'=>time(),'member_id'=>session('member_id')]);
 
-        //奖品总数
-        $count = Db::name('award')->count();
         //产生随机数
         $rand_num = rand(1,10000);
         $list = Db::name('award')->field('id,name,chance,num,thumd')->select();
@@ -131,6 +129,8 @@ class Index extends Base
             }
         }
         if( $jp_key == -1 ){
+            //奖品总数
+            $count = Db::name('award')->count();
             return json(msg('-1',$count,'运气欠佳！'));
         }
         $award = $list[$jp_key];
