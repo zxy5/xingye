@@ -44,7 +44,7 @@
                 <p class="ui-nowrap">商户电话：{$vo.store_phone}</p>
                 <p class="ui-nowrap sale"><span class="sale-info">{$vo.discount}折</span><span class="sale-type">优惠券</span></p>
             </div>
-            <a href="javascript:add_coupons({$vo.id})"><div class="btn">立即领取</div></a>
+            <a href="javascript:void(0);"><div class="btn" onclick="add_coupons({$vo.id});">立即领取</div></a>
         </li>
         {/foreach}
     </ul>
