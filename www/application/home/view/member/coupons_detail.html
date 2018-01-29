@@ -9,6 +9,7 @@
     <link rel="stylesheet" href="/static/home/css/frozen.css">
     <link rel="stylesheet" href="/static/home/css/index.css">
     <link rel="stylesheet" href="/static/home/css/detail.css">
+    <link rel="stylesheet" href="/static/home/css/dialog-plugin.css">
 </head>
 <body ontouchstart="">
 <footer class="ui-footer ui-footer-btn">
@@ -25,7 +26,7 @@
     <h3 class="title">{$info.name}</h3>
     <p class=""><span class="sale-info">{$info.discount}折</span><span class="sale-type">优惠券</span></p>
     <p><span class="time-line">有效时间: {$info.start_time|date="Y年m月d日",###}-{$info.end_time|date="Y年m月d日",###}</span></p>
-    <a href="">
+    <a href="javascript:void(0);">
         <div class="btn" onclick="use();">立即使用</div>
     </a>
 </section>
@@ -39,6 +40,7 @@
 </section>
 <script src="/static/home/lib/zepto.min.js"></script>
 <script src="/static/home/js/frozen.js"></script>
+<script src="/static/home/js/dialog-plugin.js"></script>
 <script>
     (function (){
         var tab = new fz.Scroll('.ui-tab', {
@@ -53,8 +55,12 @@
     })();
 </script>
 <script>
+    //使用券，获取券码
     function use(){
-        alert('跳转获取码的界面');
+      $.dialog({
+        titleText: '优惠券券码',
+        contentHtml : '<p class="quanma">3SHDON</p>'
+      });
     }
 </script>
 </body>

@@ -2,7 +2,7 @@ body{
     background-color: #f4f4f4;
 }
 section{
-    padding: 3vw 0vw 3vw 2vw;
+    padding: 3vw 3vw 3vw 2vw;
 }
 p{
     font-size: 14px;
@@ -65,4 +65,12 @@ p{
     color: #999999;
     padding: 10px 1vw 1vw 1vw;
     font-size: 12px;
+}
+
+.quanma{
+    text-align: center;
+    font-size: 7vw;
+    background-color: #c7c7c7;
+    padding: 20vw;
+    border-radius: 3vw;
 }
