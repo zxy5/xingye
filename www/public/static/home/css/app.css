@@ -166,3 +166,12 @@ dl,dd{
 .sale-info{
 	font-size: 6vw;
 }
+
+.ui-list-img{
+	padding: 2.5vw;
+	width: 20vw;
+	/* display: inline-block; */
+	float: left;
+	height: 20vw;
+	margin: 0;
+}
