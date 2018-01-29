@@ -66,7 +66,7 @@ class Member extends Base
             //中奖记录
             $condition = array();
             $condition['a.member_id'] = session('member_id');
-            $condition['a.is_use'] = 0;
+            $condition['a.is_validate'] = 0;
             $award_log = Db::name('award_log')
                 ->alias('a')->field('a.*,b.name,b.id as c_id,b.thumd,b.discount,b.type')
                 ->join('__AWARD__ b','a.award_id=b.id','LEFT')
@@ -79,7 +79,12 @@ class Member extends Base
         }
     }
 
-    public function get_ccode_str(){
+    /**
+     * 获取优惠券随机码
+     * @return \think\response\Json
+     * @throws \think\Exception
+     */
+    public function use_coupons(){
         $id = input('param.id');
         $info = Db::name('coupons_log')->where('id',$id)->find();
         if( empty($info) ){
@@ -88,12 +93,46 @@ class Member extends Base
         if( !empty($info['code_str']) ){
             return json(msg(1,$info['code_str'],'使用成功！'));
         }
+
+        $code_str = $this->create_str('','C');
+
         $data = [
             'is_use' => 1,
-            'code_str' =>''
+            'code_str' => $code_str
         ];
         $re = Db::name('coupons_log')->where('id',$id)->update( $data );
-        return '';
+        if( !$re ){
+            return json(msg('-1','','系统错误！'));
+        }
+        return json(msg(1,$code_str,'使用成功！'));
+    }
+
+    /**
+     * 获取奖品随机码
+     * @return \think\response\Json
+     * @throws \think\Exception
+     */
+    public function use_award(){
+        $id = input('param.id');
+        $info = Db::name('award_log')->where('id',$id)->find();
+        if( empty($info) ){
+            return json(msg('-1','','奖品不存在！'));
+        }
+        if( !empty($info['code_str']) ){
+            return json(msg(1,$info['code_str'],'使用成功！'));
+        }
+
+        $code_str = $this->create_str('','A');
+
+        $data = [
+            'is_use' => 1,
+            'code_str' => $code_str
+        ];
+        $re = Db::name('award_log')->where('id',$id)->update( $data );
+        if( !$re ){
+            return json(msg('-1','','系统错误！'));
+        }
+        return json(msg(1,$code_str,'使用成功！'));
     }
 
     /**
@@ -128,4 +167,21 @@ class Member extends Base
         $this->assign('info',$info);
         return $this->fetch();
     }
+
+    /**
+     * 生成随机字符串
+     * @param $table_name
+     * @param int $len
+     * @param $pre
+     * @return string
+     */
+    private function create_str( $table_name , $pre , $len = 6 ){
+        $code_str = $pre.strtoupper(substr(md5(uniqid()),0,$len));
+//        $r_code = Db::name($table_name)->where('code_str',$code_str)->find();
+//        if( !empty($r_code) ){
+//            $this->create_str( $table_name , $pre , $len );
+//        }
+        return $code_str;
+    }
+
 }

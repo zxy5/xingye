@@ -24,6 +24,7 @@
 </section>
 <section class="header">
     <h3 class="title">{$info.name}</h3>
+    <input type="hidden" class="log_id" value="{$info.id}">
     <p class=""><span class="sale-info">{$info.discount}折</span><span class="sale-type">优惠券</span></p>
     <div class="btn" onclick="use();">立即使用</div>
 </section>
@@ -54,10 +55,21 @@
 <script>
   //使用券，获取券码
   function use(){
-    $.dialog({
-      titleText: '优惠券券码',
-      contentHtml : '<p class="quanma">3SHDON</p>'
-    });
+      $.ajax({
+          url: '/home/member/use_award',
+          type: 'post',
+          dataType:'json',
+          data:{'id':$('.log_id').val()},
+          success: function (response) {
+              $.dialog({
+                  titleText: '优惠券券码',
+                  contentHtml : '<p class="quanma">'+response.data+'</p>'
+              });
+          },
+          error: function () {
+              console.error('出错!');
+          }
+      });
   }
 </script>
 </body>
