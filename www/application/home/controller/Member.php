@@ -104,7 +104,7 @@ class Member extends Base
     public function award_detail(){
         $id = input('param.id');
         $info = Db::name('award_log')->alias('a')
-            ->field('a.*,b.name,b.id as c_id,b.thumd,b.store_phone,b.store_address,b.desc,b.discount,b.start_time,b.end_time')
+            ->field('a.*,b.name,b.id as c_id,b.thumd,b.store_phone,b.store_address,b.desc,b.discount')
             ->join('__AWARD__ b','a.award_id=b.id','LEFT')
             ->where('a.id',$id)->find();
 
