@@ -24,16 +24,32 @@
     <!-- lotterylist -->
     <div id="lottery-list" class="lottery-list">
         <dl class="lottery-cardlist" id="lottery-cardlist">
-            <dd></dd><!--不删除，设为谢谢回顾字样-->
+            <dd style="display: flex;">
+                <div style="flex-basis: 42%;">
+                    <img class="img" src="/static/home/img/xiexie.png" alt="">
+                </div>
+                <div style="flex-basis: 58%;"><p><span class="sale-info"></span><span class="sale-type">下次再来！</span></p></div>
+            </dd>
             {foreach $list as  $k=>$v}
                 <dd style="display: flex;">
                     <div style="flex-basis: 42%;">
-                        <img style="width:100%;padding: 3vw;box-sizing: border-box;"src="{$v.thumd}" alt="">
+                        <img class="img" src="{$v.thumd}" alt="">
                     </div>
                     <div style="flex-basis: 58%;"><p><span class="sale-info">{$v.discount}折</span><span class="sale-type">优惠券</span></p></div>
                 </dd>
             {/foreach}
-            <dd></dd><!--不删除，设为谢谢回顾字样-->
+            <dd style="display: flex;">
+                <div style="flex-basis: 42%;">
+                    <img class="img" src="/static/home/img/xiexie.png" alt="">
+                </div>
+                <div style="flex-basis: 58%;"><p><span class="sale-info"></span><span class="sale-type">下次再来！</span></p></div>
+            </dd>
+            <dd style="display: flex;">
+                <div style="flex-basis: 42%;">
+                    <img class="img" src="/static/home/img/xiexie.png" alt="">
+                </div>
+                <div style="flex-basis: 58%;"><p><span class="sale-info"></span><span class="sale-type">下次再来！</span></p></div>
+            </dd>
         </dl>
     </div>
     <div class="lottery-run button blue" id="run"></div>
@@ -44,25 +60,40 @@
 <script >
 window.onload = function(){
   document.getElementById('run').onclick = function() {
-    var _lot = new lottery({ "total": 5, "ms": 500, "time": 1, "award": 1 });
-    _lot.run();
-    //调用ajax记得加lock,防止多次点击
     /*
        * total:转几圈   number
        * ms:动画速度毫秒 number
        * time:抽奖机会  number
        * award:中的啥奖 number
+       * 0 本周已抽过奖
+       * code：-1 没有中奖
+       * code：-2 奖品已领完
+       * code：-3 已中过该奖
+       * code：-4 系统错误
        */
+    //调用ajax记得加lock,防止多次点击
     $.ajax({
         url: '/home/index/lottery',
         type: 'post',
         dataType:'json',
         success: function (response) {
-           console.log(response);
-           if(response.code === '-1'){return false;}
+          console.log(response);
+          //code为 -1 1 需要启动转盘进行，code为 0 -2 -3 -4 则不需要启动转盘
+          if(response.code === '1'){
+            var _lot = new lottery({ "total": 5, "ms": 500, "time": 1, "award": response.data.id}, response);
+            _lot.run();
+          }else if(response.code === '-1'){
+            var _lot = new lottery({ "total": 5, "ms": 500, "time": 1, "award": response.data+1}, response);
+            _lot.run();
+          }else{
+            $.dialog({
+              showTitle : false,
+              contentHtml : '<p style="text-align: center;">'+response.msg+'</p>'
+            });
+          }
         },
         error: function () {
-            console.error('出错!');
+            console.error('系统错误!');
         }
       });
   }

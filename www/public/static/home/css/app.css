@@ -175,3 +175,7 @@ dl,dd{
 	height: 20vw;
 	margin: 0;
 }
+
+.img{
+	width:100%;height: 100%;box-sizing: border-box;padding: 4vw 3vw;
+}

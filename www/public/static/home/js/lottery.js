@@ -14,23 +14,14 @@ var move = function move(obj, attrs, duration, fx, callback) {
     var startTime = new Date();
     var j = {};
     for (var attr in attrs) {
-      console.log('attrs[attr]#####',attrs[attr])
       j[attr] = {};
       if (attr == 'opacity') {
-        console.log('obj---1',obj)
-        console.log('attr---1',attr)
-        console.log('css(obj, attr)---1',css(obj, attr))
         j[attr].b = Math.round(css(obj, attr) * 100);
       } else {
-        console.log('obj---2',obj)
-        console.log('attr---2',attr)
-        console.log('css(obj, attr)---2',css(obj, attr))
-
         j[attr].b = parseInt(css(obj, attr));
       }
       j[attr].c = attrs[attr] - j[attr].b;
     }
-    console.log('j------->',j)
     var d = duration;
     obj.iTimer = setInterval(function () {
       var t = new Date() - startTime;
@@ -54,10 +45,12 @@ var move = function move(obj, attrs, duration, fx, callback) {
   },
   css = function css(obj, attr) {
     if (obj.currentStyle) {
-      return obj.currentStyle[attr];
+      // return (obj.currentStyle[attr]/window.innerWidth)*100;
+      // return obj.currentStyle[attr];
     } else {
-      return getComputedStyle(obj, false)[attr];
+      // return getComputedStyle(obj, false)[attr];
     }
+    return -26.5
   };
 
 //Tween
@@ -231,7 +224,7 @@ var list = getID('lottery-list');
 var run = getID("run");
 
 var lottery = function () {
-  function lottery(info) {
+  function lottery(info,response) {
     _classCallCheck(this, lottery);
 
     if ((typeof info === 'undefined' ? 'undefined' : _typeof(info)) != "object") {
@@ -240,7 +233,6 @@ var lottery = function () {
     };
     this.lotteryCardlist = getID('lottery-cardlist');
     this.lotteryListHeight = this.lotteryCardlist.offsetHeight; //列表的高度
-    console.log('this.lotteryListHeight-->',this.lotteryListHeight)
     this.time = info.time || 0;
     this.total = info.total || 9; //跑几圈
     this.start = 0; //计数器
@@ -248,6 +240,7 @@ var lottery = function () {
     this.award = info.award || 1;
     this.animate = "linear";
     this.remember = info.ms;
+    this.response = response
   }
 
   _createClass(lottery, [{
@@ -263,7 +256,7 @@ var lottery = function () {
         that.ms = that.remember;
       }
 
-      move(cardlist, { "top": -(this.lotteryListHeight/window.innerWidth)*100+26.5 }, this.ms, this.animate, callback);
+      move(cardlist, { "top": -(this.lotteryListHeight/window.innerWidth)*100+30 }, this.ms, this.animate, callback);
 
       function callback() {
         cardlist.style.top = "-26.5vw";
@@ -272,6 +265,12 @@ var lottery = function () {
           that.run();
         } else if (that.start >= that.total) {
           move(cardlist, { "top": -that.award * 27.67 }, 4000, "backOut");
+          setTimeout(function(){
+            $.dialog({
+              showTitle : false,
+              contentHtml : '<p style="text-align: center;">'+that.response.msg+'</p>'
+            });
+          }, 4000)
         }
       }
     }
