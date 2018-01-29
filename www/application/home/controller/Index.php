@@ -93,7 +93,10 @@ class Index extends Base
      */
     public function award(){
         $list = Db::name('award')->field('id,name,chance,num,thumd,discount')->order('sort desc')->select();
-        $this->assign('list',$list);
+        $this->assign([
+            'list'=>$list,
+            'count'=>count($list)
+        ]);
         return $this->fetch();
     }
 
