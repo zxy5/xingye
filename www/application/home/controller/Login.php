@@ -38,7 +38,7 @@ class Login extends Controller
 
         $validate = new Validate();
         $validate->rule('phone','require|/^1[345789]\d{9}$/');
-        $validate->message('phone','手机格式不正确');
+        $validate->message('phone','请输入正确的手机号');
         if( !$validate->check( array( 'phone'=>$phone ) ) ){
             return json( msg( '-1','',$validate->getError() ) );
         }
@@ -51,9 +51,10 @@ class Login extends Controller
         $member = Db::name('member')->where('member_phone',$phone)->find();
         if( $member ){
             session('member_id',$member['id']);
+            session('member_phone',$member['member_phone']);
             return json( msg( 1 , '' , '登录成功！' ) );
         }else{
-            $re = Db::name('member')->insertGetId(array('member_name'=>$phone,'member_phone'=>$phone));
+            $re = Db::name('member')->insertGetId(array('member_name'=>$phone,'member_phone'=>$phone,'add_time'=>time()));
             if( $re ){
                 session( 'member_id',$re );
                 session( 'member_phone',$phone );
@@ -76,7 +77,7 @@ class Login extends Controller
         //手机号验证
         $validate = new Validate();
         $validate->rule('phone','require|/^1[345789]\d{9}$/');
-        $validate->message('phone','手机格式不正确');
+        $validate->message('phone','请输入正确的手机号');
         if( !$validate->check( array( 'phone'=>input('param.phone') ) ) ){
             return json( msg( '-1','',$validate->getError() ) );
         }

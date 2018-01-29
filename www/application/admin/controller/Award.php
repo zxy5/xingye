@@ -61,7 +61,7 @@ class Award extends Base
                 'store_address' => input('param.store_address'),
                 'store_phone' => input('param.store_phone'),
                 'login_phone' => input('param.login_phone'),
-                'login_password' => md5(input('param.login_phone')),
+//                'login_password' => md5(input('param.login_phone')),
                 'num' => input('param.num'),
                 'chance' => input('param.chance'),
                 'api_id' => input('param.api_id'),
