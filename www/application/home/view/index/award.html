@@ -25,23 +25,14 @@
     <div id="lottery-list" class="lottery-list">
         <dl class="lottery-cardlist" id="lottery-cardlist">
             <dd></dd><!--不删除，设为谢谢回顾字样-->
-            <dd style="display: flex;">
-                <div style="flex-basis: 42%;">
-                    <img style="width:100%;padding: 3vw;box-sizing: border-box;"src="http://placeholder.qiniudn.com/170x170" alt="">
-                </div>
-                <div style="flex-basis: 58%;"><p><span class="sale-info">9.8折</span><span class="sale-type">优惠券</span></p></div>
-            </dd>
-            <dd>2</dd>
-            <dd>3</dd>
-            <dd>4</dd>
-            <dd>5</dd>
-            <dd>6</dd>
-            <dd>7</dd>
-            <dd>8</dd>
-            <dd>9</dd>
-            <dd>10</dd>
-            <dd>11</dd>
-            <dd>12</dd>
+            {foreach $list as  $k=>$v}
+                <dd style="display: flex;">
+                    <div style="flex-basis: 42%;">
+                        <img style="width:100%;padding: 3vw;box-sizing: border-box;"src="{$v.thumd}" alt="">
+                    </div>
+                    <div style="flex-basis: 58%;"><p><span class="sale-info">{$v.discount}折</span><span class="sale-type">优惠券</span></p></div>
+                </dd>
+            {/foreach}
             <dd></dd><!--不删除，设为谢谢回顾字样-->
         </dl>
     </div>

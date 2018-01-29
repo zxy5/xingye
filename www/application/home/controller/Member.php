@@ -79,6 +79,23 @@ class Member extends Base
         }
     }
 
+    public function get_ccode_str(){
+        $id = input('param.id');
+        $info = Db::name('coupons_log')->where('id',$id)->find();
+        if( empty($info) ){
+            return json(msg('-1','','优惠券不存在！'));
+        }
+        if( !empty($info['code_str']) ){
+            return json(msg(1,$info['code_str'],'使用成功！'));
+        }
+        $data = [
+            'is_use' => 1,
+            'code_str' =>''
+        ];
+        $re = Db::name('coupons_log')->where('id',$id)->update( $data );
+        return '';
+    }
+
     /**
      * 优惠券详情
      */

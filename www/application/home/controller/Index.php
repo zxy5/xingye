@@ -92,7 +92,7 @@ class Index extends Base
      * 抽奖
      */
     public function award(){
-        $list = Db::name('award')->field('id,name,chance,num,thumd')->order('sort desc')->select();
+        $list = Db::name('award')->field('id,name,chance,num,thumd,discount')->order('sort desc')->select();
         $this->assign('list',$list);
         return $this->fetch();
     }
