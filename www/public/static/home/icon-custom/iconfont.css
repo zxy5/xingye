@@ -33,9 +33,21 @@
 
 .icon-shouye:before { content: "\e60d"; }
 
-.icon-gerenzhongxin1:before { content: "\e60f"; }
+.icon-gerenzhongxin1:before { content: "\e60f";
+  position: absolute;
+  top: -2px;
+  left: 4px;
+}
 
-.icon-shouye-xuanze1:before { content: "\e610"; }
+.icon-shouye-xuanze1:before { content: "\e610";
+  position: absolute;
+  top: -2px;
+  left: 4px;
+}
 
-.icon-choujiang1:before { content: "\e611"; }
+.icon-choujiang1:before { content: "\e611";
+  position: absolute;
+  top: -1px;
+  left: 4px;
+}
 

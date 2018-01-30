@@ -117,6 +117,7 @@ a{
     border-radius: 15px;
     background-color: transparent;
     margin: 0 auto;
+    position: relative;
 }
 
 .ui-footer .active .circle{
@@ -125,4 +126,21 @@ a{
 
 .ui-footer .active .iconfont{
     color: #ffffff;
+}
+#test-flex{
+    display: -webkit-flex; /* Safari */
+    display: flex;
+    height: 20vw;
+}
+#test-flex .test-img{
+    flex: auto;
+    padding: 0.5em;
+    width: 100%;
+    min-width: 0;
+    font-size: 0;
+}
+#test-flex .test-img img{
+    width: 80%;
+    margin: 2vw;
+    box-sizing: border-box;
 }

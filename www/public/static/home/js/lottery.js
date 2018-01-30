@@ -266,6 +266,7 @@ var lottery = function () {
         } else if (that.start >= that.total) {
           move(cardlist, { "top": -that.award * 27.67 }, 4000, "backOut");
           setTimeout(function(){
+            $('#modal-custom').hide();
             $.dialog({
               showTitle : false,
               contentHtml : '<p style="text-align: center;">'+that.response.msg+'</p>'

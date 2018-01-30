@@ -10,6 +10,19 @@
     <link rel="stylesheet" href="/static/home/css/index.css">
     <link rel="stylesheet" href="/static/home/css/app.css">
     <link rel="stylesheet" href="/static/home/css/dialog-plugin.css">
+    <style>
+        #modal-custom{
+            background-color: #000;
+            width: 100%;
+            height: 100%;
+            position: absolute;
+            top: 0;
+            left: 0;
+            z-index: 9999;
+            opacity: 0;
+            display: none;
+        }
+    </style>
 </head>
 <body ontouchstart="">
 <footer class="ui-footer ui-footer-btn">
@@ -54,24 +67,26 @@
     </div>
     <div class="lottery-run button blue" id="run"></div>
 </div>
+<div id="modal-custom"></div>
 <script src="/static/home/lib/zepto.min.js"></script>
 <script src="/static/home/js/lottery.js"></script>
 <script src="/static/home/js/dialog-plugin.js"></script>
 <script >
 window.onload = function(){
   document.getElementById('run').onclick = function() {
-    /*
-       * total:转几圈   number
-       * ms:动画速度毫秒 number
-       * time:抽奖机会  number
-       * award:中的啥奖 number
-       * 0 本周已抽过奖
-       * code：-1 没有中奖
-       * code：-2 奖品已领完
-       * code：-3 已中过该奖
-       * code：-4 系统错误
-       */
-    //调用ajax记得加lock,防止多次点击
+  /*
+   * total:转几圈   number
+   * ms:动画速度毫秒 number
+   * time:抽奖机会  number
+   * award:中的啥奖 number
+   * 0 本周已抽过奖
+   * code：-1 没有中奖
+   * code：-2 奖品已领完
+   * code：-3 已中过该奖
+   * code：-4 系统错误
+  */
+    //调用ajax记得加lock,防止多次点击 #modal-custom为防重复点击
+    $('#modal-custom').show();
     $.ajax({
         url: '/home/index/lottery',
         type: 'post',
@@ -80,12 +95,14 @@ window.onload = function(){
           console.log(response);
           //code为 -1 1 需要启动转盘进行，code为 0 -2 -3 -4 则不需要启动转盘
           if(response.code === '1'){
+            //注意：lottery.js具有隐式依赖dialog-plugin.js中的$.dialog()方法，response则是$.dialog()所需的数据展示
             var _lot = new lottery({ "total": 5, "ms": 500, "time": 1, "award": response.data.id}, response);
             _lot.run();
           }else if(response.code === '-1'){
             var _lot = new lottery({ "total": 5, "ms": 500, "time": 1, "award": response.data+1}, response);
             _lot.run();
           }else{
+            $('#modal-custom').hide();
             $.dialog({
               showTitle : false,
               contentHtml : '<p style="text-align: center;">'+response.msg+'</p>'
