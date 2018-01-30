@@ -13,6 +13,10 @@
     <style>
         .minirefresh-wrap{
             position: relative;
+            height: 120vw;
+        }
+        .minirefresh-theme-default .minirefresh-upwrap{
+            padding-top: 30vw;
         }
     </style>
 </head>
@@ -70,6 +74,7 @@
             container: '#minirefresh',
             down: {
                 //isLock: true,//是否禁用下拉刷新
+                isAllowAutoLoading:false,
                 callback: function () {
                     doAjax('down');
                 }
@@ -99,7 +104,7 @@
         $('#liquan').removeClass('current');
         $('#jiangpin').removeClass('current');
         $current.addClass('current');
-      })
+      });
 
         // 组装 ajax 分页函数。参数 downOrUp 判断是下拉刷新还是上拉加载。
         // 特别提示：若你仅使用下拉刷新或上拉加载的其中一项，可不用组装 ajax 分页函数了，直接将 ajax 分页放在下拉刷新或上拉加载的回调 callback 里。
@@ -122,16 +127,19 @@
                         var html = '';
                         $.each(response.data, function (key, value) {
                             html +=
-                                    '<li class="ui-border-t">'+
-                                        '<div class="ui-list-img">'+
-                                            '<span style="background-image:url('+value.thumd+')"></span>'+
-                                        '</div>'+
-                                        '<div class="ui-list-info">'+
-                                            '<h4 class="ui-nowrap">'+value.name+'</h4>'+
-                                        '<p class="ui-nowrap sale"><span class="sale-info">'+value.discount+'折</span><span class="sale-type">优惠券</span></p>'+
-                                        '</div>'+
-                                        '<a href="'+detail_url+'/id/'+value.id+'"><div class="btn">查看详情</div></a>'+
-                                    '</li>';
+                                '<li class="ui-border-t">'+
+                                    '<div class="ui-list-img">'+
+                                        '<span style="background-image:url('+value.thumd+')"></span>'+
+                                    '</div>'+
+                                    '<div class="ui-list-info">'+
+                                        '<h4 class="ui-nowrap">'+value.name+'</h4>'+
+                                    '<p class="ui-nowrap sale">' +
+                                        '<span class="sale-info">'+value.discount+'折</span>' +
+                                        '<span class="sale-type">优惠券</span>' +
+                                    '</p>'+
+                                    '</div>'+
+                                    '<a href="'+detail_url+'/id/'+value.id+'"><div class="btn">查看详情</div></a>'+
+                                '</li>';
                         });
                         if (downOrUp == 'down') {
                             $('#listdata').html('');
