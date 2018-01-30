@@ -37,7 +37,7 @@ class Member extends Base
             $where['a.member_id'] = session('member_id');
             $where['a.is_validate'] = 0;
             $coup_list = Db::name('coupons_log')
-                ->alias('a')->field('a.*,b.name,b.id as c_id,b.thumd,b.discount,c.class_thumd')
+                ->alias('a')->field('a.id,b.name,b.id as c_id,b.thumd,b.discount,c.class_thumd')
                 ->join('__COUPONS__ b','a.coupons_id=b.id','LEFT')
                 ->join('__COUPONS_CLASS__ c','b.class_id=c.class_id','LEFT')
                 ->where($where)
@@ -68,7 +68,7 @@ class Member extends Base
             $condition['a.member_id'] = session('member_id');
             $condition['a.is_validate'] = 0;
             $award_log = Db::name('award_log')
-                ->alias('a')->field('a.*,b.name,b.id as c_id,b.thumd,b.discount,b.type')
+                ->alias('a')->field('a.id,b.name,b.id as c_id,b.thumd,b.discount,b.type')
                 ->join('__AWARD__ b','a.award_id=b.id','LEFT')
                 ->where($condition)
                 ->limit($offset,$limit)->order('a.id desc')->select();
