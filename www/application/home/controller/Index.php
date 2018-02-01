@@ -12,7 +12,7 @@ class Index extends Base
      */
     public function index(){
         //获取分类
-        $type_list = Db::name('coupons_class')->where(array())->order('class_sort desc,class_id desc')->select();
+        $type_list = Db::name('coupons_class')->order('class_sort desc,class_id desc')->select();
         //获取推荐券
         $list = Db::name('coupons')->alias('a')->field('a.id,a.name,a.discount,a.thumd,a.store_address,a.store_phone,b.class_thumd')
                     ->join('__COUPONS_CLASS__ b','a.class_id=b.class_id','LEFT')
@@ -20,7 +20,7 @@ class Index extends Base
 
         $this->assign([
             'list'=>$list,
-            'type_lsit'=>$type_list
+            'type_list'=>$type_list
         ]);
         return $this->fetch();
     }
@@ -36,7 +36,7 @@ class Index extends Base
 
             //优惠券列表
             $list = Db::name('coupons')->field('id,name,discount,thumd,store_address,store_phone')
-                ->where('class_id','1')->limit($offset,$limit)->order('id desc')->select();
+                ->where('class_id',input('param.class_id'))->limit($offset,$limit)->order('id desc')->select();
             $class_info = Db::name('coupons_class')->field('class_id,class_thumd')->where('class_id',input('param.class_id'))->find();
             //整理数据
             foreach( $list as $k=>$v ){

@@ -22,11 +22,9 @@
     <span style="background-image:url(/static/home/img/banner.png);"></span>
 </section>
 <ul id="test-flex">
-    <li class="test-img"><a href="/home/index/coupons_list/id/1"><img src="/static/home/img/food.png" alt=""></a></li>
-    <li class="test-img"><img src="/static/home/img/food.png" alt=""></li>
-    <li class="test-img"><img src="/static/home/img/food.png" alt=""></li>
-    <li class="test-img"><img src="/static/home/img/food.png" alt=""></li>
-    <li class="test-img"><img src="/static/home/img/food.png" alt=""></li>
+    {foreach $type_list as $t}
+        <li class="test-img"><a href="/home/index/coupons_list/id/{$t.class_id}"><img src="{$t.class_thumd}" alt=""></a></li>
+    {/foreach}
 </ul>
 <p class="list-title">-- 热门 --</p>
 <section class="ui-container">
