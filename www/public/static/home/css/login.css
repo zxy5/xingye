@@ -168,9 +168,9 @@ input {
     width: 60%;
 }
 .disable{
-    background-color: #ccc!important;
-    border: 1px solid #ccc;
-    color: #e8473c;
+    background-color: #e52416!important;
+    border: 1px solid #e52416;
+    color: #e52416;
 }
 .dialog-content-bd{
     text-align: center!important;

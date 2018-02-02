@@ -127,10 +127,15 @@ a{
 .ui-footer .active .iconfont{
     color: #ffffff;
 }
+.ui-list li h4{
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
 #test-flex{
     display: -webkit-flex; /* Safari */
     display: flex;
-    height: 20vw;
+    min-height: 20vw;
 }
 #test-flex .test-img{
     flex: auto;
