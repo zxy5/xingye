@@ -70,7 +70,7 @@
                             <td>{$v.id}</td>
                             <td>{$v.name}</td>
                             <td>{$v.discount}</td>
-                            <td><img src="{$v.thumd}" style="width: 40px; height: 40px;"></td>
+                            <td>{if !empty($v.thumd)}<img src="{$v.thumd}" style="width: 40px; height: 40px;">{/if}</td>
                             <td>{$v.login_phone}</td>
                             <td>{$v.desc|my_substr=0,10}</td>
                             <td>{$v.store_address|my_substr=0,10}</td>
