@@ -102,14 +102,14 @@ class Index extends Base
      */
     public function lottery(){
         //判断是否能够抽奖
-//        $record = Db::name('award_record')->where('member_id',session('member_id'))->order('add_time desc')->find();
-//        if( !empty($record) ){
-//            $week = date('W',$record['add_time']);
-//            $now = date('W',time());
-//            if( $now==$week ){
-//                return json(msg('0','','你本周已抽过奖啦，下周再来吧！'));
-//            }
-//        }
+        $record = Db::name('award_record')->where('member_id',session('member_id'))->order('add_time desc')->find();
+        if( !empty($record) ){
+            $week = date('W',$record['add_time']);
+            $now = date('W',time());
+            if( $now==$week ){
+                return json(msg('0','','你本周已抽过奖啦，下周再来吧！'));
+            }
+        }
         //记录抽奖时间
         Db::name('award_record')->insert(['add_time'=>time(),'member_id'=>session('member_id')]);
 
