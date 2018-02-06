@@ -46,7 +46,7 @@
                         <th>添加时间</th>
                         <th>修改时间</th>
                         <th>管理者</th>
-                        <th>修改密码</th>
+                        <!--<th>修改密码</th>-->
                         <th>操作</th>
                         </thead>
                         <tbody>
@@ -66,12 +66,12 @@
                             <td>{$v.add_time|date='Y-m-d',###}</td>
                             <td>{$v.update_time|date='Y-m-d',###}</td>
                             <td>{$v.user_name}</td>
-
+<!--
                             {eq name="v.is_modify" value="1"}
                             <td style="color: green">是</td>
                             {else/}
                             <td style="color: red">否</td>
-                            {/eq}
+                            {/eq}-->
 
                             <td>
                                 {if authCheck('award/award_edit') }
@@ -84,11 +84,11 @@
                                     <button type="button" class="btn btn-danger btn-sm"><i class="fa fa-trash-o"></i> 删除</button>
                                 </a>
                                 {/if}
-                                {if authCheck('award/reset_pass') }
+                              <!--  {if authCheck('award/reset_pass') }
                                 <a href="javascript:reset_pass({$v.id})">
                                     <button type="button" class="btn btn-warning btn-sm"><i class="fa fa-mail-reply"></i> 重置密码</button>
                                 </a>
-                                {/if}
+                                {/if}-->
                             </td>
                         </tr>
                         {/foreach}

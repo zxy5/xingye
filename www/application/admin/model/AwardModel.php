@@ -77,9 +77,9 @@ class AwardModel extends Model
             }
 
             //检测登录电话是否存在
-            if( $this->checkLoginPhone( $param['login_phone'],$id ) ){
-                return msg('-1','','该号码已存在！');
-            }
+//            if( $this->checkLoginPhone( $param['login_phone'],$id ) ){
+//                return msg('-1','','该号码已存在！');
+//            }
 
             $result =  $this->where('id',$id)->update($param);
             if($result){
@@ -121,9 +121,9 @@ class AwardModel extends Model
             }
 
             //检测登录电话是否存在
-            if( $this->checkLoginPhone($param['login_phone']) ){
-                return msg('-1','','该号码已存在！');
-            }
+//            if( $this->checkLoginPhone($param['login_phone']) ){
+//                return msg('-1','','该号码已存在！');
+//            }
 
             $result =  $this->insert($param);
             if($result){

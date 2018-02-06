@@ -161,7 +161,7 @@ class Coupons extends  Base
                 'end_time' => strtotime(input('param.end_time')),
                 'status' => input('param.status'),
                 'class_id' => input('param.class_id'),
-                'login_phone' => input('param.login_phone'),
+//                'login_phone' => input('param.login_phone'),
                 'is_recommend' => input('param.is_recommend'),
                 'user_id' => session('id')
             ];
@@ -200,8 +200,8 @@ class Coupons extends  Base
                 'add_time' => time(),
                 'status' => input('param.status'),
                 'class_id' => input('param.class_id'),
-                'login_phone' => input('param.login_phone'),
-                'login_password' => md5(input('param.login_phone')),
+//                'login_phone' => input('param.login_phone'),
+//                'login_password' => md5(input('param.login_phone')),
                 'is_recommend' => input('param.is_recommend'),
                 'user_id' => session('id')
             ];
