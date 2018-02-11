@@ -9,6 +9,7 @@
 namespace app\home\controller;
 
 
+use Endroid\QrCode\QrCode;
 use think\Controller;
 use PHPExcel_Reader_Excel2007;
 use PHPExcel_Cell;
@@ -17,6 +18,13 @@ use think\Db;
 class Import extends Controller
 {
 
+//    public function qr(){
+////        $qr = new QrCode();
+////        $qr->setText('http://www.baidu.com')->setSize(255)->setImageType('png');
+////        header("Content-type: image/png");
+////        $qr->render(); //输入到浏览器
+////        $qr->save('a.png');
+//    }
     public function index(){
 //        $reader = \PHPExcel_IOFactory::createReader('Excel5'); //设置以Excel5格式(Excel97-2003工作簿)
 //        $PHPExcel = $reader->load("test.xlsx"); // 载入excel文件

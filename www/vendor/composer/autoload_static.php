@@ -17,6 +17,14 @@ class ComposerStaticInitbb7e930f79f5db41ad932991d1199eeb
             'think\\captcha\\' => 14,
             'think\\' => 6,
         ),
+        'S' => 
+        array (
+            'Symfony\\Component\\OptionsResolver\\' => 34,
+        ),
+        'E' => 
+        array (
+            'Endroid\\QrCode\\' => 15,
+        ),
     );
 
     public static $prefixDirsPsr4 = array (
@@ -31,6 +39,14 @@ class ComposerStaticInitbb7e930f79f5db41ad932991d1199eeb
         'think\\' => 
         array (
             0 => __DIR__ . '/../..' . '/thinkphp/library/think',
+        ),
+        'Symfony\\Component\\OptionsResolver\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/symfony/options-resolver',
+        ),
+        'Endroid\\QrCode\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/endroid/qrcode/src',
         ),
     );
 
