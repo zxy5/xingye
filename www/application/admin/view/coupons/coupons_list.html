@@ -51,7 +51,7 @@
                         <th>优惠券名称</th>
                         <th>折扣</th>
                         <th>缩略图</th>
-                        <th>登录电话</th>
+                        <!--<th>登录电话</th>-->
                         <th>优惠券描述</th>
                         <th>门店地址</th>
                         <th>添加时间</th>
@@ -71,7 +71,7 @@
                             <td>{$v.name}</td>
                             <td>{$v.discount}</td>
                             <td>{if !empty($v.thumd)}<img src="{$v.thumd}" style="width: 40px; height: 40px;">{/if}</td>
-                            <td>{$v.login_phone}</td>
+                            <!--<td>{$v.login_phone}</td>-->
                             <td>{$v.desc|my_substr=0,10}</td>
                             <td>{$v.store_address|my_substr=0,10}</td>
                             <td>{$v.add_time|date='Y-m-d',###}</td>
