@@ -26,26 +26,13 @@
                     </ul>
                     <ul class="ui-tab-content" style="width:300%">
                         <li>
+                            {foreach $list as $v}
                             <div class="ui-row-flex ui-whitespace">
-                                <div class="ui-col ui-col-3 code">CC85H68</div>
-                                <a class="ui-col button disable" href="javascript:void(0);" onclick="validate(this)">确定验证</a>
+                                <div class="ui-col ui-col-3 code">{$v.code_str}</div>
+                                <a class="ui-col button" href="javascript:void(0);" onclick="validate(this,{$v.id})">确定验证</a>
                             </div>
-                            <div class="ui-row-flex ui-whitespace">
-                                <div class="ui-col ui-col-3 code">CC85H68</div>
-                                <a class="ui-col button">确定验证</a>
-                            </div>
-                            <div class="ui-row-flex ui-whitespace">
-                                <div class="ui-col ui-col-3 code">CC85H68</div>
-                                <a class="ui-col button">确定验证</a>
-                            </div>
-                            <div class="ui-row-flex ui-whitespace">
-                                <div class="ui-col ui-col-3 code">CC85H68</div>
-                                <a class="ui-col button">确定验证</a>
-                            </div>
-                            <div class="ui-row-flex ui-whitespace">
-                                <div class="ui-col ui-col-3 code">CC85H68</div>
-                                <a class="ui-col button">确定验证</a>
-                            </div>
+                            {/foreach}
+
                         </li>
                         <li>
                             <div class="ui-row-flex ui-whitespace">
@@ -64,7 +51,7 @@
             </div>
         </div>
     </section>
-    <section class="total">共有:50条验证记录</section>
+    <section class="total">共有:{$count}条验证记录</section>
     <section class="page">
         <a class="up disable">上一页</a>
         <a class="down disable">下一页</a>
@@ -86,7 +73,7 @@
         })
     })();
     //验证
-    function validate(curren){
+    function validate( curren , id ){
       var $btn = $(curren);
       if($btn.hasClass('disable')){return false;}
       var infoDialog = $.dialog({
@@ -94,11 +81,12 @@
         infoText : '加载中…',
         infoIcon : '/static/home/img/loading.gif'
       });
+        alert(id);
       $.ajax({
-        url: '',
+        url: '/home/store/validate_code',
         type: 'post',
         dataType:'json',
-        data:{'phone':$('.phone').val(),'code':$('.code').val()},
+        data:{ 'id':id },
         success: function (response) {
           if( response.code && response.code == 1 ){
             infoDialog.dialog.update({
@@ -106,8 +94,7 @@
               infoText : response.msg,
               infoIcon : '/static/home/img/success.png'
             });
-            location.href = '/home/index/index';
-//                TODO::location.href = response.data;
+
           }else {
             infoDialog.dialog.update({
               autoClose : 1500,
