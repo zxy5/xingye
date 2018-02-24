@@ -22,17 +22,25 @@ class Store extends Controller
         $page = empty(input('param.page'))?1:input('param.page');
         $offset = ( $page - 1 ) * $limit;
 
+        $validate = input('param.valid');
+        if( empty($validate) || $validate==0 ){
+            $is_va = 0;
+        }else{
+            $is_va = 1;
+        }
         $where = [
             'coupons_id'   => $id,
             'is_use'       => 1,
-            'is_validate'  => 0
+            'is_validate'  => $is_va
         ];
-
         $list = Db::name('coupons_log')->where( $where )->order('add_time desc') ->limit($offset,$limit)->select();
         $count = Db::name('coupons_log')->where($where)->count();
+        $pageCount = ceil($count/$limit);
         $this->assign([
             'list'=>$list,
-            'count'=>$count
+            'count'=>$count,
+            'pageCount'=>$pageCount,
+            'page' =>$page
         ]);
         return $this->fetch();
     }
