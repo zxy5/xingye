@@ -26,7 +26,7 @@ class Store extends Controller
     public function get_data(){
         $id = input('param.id');
         //分页
-        $limit = 10;
+        $limit = 5;
         $page = empty(input('param.page'))?1:input('param.page');
         $offset = ( $page - 1 ) * $limit;
 
