@@ -50,7 +50,7 @@ class Store extends Controller
      */
     public function validate_code(){
         $id = input('param.id');
-        $re = Db::name('coupons_log')->where('id',$id)->update(array('is_validate'=>1));
+        $re = Db::name('coupons_log')->where('id',$id)->update(array('is_validate'=>1,'validate_time'=>time()));
         if( $re ){
             return msg(1,'','验证成功！');
         }else{
