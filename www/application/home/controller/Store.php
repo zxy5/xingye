@@ -16,7 +16,15 @@ class Store extends Controller
 
     public function index(){
         $id = input('param.id');
+        $this->assign('id',$id);
+        return $this->fetch();
+    }
 
+    /**
+     * 获取数据
+     */
+    public function get_data(){
+        $id = input('param.id');
         //分页
         $limit = 10;
         $page = empty(input('param.page'))?1:input('param.page');
@@ -36,13 +44,7 @@ class Store extends Controller
         $list = Db::name('coupons_log')->where( $where )->order('add_time desc') ->limit($offset,$limit)->select();
         $count = Db::name('coupons_log')->where($where)->count();
         $pageCount = ceil($count/$limit);
-        $this->assign([
-            'list'=>$list,
-            'count'=>$count,
-            'pageCount'=>$pageCount,
-            'page' =>$page
-        ]);
-        return $this->fetch();
+        return json(array('data'=>$list,'page'=>$page,'pageCount'=>$pageCount,'count'=>$count));
     }
 
     /**
