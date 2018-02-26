@@ -145,6 +145,7 @@ a{
     font-size: 0;
 }
 #test-flex .test-img img{
+    border-radius: 50%;
     width: 80%;
     margin: 2vw 2vw 1vw 2vw;
     box-sizing: border-box;
