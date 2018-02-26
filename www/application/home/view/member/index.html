@@ -133,13 +133,14 @@
                                         '<span style="background-image:url('+value.thumd+')"></span>'+
                                     '</div>'+
                                     '<div class="ui-list-info">'+
-                                        '<h4 class="ui-nowrap">'+value.name+'</h4>'+
-                                    '<p class="ui-nowrap sale">' +
-                                        '<span class="sale-info">'+value.discount+'折</span>' +
-                                        '<span class="sale-type">优惠券</span>' +
-                                    '</p>'+
+                                        '<a href="'+detail_url+'/id/'+value.id+'">' +
+                                          '<h4 class="ui-nowrap">'+value.name+'</h4>'+
+                                          '<p class="ui-nowrap sale">' +
+                                              '<span class="sale-info">'+value.discount+'折</span>' +
+                                              '<span class="sale-type">优惠券</span>' +
+                                          '</p>'+
+                                        '</a>'+
                                     '</div>'+
-                                    '<a href="'+detail_url+'/id/'+value.id+'"><div class="btn">查看详情</div></a>'+
                                 '</li>';
                         });
                         if (downOrUp == 'down') {

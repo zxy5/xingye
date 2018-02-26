@@ -23,29 +23,30 @@
 </section>
 <ul id="test-flex">
     {foreach $type_list as $t}
-        <li class="test-img"><a href="/home/index/coupons_list/id/{$t.class_id}"><img src="{$t.class_thumd}" alt=""></a></li>
+        <li class="test-img"><a href="/home/index/coupons_list/id/{$t.class_id}"><img src="{$t.class_thumd}" alt=""></a><h5 class="title">美食</h5></li>
     {/foreach}
 </ul>
-<p class="list-title">-- 热门 --</p>
+<p class="list-title">-- 猜你喜欢 --</p>
 <section class="ui-container">
     <ul class="ui-list ui-list-link ui-border-tb">
         {foreach $list as $vo }
-        <li class="ui-border-t">
-            <div class="ui-list-img">
-                {if !empty($vo['thumd'])}
-                <span style="background-image:url({$vo.thumd})"></span>
-                {else/}
-                <span style="background-image:url({$vo.class_thumd})"></span>
-                {/if}
-            </div>
-            <div class="ui-list-info">
-                <h4 class="ui-nowrap">{$vo.name}</h4>
-                <p class="ui-nowrap">地址：{$vo.store_address}</p>
-                <p class="ui-nowrap">电话：{$vo.store_phone}</p>
-                <p class="ui-nowrap sale"><span class="sale-info">{$vo.discount}折</span><span class="sale-type">优惠券</span></p>
-            </div>
-            <a href="javascript:void(0);"><div class="btn" onclick="add_coupons({$vo.id});">立即领取</div></a>
-        </li>
+            <li class="ui-border-t">
+                    <div class="ui-list-img">
+                        {if !empty($vo['thumd'])}
+                        <span style="background-image:url({$vo.thumd})"></span>
+                        {else/}
+                        <span style="background-image:url({$vo.class_thumd})"></span>
+                        {/if}
+                    </div>
+                    <div class="ui-list-info">
+                        <a href="/home/member/coupons_detail/id/{$vo.id}">
+                            <h4 class="ui-nowrap">{$vo.name}</h4>
+                            <p class="ui-nowrap">电话：{$vo.store_phone}</p>
+                            <p class="ui-nowrap sale"><span class="sale-info">{$vo.discount}折</span><span class="sale-type">优惠券</span></p>
+                        </a>
+                    </div>
+                <!--<a href="javascript:void(0);"><div class="btn" onclick="add_coupons({$vo.id});">立即领取</div></a>-->
+            </li>
         {/foreach}
     </ul>
 </section>

@@ -79,16 +79,18 @@
                         $.each(response.data, function (key, value) {
                             html +=
                                     '<li class="ui-border-t">' +
-                                    '<div class="ui-list-img">' +
-                                    '<span style="background-image:url('+value.thumd+')"></span>' +
-                                    '</div>' +
-                                    '<div class="ui-list-info">' +
-                                    '<h4 class="ui-nowrap">'+value.name+'</h4>'+
-                                    '<p class="ui-nowrap">地址：'+value.store_address+'</p>'+
-                                    '<p class="ui-nowrap">电话：'+value.store_phone+'</p>'+
-                                    '<p class="ui-nowrap sale"><span class="sale-info">'+value.discount+'折</span><span class="sale-type">优惠券</span></p>'+
-                                    '</div>'+
-                                    '<a href="javascript:add_coupons('+value.id+')"><div class="btn">立即领取</div></a>'+
+                                        '<div class="ui-list-img">' +
+                                            '<span style="background-image:url('+value.thumd+')"></span>' +
+                                        '</div>' +
+                                        '<div class="ui-list-info">' +
+                                            '<a href="/home/member/coupons_detail/id/'+ value.id +'">'+
+                                                '<h4 class="ui-nowrap">'+value.name+'</h4>'+
+                                                '<p class="ui-nowrap">地址：'+value.store_address+'</p>'+
+                                                '<p class="ui-nowrap">电话：'+value.store_phone+'</p>'+
+                                                '<p class="ui-nowrap sale"><span class="sale-info">'+value.discount+'折</span><span class="sale-type">优惠券</span></p>'+
+                                            '</a>'+
+                                        '</div>'+
+//                                      '<a href="javascript:add_coupons('+value.id+')"><div class="btn">立即领取</div></a>'+
                                     '</li>';
                         });
                             if (downOrUp == 'down') {
