@@ -42,6 +42,12 @@ class Store extends Controller
             'is_validate'  => $is_va
         ];
         $list = Db::name('coupons_log')->where( $where )->order('add_time desc') ->limit($offset,$limit)->select();
+
+        foreach( $list as $k=>$v ){
+            if( $v['validate_time'] != 0 ){
+                $list[$k]['validate_time'] = date('Y-m-d H:i:s',$v['validate_time']);
+            }
+        }
         $count = Db::name('coupons_log')->where($where)->count();
         $pageCount = ceil($count/$limit);
         return json(array('data'=>$list,'page'=>$page,'pageCount'=>$pageCount,'count'=>$count));

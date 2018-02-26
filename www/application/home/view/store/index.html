@@ -24,6 +24,7 @@
                         <li class="current">待验证</li>
                         <li>验证记录</li>
                     </ul>
+                    <input type="hidden" class="coupons_id" value="{$id}">
                     <ul class="ui-tab-content" style="width:300%">
                         <li id="notValidate">
                             <!--<div class="ui-row-flex ui-whitespace">-->
@@ -99,7 +100,7 @@
         type: 'post',
         dataType:'json',
         data:{
-          id: 4,
+          id: $('.coupons_id').val(),
           valid: valid,
           page: page
         },
@@ -129,7 +130,7 @@
                                 '<p class="detail-code">验证码: '+ data[i].code_str +'</p>' +
                             '</div>' +
                             '<div class="ui-col detail right">' +
-                                '<p>'+ getDate(data[i].add_time) +'</p>' +
+                                '<p>'+ data[i].validate_time +'</p>' +
                             '</div>' +
                         '</div>'
             }
@@ -178,7 +179,7 @@
         success: function (response) {
             infoDialog.dialog.update({
               autoClose : 500,
-              infoText : '读取成功',
+              infoText : response.msg,
               infoIcon : '/static/home/img/success.png'
             });
             loadList(id, valid, page);
