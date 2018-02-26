@@ -96,3 +96,6 @@ body{
     border: 1px solid #cccccc!important;
     color: #cccccc!important;
 }
+.dialog-content-bd{
+    text-align: center!important;
+}

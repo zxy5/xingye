@@ -25,36 +25,20 @@
                         <li>验证记录</li>
                     </ul>
                     <ul class="ui-tab-content" style="width:300%">
-                        <li>
-                            <div class="ui-row-flex ui-whitespace">
-                                <div class="ui-col ui-col-3 code">CC85H68</div>
-                                <a class="ui-col button disable" href="javascript:void(0);" onclick="validate(this)">确定验证</a>
-                            </div>
-                            <div class="ui-row-flex ui-whitespace">
-                                <div class="ui-col ui-col-3 code">CC85H68</div>
-                                <a class="ui-col button">确定验证</a>
-                            </div>
-                            <div class="ui-row-flex ui-whitespace">
-                                <div class="ui-col ui-col-3 code">CC85H68</div>
-                                <a class="ui-col button">确定验证</a>
-                            </div>
-                            <div class="ui-row-flex ui-whitespace">
-                                <div class="ui-col ui-col-3 code">CC85H68</div>
-                                <a class="ui-col button">确定验证</a>
-                            </div>
-                            <div class="ui-row-flex ui-whitespace">
-                                <div class="ui-col ui-col-3 code">CC85H68</div>
-                                <a class="ui-col button">确定验证</a>
-                            </div>
+                        <li id="notValidate">
+                            <!--<div class="ui-row-flex ui-whitespace">-->
+                                <!--<div class="ui-col ui-col-3 code">CC85H68</div>-->
+                                <!--<a class="ui-col button disable" href="javascript:void(0);" onclick="validate(this)">确定验证</a>-->
+                            <!--</div>-->
                         </li>
-                        <li>
+                        <li id="validated">
                             <div class="ui-row-flex ui-whitespace">
                                 <div class="ui-col detail left">
                                     <p class="detail-code">验证码: CC85A26</p>
-                                    <p>折扣类型：满100元减25元</p>
+                                    <!--<p>折扣类型：满100元减25元</p>-->
                                 </div>
                                 <div class="ui-col detail right">
-                                    <p>消费总金额：236.00元</p>
+                                    <!--<p>消费总金额：236.00元</p>-->
                                     <p>2018-01-29  17:23:40</p>
                                 </div>
                             </div>
@@ -64,10 +48,10 @@
             </div>
         </div>
     </section>
-    <section class="total">共有:50条验证记录</section>
+    <section class="total"></section>
     <section class="page">
-        <a class="up disable">上一页</a>
-        <a class="down disable">下一页</a>
+        <a class="up" onclick="pre()">上一页</a>
+        <a class="down" onclick="next()">下一页</a>
     </section>
 </section>
 <script src="/static/home/lib/zepto.min.js"></script>
@@ -83,38 +67,86 @@
         /* 滑动开始前 */
         tab.on('beforeScrollStart', function(fromIndex, toIndex) {
             console.log(fromIndex,toIndex);// from 为当前页，to 为下一页
+          if(toIndex){
+            //验证
+            valid = 1;
+            loadList(id, valid, page);
+          }else{
+            //未验证
+            valid = 0;
+            loadList(id, valid, page);
+          }
         })
     })();
-    //验证
-    function validate(curren){
-      var $btn = $(curren);
-      if($btn.hasClass('disable')){return false;}
+    //需要后端渲染
+    var id = null, //商户ID
+        valid = 0, //是否验证
+        page = 1,  //页码
+        count = 0;
+    //获取列表数据 默认为未验证的数据
+    (function (){
+      loadList(id, valid, page);
+    })();
+    //获取列表数据
+    function loadList (id, valid, page) {
       var infoDialog = $.dialog({
         type : 'info',
         infoText : '加载中…',
         infoIcon : '/static/home/img/loading.gif'
       });
       $.ajax({
-        url: '',
+        url: '/home/store/get_data',
         type: 'post',
         dataType:'json',
-        data:{'phone':$('.phone').val(),'code':$('.code').val()},
+        data:{
+          id: 4,
+          valid: valid,
+          page: page
+        },
         success: function (response) {
-          if( response.code && response.code == 1 ){
-            infoDialog.dialog.update({
-              autoClose : 1500,
-              infoText : response.msg,
-              infoIcon : '/static/home/img/success.png'
-            });
-            location.href = '/home/index/index';
-//                TODO::location.href = response.data;
-          }else {
-            infoDialog.dialog.update({
-              autoClose : 1500,
-              infoText : response.msg,
-              infoIcon : '/static/home/img/fail.png'
-            });
+          var data = response.data;
+          var $total = $($('.total')[0])
+
+          //未验证
+          if(valid === 0){
+            var $notValidate = $('#notValidate'),
+              DOM = "";
+            for(var i = 0; i < data.length;i++){
+              DOM +=    "<div class='ui-row-flex ui-whitespace'>" +
+                            "<div class='ui-col ui-col-3 code'>"+ data[i].code_str + "</div>" +
+                            "<a data-id='"+data[i].id+"' class='ui-col button' href='javascript:void(0);' onclick='validate(this)'>确定验证</a>" +
+                        "</div>";
+            }
+            $notValidate.html(DOM);
+            count = (response.count?response.count:0);
+            $total.html('共有: '+ count +'条验证记录');
+          }else if(valid === 1){
+            var validated = $('#validated'),
+              DOM = "";
+            for(var i = 0; i < data.length;i++){
+              DOM +=    '<div class="ui-row-flex ui-whitespace">' +
+                            '<div class="ui-col detail left">' +
+                                '<p class="detail-code">验证码: '+ data[i].code_str +'</p>' +
+                            '</div>' +
+                            '<div class="ui-col detail right">' +
+                                '<p>'+ getDate(data[i].add_time) +'</p>' +
+                            '</div>' +
+                        '</div>'
+            }
+            validated.html(DOM)
+            $total.html('共有: '+ (response.count?response.count:0) +'条验证记录');
           }
+          if(page <= 1){
+            $('.up').addClass('disable');
+          }
+          if(page * 5 >= count){
+              $('.down').addClass('disable');
+          }
+          infoDialog.dialog.update({
+            autoClose : 500,
+            infoText : '读取成功!',
+            infoIcon : '/static/home/img/success.png'
+          });
         },
         error: function () {
           infoDialog.dialog.update({
@@ -124,6 +156,68 @@
           });
         }
       });
+    }
+    //验证
+    function validate(current){
+      var $btn = $(current),
+          id = $($btn[0]).attr('data-id');
+
+      if($btn.hasClass('disable')){return false;}
+      var infoDialog = $.dialog({
+        type : 'info',
+        infoText : '加载中…',
+        infoIcon : '/static/home/img/loading.gif'
+      });
+      $.ajax({
+        url: '/home/store/validate_code',
+        type: 'post',
+        dataType:'json',
+        data:{
+          id: id
+        },
+        success: function (response) {
+            infoDialog.dialog.update({
+              autoClose : 500,
+              infoText : '读取成功',
+              infoIcon : '/static/home/img/success.png'
+            });
+            loadList(id, valid, page);
+        },
+        error: function () {
+          infoDialog.dialog.update({
+            autoClose : 1500,
+            infoText : '发生错误!',
+            infoIcon : '/static/home/img/fail.png'
+          });
+        }
+      });
+    }
+    function pre () {
+      if(page > 1){
+        page--
+        loadList(id, valid, page);
+      }else{
+        page = 1;
+        loadList(id, valid, page);
+      }
+    }
+    function next () {
+      page++
+      if (page*5 <= count){
+        page++
+        //TODO::page判断待优化
+        loadList(id, valid, page);
+      }
+    }
+    function getDate(times){
+      var date = new Date(times);
+      var Y = date.getFullYear() + '-',
+      M = (date.getMonth()+1 < 10 ? '0'+(date.getMonth()+1) : date.getMonth()+1) + '-',
+      D = date.getDate() + ' ',
+      h = date.getHours() + ':',
+      m = date.getMinutes() + ':',
+      s = date.getSeconds();
+      return Y+M+D+h+m+s;
     }
 </script>
 </body>
