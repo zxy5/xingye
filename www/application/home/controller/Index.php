@@ -56,6 +56,24 @@ class Index extends Base
     }
 
     /**
+     * 优惠券详情
+     */
+    public function coupons_detail(){
+        $id = input('param.id');
+        $info = Db::name('coupons')->alias('a')->field('a.id,a.name,a.thumd,a.desc,a.discount,a.start_time,a.end_time,a.store_address,a.store_phone,b.class_thumd')
+                ->join('__COUPONS_CLASS__ b','a.class_id=b.class_id','LEFT')
+                ->where('id',$id)->find();
+
+        if( empty($info['thumd'])||$info['thumd']=='' ){
+            $info['thumd'] = $info['class_thumd'];
+        }
+
+        $this->assign('info',$info);
+        return $this->fetch();
+    }
+
+
+    /**
      * 领取优惠券
      */
     public function add_coupons_log(){
