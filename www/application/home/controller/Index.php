@@ -16,7 +16,7 @@ class Index extends Base
         //获取推荐券
         $list = Db::name('coupons')->alias('a')->field('a.id,a.name,a.discount,a.thumd,a.store_address,a.store_phone,b.class_thumd')
                     ->join('__COUPONS_CLASS__ b','a.class_id=b.class_id','LEFT')
-                    ->where(array('a.is_recommend'=>1,'a.status'=>1))->order('a.id desc')->select();
+                    ->where(array('a.is_recommend'=>1,'a.status'=>1))->select();
 
         $this->assign([
             'list'=>$list,
