@@ -184,7 +184,6 @@ class Index extends Base
         }
         return json(msg('1',$award,'恭喜你中奖了！'));
     }
-
 }
 
 

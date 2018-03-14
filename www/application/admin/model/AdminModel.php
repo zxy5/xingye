@@ -14,7 +14,7 @@ use think\Model;
 class AdminModel extends Model
 {
     // 确定链接表名
-    protected $table = 'sd_admin';
+    protected $table = 'f_sys_role';
 
     /**
      * 根据搜索条件获取用户列表信息
@@ -27,6 +27,7 @@ class AdminModel extends Model
         return $this->field($this->table . '.*,role_name')
             ->join('sd_role', $this->table . '.role_id = ' . 'sd_role.id')
             ->where($where)->limit($offset, $limit)->order('id desc')->select();
+      ;
     }
 
     /**
